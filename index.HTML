@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Pharmanex Tracker Pro V18</title>
+    <style>
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
+        :root {
+            --primary: #1a237e;
+            --primary-dark: #0f195e;
+            --bg: #f0f4f8;
+            --alert: #f57c00;
+            --success: #2e7d32;
+            --danger: #d32f2f;
+            --border-light: #e9ecef;
+            --text-muted: #5f6368;
+            --gold: #ffd54f;
+        }
+        body {
+            font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
+            background: var(--bg);
+            padding-top: 245px !important;
+            padding-bottom: 80px;
+            min-height: 100vh;
+        }
+
+        /* ===== FIXED HEADER — NEW BRANDING ===== */
+        .header-banner {
+            width: 100%;
+            height: 115px;
+            background: linear-gradient(135deg, #0b2060 0%, #0a3e82 55%, #0d4fa0 100%);
+            position: fixed; top: 0; left: 0; z-index: 1000;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.28);
+            padding: 8px 14px;
+            gap: 1px;
+        }
+        .hdr-brand {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #ffffff;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+            line-height: 1.15;
+        }
+        .hdr-subtitle {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: #e8eef8;
+            letter-spacing: 0.5px;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+            line-height: 1.3;
+        }
+        .hdr-contact {
+            font-size: 0.92rem;
+            font-weight: 800;
+            color: var(--gold);
+            letter-spacing: 0.8px;
+            text-shadow: 0 1px 6px rgba(0,0,0,0.4);
+            line-height: 1.3;
+        }
+
+        /* ===== STATS ROW ===== */
+        .stats-container {
+            display: flex; gap: 9px; padding: 0 12px;
+            position: fixed; top: 120px !important; left: 0; right: 0; z-index: 1001;
+        }
+        .stat-box {
+            flex: 1; background: white; padding: 4px 2px;
+            border-radius: 18px; text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            cursor: pointer; border: 2px solid transparent;
+            transition: all 0.2s; user-select: none;
+        }
+        .stat-box.active { border-color: var(--primary); background: #eef2ff; transform: scale(0.97); }
+        .stat-box h4 { color: var(--text-muted); font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        .stat-box p { font-size: 17px; font-weight: 800; color: var(--primary); margin-top: 2px; }
+
+        /* ===== SORT BAR ===== */
+        .sort-bar {
+            display: flex; gap: 7px; padding: 6px 12px;
+            position: fixed; top: 190px !important; left: 0; right: 0; z-index: 999;
+            overflow-x: auto; background: var(--bg);
+        }
+        .sort-bar::-webkit-scrollbar { display: none; }
+        .sort-btn {
+            flex-shrink: 0; padding: 5px 14px;
+            border-radius: 40px; border: 1.5px solid #c8d6e8;
+            background: white; font-size: 12px; font-weight: 600;
+            color: #3a4a6b; cursor: pointer; white-space: nowrap;
+            transition: all 0.15s;
+        }
+        .sort-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+        /* ===== ACTION AREA ===== */
+        .action-area { padding: 14px 12px 8px; }
+        .search-input {
+            width: 100%; padding: 13px 18px;
+            border: 1.5px solid #dde3ef; border-radius: 40px;
+            margin-bottom: 10px; font-size: 15px; outline: none;
+            background: white; transition: 0.2s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+        .search-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(26,35,126,0.12); }
+
+        #dateRangeBanner {
+            display: none; align-items: center; justify-content: space-between;
+            background: #fff3e0; border: 1.5px solid #ffb74d;
+            border-radius: 14px; padding: 8px 14px;
+            margin-bottom: 10px; font-size: 13px; color: #e65100;
+        }
+        #drClear { border: none; background: none; color: #e65100; font-size: 20px; cursor: pointer; line-height: 1; }
+
+        .btn-main {
+            width: 100%; padding: 13px; border: none;
+            border-radius: 40px; background: var(--primary);
+            color: white; font-weight: 700; font-size: 16px;
+            cursor: pointer; transition: 0.2s;
+            box-shadow: 0 3px 8px rgba(26,35,126,0.25);
+        }
+        .btn-main:active { transform: scale(0.97); background: var(--primary-dark); }
+        .btn-secondary { background: #eef2fa !important; color: #1f2b48 !important; box-shadow: none !important; border: 1.5px solid #dde3ef !important; }
+        .btn-danger { background: #fdecea !important; color: var(--danger) !important; box-shadow: none !important; }
+
+        /* ===== TABLE ===== */
+        table {
+            width: 100%; background: white; border-collapse: collapse;
+            margin-top: 4px; border-radius: 20px; overflow: hidden;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+        }
+        th {
+            background: #f3f6fd; color: #2c3e66; padding: 12px 8px;
+            font-size: 11px; font-weight: 700; text-align: left;
+            border-bottom: 2px solid var(--border-light);
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        td { padding: 12px 8px; border-bottom: 1px solid #f0f0f0; font-size: 14px; vertical-align: top; cursor: pointer; }
+        tr:last-child td { border-bottom: none; }
+        tr:active td { background: #f5f7ff; }
+        .date-cell { font-size: 13px; line-height: 1.3; color: #1e2a47; font-weight: 600; min-width: 52px; }
+        .date-year { color: #8898aa; display: block; font-size: 10px; margin-top: 2px; font-weight: 400; }
+        .name-cell b { font-size: 15px; display: block; margin-bottom: 3px; color: #0b2b5c; }
+        .name-sub { font-size: 11px; color: #6b7a8d; line-height: 1.5; }
+        .red { color: #d32f2f; font-weight: 700; }
+        .orange { color: #f57c00; font-weight: 700; }
+        .green { color: #2e7d32; font-weight: 700; }
+
+        /* ===== SETTINGS FAB ===== */
+.settings-fab {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: white;
+    font-size: 20px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 3px 8px rgba(26,35,126,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* రెండు బటన్లు పక్కపక్కన రావడానికి కొత్త బాక్స్ */
+.action-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 5px;
+}
+
+        /* ===== OVERLAY ===== */
+        .overlay {
+            display: none; position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%; background: rgba(0,0,0,0.55); z-index: 1500;
+        }
+
+        /* ===== MODALS ===== */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%; background: rgba(0,0,0,0.82);
+            z-index: 2000; align-items: center; justify-content: center;
+            padding: 16px; box-sizing: border-box; backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            background: white; width: 100%; max-width: 460px;
+            padding: 22px 18px; border-radius: 28px;
+            max-height: 92vh; overflow-y: auto;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.35);
+        }
+        .modal-title { font-size: 18px; font-weight: 800; color: var(--primary); margin-bottom: 16px; }
+
+        /* ===== BOTTOM SHEETS ===== */
+        .list-modal {
+            display: none; position: fixed; bottom: 0; left: 0;
+            width: 100%; background: white;
+            border-radius: 26px 26px 0 0; z-index: 2100;
+            padding: 20px 16px 28px; box-sizing: border-box;
+            box-shadow: 0 -8px 32px rgba(0,0,0,0.22);
+        }
+        .sheet-title { font-size: 17px; font-weight: 800; margin-bottom: 14px; color: #1a237e; }
+
+        /* ===== FORM ELEMENTS ===== */
+        .form-group { margin-bottom: 13px; }
+        label { font-size: 11.5px; font-weight: 700; color: #2c3e66; display: block; margin-bottom: 5px; letter-spacing: 0.2px; }
+        input[type=text], input[type=number], input[type=tel], input[type=date], select, textarea {
+            width: 100%; padding: 11px 14px;
+            border: 1.5px solid #cfdfe8; border-radius: 16px;
+            font-size: 15px; background: #fff; transition: 0.2s;
+            font-family: inherit; color: #1a2340;
+        }
+        textarea { resize: none; min-height: 72px; }
+        input:focus, select:focus, textarea:focus {
+            outline: none; border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(26,35,126,0.15);
+        }
+        .flex-row { display: flex; gap: 10px; }
+        .flex-row .form-group { flex: 1; }
+
+        /* ===== HISTORY ===== */
+        .h-info-bar {
+            background: #f0f4fa; border-radius: 20px;
+            padding: 9px 14px; font-size: 13px; color: #3a527a;
+            margin-bottom: 12px; line-height: 1.6;
+        }
+        .contact-row { display: flex; gap: 9px; margin-bottom: 13px; }
+        .contact-btn {
+            flex: 1; padding: 11px 6px; border-radius: 16px; border: none;
+            font-size: 14px; font-weight: 700; cursor: pointer; transition: 0.15s;
+        }
+        .contact-btn:active { transform: scale(0.96); }
+        .wa-btn { background: #e8f5e9; color: #2e7d32; }
+        .call-btn { background: #e3f2fd; color: #1565c0; }
+
+        .chart-wrap {
+            background: #f8fafc; border-radius: 16px;
+            padding: 10px 10px 6px; margin-bottom: 12px;
+            display: none;
+        }
+        .chart-label { font-size: 11px; color: var(--text-muted); font-weight: 600; margin-bottom: 4px; }
+        #scoreChart { width: 100%; height: 80px; display: block; }
+
+        .history-item {
+            background: #f9fafc; padding: 12px 14px; margin-bottom: 8px;
+            border-radius: 18px; border-left: 4px solid var(--primary); font-size: 13px;
+        }
+        .history-item-head { display: flex; justify-content: space-between; align-items: center; }
+        .score-badge { background: #eef2ff; padding: 3px 10px; border-radius: 40px; font-size: 12px; }
+        .history-sub { font-size: 12px; color: #555; margin-top: 5px; line-height: 1.5; }
+        .fresh-tag { font-size: 11px; color: #1a73e8; margin-top: 4px; font-weight: 600; }
+        .hist-actions { display: flex; gap: 8px; margin-top: 9px; }
+        .hist-btn {
+            flex: 1; padding: 7px; border-radius: 12px; border: none;
+            font-size: 12px; font-weight: 700; cursor: pointer; transition: 0.15s;
+        }
+        .hist-btn:active { transform: scale(0.95); }
+        .h-edit { background: #e3f2fd; color: #1565c0; }
+        .h-del { background: #fdecea; color: var(--danger); }
+
+        /* ===== AREA CHIPS ===== */
+        .area-chip {
+            padding: 13px 14px; border-bottom: 1px solid #eef2f5;
+            font-weight: 500; font-size: 15px; cursor: pointer;
+        }
+        .area-chip:active { background: #eef2ff; }
+
+        /* ===== SETTINGS ITEMS ===== */
+        .sett-item {
+            display: flex; align-items: center; gap: 14px;
+            padding: 14px 4px; border-bottom: 1px solid #eef2f5;
+            cursor: pointer; font-size: 15px; font-weight: 500;
+            transition: 0.1s;
+        }
+        .sett-item:active { background: #f0f4ff; border-radius: 12px; }
+        .sett-icon { font-size: 22px; width: 34px; text-align: center; }
+        .dr-row { display: flex; gap: 9px; align-items: flex-end; margin-top: 10px; }
+        .dr-row .form-group { flex: 1; margin-bottom: 0; }
+        .dr-clear-btn {
+            padding: 10px 13px; border-radius: 14px; border: 1px solid #ddd;
+            background: #fdecea; color: var(--danger); font-weight: 700;
+            cursor: pointer; flex-shrink: 0; font-size: 13px;
+        }
+
+        /* ===== PRINT STYLES ===== */
+        @media print {
+            .header-banner, .stats-container, .sort-bar, .action-area,
+            .settings-fab, .overlay, .modal, .list-modal { display: none !important; }
+            body { padding: 0 !important; background: white !important; }
+            table { box-shadow: none; border: 1px solid #ccc; }
+            th { background: #e8eaf6 !important; -webkit-print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== NEW HEADER / BRANDING SECTION ===== -->
+<div class="header-banner">
+    <div class="hdr-brand">PHARMANEX®</div>
+    <div class="hdr-subtitle">LifePak® Elements &bull; Prysm Score Tracker</div>
+    <div class="hdr-contact">RAAZASEKHAR &nbsp; PH: 9866662791</div>
+</div>
+
+<div class="stats-container">
+    <div class="stat-box active" id="statAll" onclick="filterData('all')">
+        <h4>📊 మొత్తం</h4><p id="totalCount">0</p>
+    </div>
+    <div class="stat-box" id="statArea" onclick="showAreaPopup()">
+        <h4>📍 ప్రాంతాలు</h4><p id="areaCount">0</p>
+    </div>
+    <div class="stat-box" id="statMonth" onclick="filterData('month')">
+        <h4>📅 ఈ నెల</h4><p id="monthCount">0</p>
+    </div>
+</div>
+
+<div class="sort-bar">
+    <button class="sort-btn active" id="sBtn_date"  onclick="setSort('date')">📅 తేదీ ↓</button>
+    <button class="sort-btn"        id="sBtn_name"  onclick="setSort('name')">🔤 పేరు</button>
+    <button class="sort-btn"        id="sBtn_score" onclick="setSort('score')">⭐ స్కోర్</button>
+    <button class="sort-btn"        id="sBtn_lp"    onclick="setSort('lp')">📦 LP</button>
+</div>
+
+<div class="action-area">
+    <input type="text" id="search" class="search-input"
+           placeholder="🔍 వెతకండి: పేరు / ఫోన్ / ప్రాంతం ..."
+           oninput="renderTable()">
+    
+    <div class="action-row">
+        <button class="btn-main" onclick="openForm('add')">+ కొత్త కస్టమర్ నమోదు</button>
+        <button class="settings-fab" onclick="openSettings()">⚙️</button>
+    </div>
+</div>
+
+<table id="dataTable">
+    <thead>
+        <tr>
+            <th>📆 తేదీ</th>
+            <th>👤 కస్టమర్</th>
+            <th style="text-align:center">🔄 Vis</th>
+            <th style="text-align:center">⭐ స్కోర్</th>
+            <th style="text-align:center">📦 LP</th>
+        </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+</table>
+
+
+
+<div id="overlay" class="overlay" onclick="closeAllPopups()"></div>
+
+<div id="areaListPopup" class="list-modal">
+    <div class="sheet-title">📍 ప్రాంతం ఎంచుకోండి</div>
+    <div id="areaItems" style="max-height:52vh; overflow-y:auto;"></div>
+    <button class="btn-main btn-secondary" onclick="closeAllPopups()" style="margin-top:14px;">మూసివేయండి</button>
+</div>
+
+<div id="settingsPopup" class="list-modal">
+    <div class="sheet-title">⚙️ సెట్టింగ్స్</div>
+    <div class="sett-item" onclick="saveToIndexedDBManual()" style="background:#e8f5e9; border-radius:12px; margin-bottom:8px; border:1px solid #c8e6c9;">
+        <span class="sett-icon">🛡️</span> <b>IndexedDB లో భద్రపరచండి</b>
+    </div>
+    <div class="sett-item" onclick="exportJSON()">
+        <span class="sett-icon">📤</span> డేటా Export (JSON బ్యాకప్)
+    </div>
+    <div class="sett-item" onclick="document.getElementById('importFile').click()">
+        <span class="sett-icon">📥</span> డేటా Import (JSON లోడ్)
+        <input type="file" id="importFile" accept=".json" style="display:none;" onchange="importJSON(event)">
+    </div>
+    <div class="sett-item" onclick="doPrint()">
+        <span class="sett-icon">🖨️</span> Print / PDF గా సేవ్ చేయండి
+    </div>
+    <div style="margin-top:14px; padding-top:14px; border-top:1px solid #eef2f5;">
+        <label style="font-size:13px; font-weight:700; color:#2c3e66; display:block; margin-bottom:8px;">📅 తేదీ రేంజ్ ఫిల్టర్</label>
+        <div class="dr-row">
+            <div class="form-group">
+                <label>నుండి</label>
+                <input type="date" id="fromDate" onchange="applyDateRange()">
+            </div>
+            <div class="form-group">
+                <label>వరకు</label>
+                <input type="date" id="toDate" onchange="applyDateRange()">
+            </div>
+            <button class="dr-clear-btn" onclick="clearDateRange()">✕ క్లియర్</button>
+        </div>
+    </div>
+    <button class="btn-main btn-secondary" onclick="closeAllPopups()" style="margin-top:18px;">మూసివేయండి</button>
+</div>
+
+<div id="entryModal" class="modal">
+    <div class="modal-content">
+        <div id="modalTitle" class="modal-title">📝 కొత్త విజిట్</div>
+        <input type="hidden" id="editId">
+        <input type="hidden" id="oldName">
+        <div class="form-group">
+            <label>📅 తేదీ</label>
+            <input type="date" id="fDate">
+        </div>
+        <div class="form-group">
+            <label>🧑 పూర్తి పేరు *</label>
+            <input type="text" id="fName" placeholder="కస్టమర్ పేరు">
+        </div>
+        <div class="flex-row">
+            <div class="form-group">
+                <label>🎂 వయస్సు</label>
+                <input type="number" id="fAge" placeholder="సంవత్సరాలు" min="1" max="120">
+            </div>
+            <div class="form-group">
+                <label>⚥ లింగం</label>
+                <select id="fGender">
+                    <option value="M">పురుషుడు</option>
+                    <option value="F">స్త్రీ</option>
+                    <option value="O">ఇతర</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>📞 ఫోన్ నంబర్</label>
+            <input type="tel" id="fPhone" placeholder="10 అంకెల నంబర్">
+        </div>
+        <div class="form-group">
+            <label>📍 ప్రాంతం / ఏరియా</label>
+            <input type="text" id="fArea" placeholder="ప్రాంతం పేరు">
+        </div>
+        <div class="flex-row">
+            <div class="form-group">
+                <label>⭐ హెల్త్ స్కోర్ (0–1000)</label>
+                <input type="number" id="fScore" placeholder="స్కోర్" min="0" max="1000">
+            </div>
+            <div class="form-group">
+                <label>📦 LP పరిమాణం</label>
+                <input type="number" id="fLP" placeholder="LP">
+            </div>
+        </div>
+        <div class="form-group">
+            <label>🛒 Products Used</label>
+            <input type="text" id="fProducts" placeholder="ఉదా: G3, Tegreen, Lifepak...">
+        </div>
+        <div class="form-group">
+            <label>📝 Notes / Remarks</label>
+            <textarea id="fNotes" placeholder="అదనపు వివరాలు..."></textarea>
+        </div>
+        <button id="saveBtn" class="btn-main" onclick="saveEntry()">💾 సేవ్ చేయండి</button>
+        <button id="masterBtn" class="btn-main" style="background:#2c6e9e; display:none; margin-top:8px;" onclick="saveMasterEdit()">✏️ ప్రొఫైల్ నవీకరించండి</button>
+        <button class="btn-main btn-secondary" style="margin-top:8px;" onclick="closeAllPopups()">రద్దు చేయండి</button>
+    </div>
+</div>
+
+<div id="historyModal" class="modal">
+    <div class="modal-content">
+        <div id="hName" class="modal-title">📋 విజిట్ చరిత్ర</div>
+        <div id="hInfo" class="h-info-bar"></div>
+        <div id="contactRow" class="contact-row"></div>
+        <div id="chartWrap" class="chart-wrap">
+            <div class="chart-label">📈 స్కోర్ ట్రెండ్</div>
+            <canvas id="scoreChart"></canvas>
+        </div>
+        <div id="historyList" style="max-height:42vh; overflow-y:auto;"></div>
+        <button class="btn-main" style="margin-top:14px;" onclick="quickAddVisit()">➕ కొత్త విజిట్ జోడించు</button>
+        <button class="btn-main btn-danger" style="margin-top:8px;" onclick="deleteCustomer()">🗑️ కస్టమర్ డిలీట్ చేయండి</button>
+        <button class="btn-main btn-secondary" style="margin-top:8px;" onclick="closeAllPopups()">మూసివేయి</button>
+    </div>
+</div>
+
+<script>
+/* ============================================================
+   INDEXED DB LAYER
+============================================================ */
+const DB_NAME = 'PharmanexProDB';
+const DB_VERSION = 1;
+const STORE_NAME = 'app_data';
+
+function openIDB() {
+    return new Promise((resolve, reject) => {
+        const request = indexedDB.open(DB_NAME, DB_VERSION);
+        request.onupgradeneeded = (e) => {
+            const db = e.target.result;
+            if (!db.objectStoreNames.contains(STORE_NAME)) {
+                db.createObjectStore(STORE_NAME);
+            }
+        };
+        request.onsuccess = (e) => resolve(e.target.result);
+        request.onerror = (e) => reject(e.target.error);
+    });
+}
+
+async function saveToIDB(data) {
+    try {
+        const idb = await openIDB();
+        const tx = idb.transaction(STORE_NAME, 'readwrite');
+        tx.objectStore(STORE_NAME).put(data, 'phx_main_data');
+        return tx.complete;
+    } catch (err) { console.error("IDB Save Error:", err); }
+}
+
+async function loadFromIDB() {
+    try {
+        const idb = await openIDB();
+        return new Promise((resolve) => {
+            const tx = idb.transaction(STORE_NAME, 'readonly');
+            const req = tx.objectStore(STORE_NAME).get('phx_main_data');
+            req.onsuccess = () => resolve(req.result);
+            req.onerror = () => resolve(null);
+        });
+    } catch (err) { return null; }
+}
+
+async function saveToIndexedDBManual() {
+    await saveToIDB(db);
+    alert("✅ డేటా IndexedDB లో భద్రపరచబడింది!");
+}
+
+/* ============================================================
+   DATA LAYER
+============================================================ */
+const STORAGE_KEY = 'PhxData_V16';
+let db = [];
+
+async function loadDB() {
+    const idbData = await loadFromIDB();
+    if (idbData && Array.isArray(idbData) && idbData.length > 0) {
+        db = idbData;
+    } else {
+        const v16 = localStorage.getItem(STORAGE_KEY);
+        if (v16) { try { db = JSON.parse(v16); } catch { db = []; } }
+    }
+    updateStats();
+    renderTable();
+}
+
+function saveDB(rerender = true) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+    saveToIDB(db);
+    updateStats();
+    if (rerender) renderTable();
+}
+
+/* ============================================================
+   DATE UTILITIES
+============================================================ */
+const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const MON_MAP = {Jan:'01',Feb:'02',Mar:'03',Apr:'04',May:'05',Jun:'06',
+                 Jul:'07',Aug:'08',Sep:'09',Oct:'10',Nov:'11',Dec:'12'};
+
+function dateInputToDisplay(val) {
+    if (!val) return '';
+    const [y, m, d] = val.split('-');
+    return `${d} ${MONTHS[parseInt(m,10)-1]} ${y.slice(-2)}`;
+}
+
+function displayToDateInput(str) {
+    if (!str) return '';
+    const p = str.trim().split(' ');
+    if (p.length < 3) return '';
+    const yr = parseInt(p[2],10) < 100 ? 2000 + parseInt(p[2],10) : parseInt(p[2],10);
+    return `${yr}-${MON_MAP[p[1]]||'01'}-${p[0].padStart(2,'0')}`;
+}
+
+function dateToTs(dateStr) {
+    if (!dateStr) return 0;
+    const inp = displayToDateInput(dateStr);
+    if (!inp) return 0;
+    return new Date(inp).getTime() || 0;
+}
+
+function formatDisplayDate(dateStr) {
+    if (!dateStr) return '--';
+    const p = dateStr.trim().split(' ');
+    if (p.length >= 3) return `${p[0]} ${p[1]}<br><span class="date-year">20${p[2]}</span>`;
+    return dateStr;
+}
+
+function todayInputVal() {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
+function isCurrentMonth(dateStr) {
+    if (!dateStr) return false;
+    const p = dateStr.split(' ');
+    if (p.length < 3) return false;
+    const n = new Date();
+    const curMon = MONTHS[n.getMonth()];
+    const curYr = String(n.getFullYear()).slice(-2);
+    return p[1] === curMon && p[2] === curYr;
+}
+
+/* ============================================================
+   STATE
+============================================================ */
+let currentFilterMode = 'all';
+let currentSort      = 'date';
+let sortAsc          = false;
+let dateFrom         = null;
+let dateTo           = null;
+let activeHistoryName = '';
+
+/* ============================================================
+   STATS
+============================================================ */
+function updateStats() {
+    const unique = [...new Map(db.map(e => [e.name, e])).values()];
+    document.getElementById('totalCount').innerText = unique.length;
+    const areas = [...new Set(db.map(e => (e.area||'').trim().toLowerCase()))].filter(a => a && a !== 'n/a' && a !== '');
+    document.getElementById('areaCount').innerText = areas.length;
+    const mVisits = db.filter(e => isCurrentMonth(e.date));
+    const mUniq   = [...new Map(mVisits.map(e => [e.name, e])).values()];
+    document.getElementById('monthCount').innerText = mUniq.length;
+}
+
+/* ============================================================
+   FILTER / SORT
+============================================================ */
+function filterData(mode) {
+    currentFilterMode = mode;
+    document.getElementById('statAll').classList.toggle('active', mode === 'all');
+    document.getElementById('statMonth').classList.toggle('active', mode === 'month');
+    renderTable();
+}
+
+const sortKeys = ['date','name','score','lp'];
+function setSort(s) {
+    if (currentSort === s) { sortAsc = !sortAsc; }
+    else { currentSort = s; sortAsc = (s === 'name'); }
+    sortKeys.forEach(k => document.getElementById('sBtn_'+k).classList.remove('active'));
+    const btn = document.getElementById('sBtn_'+s);
+    btn.classList.add('active');
+    const arrows = {date: sortAsc ? '↑' : '↓', name: sortAsc ? 'A↑' : 'Z↓',
+                    score: sortAsc ? '↑' : '↓', lp: sortAsc ? '↑' : '↓'};
+    const labels = {date:'📅 తేదీ', name:'🔤 పేరు', score:'⭐ స్కోర్', lp:'📦 LP'};
+    btn.innerText = `${labels[s]} ${arrows[s]}`;
+    renderTable();
+}
+
+function applyDateRange() {
+    dateFrom = document.getElementById('fromDate').value || null;
+    dateTo   = document.getElementById('toDate').value   || null;
+    const banner = document.getElementById('dateRangeBanner');
+    if (dateFrom || dateTo) {
+        banner.style.display = 'flex';
+        document.getElementById('drLabel').innerText = `📅 ${dateFrom||'...'} → ${dateTo||'...'}`;
+    } else {
+        banner.style.display = 'none';
+    }
+    renderTable();
+}
+
+function clearDateRange() {
+    dateFrom = dateTo = null;
+    document.getElementById('fromDate').value = '';
+    document.getElementById('toDate').value   = '';
+    document.getElementById('dateRangeBanner').style.display = 'none';
+    renderTable();
+}
+
+function getFilteredData() {
+    let data = [...db];
+    if (currentFilterMode === 'month') data = data.filter(e => isCurrentMonth(e.date));
+    if (dateFrom || dateTo) {
+        const from = dateFrom ? new Date(dateFrom).getTime() : 0;
+        const to   = dateTo   ? new Date(dateTo).getTime() + 86399999 : Infinity;
+        data = data.filter(e => { const t = dateToTs(e.date); return t >= from && t <= to; });
+    }
+    const q = (document.getElementById('search').value || '').toLowerCase().trim();
+    if (q) {
+        data = data.filter(e =>
+            e.name.toLowerCase().includes(q) ||
+            (e.phone  && e.phone.toString().includes(q)) ||
+            ((e.area  || '').toLowerCase().includes(q)) ||
+            ((e.products || '').toLowerCase().includes(q))
+        );
+    }
+    return data;
+}
+
+function getLatestPerCustomer(entries) {
+    const map = new Map();
+    entries.forEach(e => {
+        const name = e.name.trim();
+        if (!map.has(name)) {
+            map.set(name, { ...e, visitCount: 1 });
+        } else {
+            const ex = map.get(name);
+            ex.visitCount += 1;
+            if (dateToTs(e.date) > dateToTs(ex.date)) {
+                ex.date = e.date; ex.score = e.score; ex.lp = e.lp;
+                ex.products = e.products; ex.age = e.age; ex.gender = e.gender;
+                ex.area = e.area; ex.id = e.id;
+            }
+        }
+    });
+    let arr = Array.from(map.values());
+    arr.sort((a, b) => {
+        if (currentSort === 'date') { const d = dateToTs(b.date) - dateToTs(a.date); return sortAsc ? -d : d; }
+        if (currentSort === 'name') { return sortAsc ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name); }
+        if (currentSort === 'score') { const as = parseInt(a.score,10)||0, bs = parseInt(b.score,10)||0; return sortAsc ? as-bs : bs-as; }
+        if (currentSort === 'lp') { const al = parseFloat(a.lp)||0, bl = parseFloat(b.lp)||0; return sortAsc ? al-bl : bl-al; }
+        return 0;
+    });
+    return arr;
+}
+
+/* ============================================================
+   RENDER TABLE
+============================================================ */
+function escapeHtml(s) {
+    if (!s) return '';
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function scoreClass(sv) {
+    if (isNaN(sv)) return '';
+    return sv <= 700 ? 'red' : sv <= 900 ? 'orange' : 'green';
+}
+
+function renderTable() {
+    const tbody = document.getElementById('tableBody');
+    tbody.innerHTML = '';
+    const filtered = getFilteredData();
+    const latest   = getLatestPerCustomer(filtered);
+
+    if (latest.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:40px; color:#aaa;">📭 డేటా లేదు.</td></tr>';
+        return;
+    }
+
+    latest.forEach(c => {
+        const sv  = parseInt(c.score, 10);
+        const cls = scoreClass(sv);
+        const ag  = `${c.age||'--'} / ${c.gender==='M'?'పు':c.gender==='F'?'స్త్రీ':c.gender||'-'}`;
+        
+        // ఫోన్ నంబర్ ఉంటే చూపించడానికి, లేకపోతే '---' అని చూపించడానికి చిన్న లాజిక్
+        const ph = c.phone && c.phone !== '' ? c.phone : '---';
+
+        tbody.innerHTML += `
+        <tr onclick="showHistory('${escapeHtml(c.name)}')">
+            <td class="date-cell">${formatDisplayDate(c.date)}</td>
+            <td class="name-cell">
+                <b>${escapeHtml(c.name)}</b>
+                <div class="name-sub">🎂 ${ag} &nbsp;📍 ${escapeHtml(c.area||'N/A')}</div>
+                <div style="font-size: 11px; color: #1a237e; font-weight: 700; margin-top: 2px;">
+                    📞 ${ph}
+                </div>
+            </td>
+            <td style="text-align:center; font-weight:800; color:#333; font-size:15px;">${c.visitCount}</td>
+            <td style="text-align:center"><b class="${cls}">${c.score!==undefined&&c.score!==''?c.score:'---'}</b></td>
+            <td style="text-align:center"><b>${c.lp!==undefined&&c.lp!==''?c.lp:'---'}</b></td>
+        </tr>`;
+    });
+}
+/* ============================================================
+   FORM / EDIT / HISTORY
+============================================================ */
+function openForm(mode, existingName = null, visitId = null) {
+    closeAllPopups();
+    document.getElementById('entryModal').style.display = 'flex';
+    document.getElementById('modalTitle').innerText = visitId ? '✏️ విజిట్ ఎడిట్' : '📝 కొత్త విజిట్';
+    document.getElementById('editId').value  = '';
+    document.getElementById('oldName').value = '';
+    document.getElementById('fDate').value     = todayInputVal();
+    document.getElementById('fName').value     = '';
+    document.getElementById('fAge').value      = '';
+    document.getElementById('fGender').value   = 'M';
+    document.getElementById('fPhone').value    = '';
+    document.getElementById('fArea').value     = '';
+    document.getElementById('fScore').value    = '';
+    document.getElementById('fLP').value       = '';
+    document.getElementById('fProducts').value = '';
+    document.getElementById('fNotes').value    = '';
+    document.getElementById('saveBtn').style.display   = 'block';
+    document.getElementById('masterBtn').style.display = 'none';
+    if (visitId) {
+        const v = db.find(e => e.id === visitId);
+        if (v) {
+            document.getElementById('editId').value     = visitId;
+            document.getElementById('fDate').value      = displayToDateInput(v.date);
+            document.getElementById('fName').value      = v.name;
+            document.getElementById('fAge').value       = v.age;
+            document.getElementById('fGender').value    = v.gender;
+            document.getElementById('fPhone').value     = v.phone;
+            document.getElementById('fArea').value      = v.area;
+            document.getElementById('fScore').value     = v.score;
+            document.getElementById('fLP').value        = v.lp;
+            document.getElementById('fProducts').value  = v.products;
+            document.getElementById('fNotes').value     = v.notes;
+        }
+    } else if (existingName) {
+        const last = [...db].reverse().find(e => e.name === existingName);
+        if (last) {
+            document.getElementById('fName').value    = last.name;
+            document.getElementById('fAge').value     = last.age;
+            document.getElementById('fGender').value  = last.gender;
+            document.getElementById('fPhone').value   = last.phone;
+            document.getElementById('fArea').value    = last.area;
+        }
+    }
+}
+
+function saveEntry() {
+    const name = document.getElementById('fName').value.trim();
+    if (!name) return alert('పేరు నమోదు చేయండి');
+    const dateVal = dateInputToDisplay(document.getElementById('fDate').value);
+    const editId = parseInt(document.getElementById('editId').value, 10);
+    const entry = {
+        date: dateVal, name,
+        age: document.getElementById('fAge').value,
+        gender: document.getElementById('fGender').value,
+        phone: document.getElementById('fPhone').value.trim(),
+        area: document.getElementById('fArea').value.trim() || 'N/A',
+        score: document.getElementById('fScore').value,
+        lp: document.getElementById('fLP').value,
+        products: document.getElementById('fProducts').value.trim(),
+        notes: document.getElementById('fNotes').value.trim()
+    };
+    if (editId) {
+        const idx = db.findIndex(e => e.id === editId);
+        if (idx !== -1) db[idx] = { ...db[idx], ...entry };
+    } else {
+        db.push({ id: Date.now(), ...entry });
+    }
+    saveDB(true);
+    closeAllPopups();
+}
+
+function openMasterEdit(customerName) {
+    closeAllPopups();
+    const last = [...db].reverse().find(e => e.name === customerName);
+    if (!last) return;
+    document.getElementById('entryModal').style.display = 'flex';
+    document.getElementById('modalTitle').innerText = '✏️ ప్రొఫైల్ ఎడిట్';
+    document.getElementById('oldName').value   = customerName;
+    document.getElementById('fName').value     = last.name;
+    document.getElementById('fAge').value      = last.age;
+    document.getElementById('fGender').value   = last.gender;
+    document.getElementById('fPhone').value    = last.phone;
+    document.getElementById('fArea').value     = last.area;
+    document.getElementById('saveBtn').style.display   = 'none';
+    document.getElementById('masterBtn').style.display = 'block';
+}
+
+function saveMasterEdit() {
+    const oldN = document.getElementById('oldName').value;
+    const newN = document.getElementById('fName').value.trim();
+    if (!newN) return alert('పేరు తప్పనిసరి');
+    db.forEach(e => {
+        if (e.name === oldN) {
+            e.name = newN;
+            e.age = document.getElementById('fAge').value;
+            e.gender = document.getElementById('fGender').value;
+            e.phone = document.getElementById('fPhone').value.trim();
+            e.area = document.getElementById('fArea').value.trim();
+        }
+    });
+    saveDB(true);
+    closeAllPopups();
+}
+
+function showHistory(customerName) {
+    activeHistoryName = customerName;
+    const visits = db.filter(e => e.name === customerName).sort((a, b) => dateToTs(b.date) - dateToTs(a.date));
+    if (!visits.length) return;
+    const latest = visits[0];
+    document.getElementById('hName').innerHTML = `📜 ${escapeHtml(customerName)}`;
+    document.getElementById('hInfo').innerHTML =
+        `🎂 వయస్సు: ${latest.age||'--'} &nbsp;|&nbsp; ⚥ ${latest.gender||'--'} &nbsp;|&nbsp; 📍 ${escapeHtml(latest.area||'N/A')}`;
+    const phone = (latest.phone||'').replace(/\D/g,'');
+    const cr = document.getElementById('contactRow');
+    cr.innerHTML = phone ? `
+        <button class="contact-btn wa-btn" onclick="window.open('https://wa.me/91${phone}','_blank')">💬 WhatsApp</button>
+        <button class="contact-btn call-btn" onclick="window.location.href='tel:+91${phone}'">📞 Call</button>` : '';
+    drawScoreChart(visits);
+    const hl = document.getElementById('historyList');
+    hl.innerHTML = '';
+    visits.forEach((v, idx) => {
+        const cls = scoreClass(parseInt(v.score, 10));
+        hl.innerHTML += `
+        <div class="history-item">
+            <div class="history-item-head">
+                <strong>📆 ${v.date}</strong>
+                <span class="score-badge">⭐ <b class="${cls}">${v.score||'---'}</b> &nbsp;📦 ${v.lp||'---'}</span>
+            </div>
+            <div class="history-sub">
+                ${v.products ? `🛒 ${escapeHtml(v.products)}<br>` : ''}
+                ${v.notes ? `📝 ${escapeHtml(v.notes)}` : ''}
+            </div>
+            ${idx === 0 ? '<div class="fresh-tag">✨ తాజా విజిట్</div>' : ''}
+            <div class="hist-actions">
+                <button class="hist-btn h-edit" onclick="editVisit(${v.id})">✏️ Edit</button>
+                <button class="hist-btn h-del" onclick="deleteVisit(${v.id})">🗑️ Delete</button>
+            </div>
+        </div>`;
+    });
+    document.getElementById('historyModal').style.display = 'flex';
+}
+
+function drawScoreChart(visits) {
+    const scores = [...visits].reverse().map(v => parseInt(v.score, 10)).filter(s => !isNaN(s));
+    const wrap = document.getElementById('chartWrap');
+    if (scores.length < 2) { wrap.style.display = 'none'; return; }
+    wrap.style.display = 'block';
+    const canvas = document.getElementById('scoreChart');
+    canvas.width = 300; canvas.height = 80;
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, 300, 80);
+    const PAD = 20, W = 260, H = 50;
+    const mn = Math.min(...scores) - 50, mx = Math.max(...scores) + 50, rng = mx - mn || 1;
+    const step = W / (scores.length - 1);
+    ctx.strokeStyle = '#1a237e'; ctx.lineWidth = 2; ctx.beginPath();
+    scores.forEach((s, i) => {
+        const x = PAD + i * step, y = 70 - ((s - mn) / rng) * H;
+        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+    scores.forEach((s, i) => {
+        const x = PAD + i * step, y = 70 - ((s - mn) / rng) * H;
+        ctx.fillStyle = s <= 700 ? '#d32f2f' : s <= 900 ? '#f57c00' : '#2e7d32';
+        ctx.beginPath(); ctx.arc(x, y, 4, 0, 7); ctx.fill();
+    });
+}
+
+function editVisit(id) { closeAllPopups(); openForm('edit', null, id); }
+
+function deleteVisit(id) {
+    if (!confirm('డిలీట్ చేయాలా?')) return;
+    db = db.filter(e => e.id !== id);
+    saveDB(false);
+    const rem = db.filter(e => e.name === activeHistoryName);
+    rem.length ? showHistory(activeHistoryName) : (closeAllPopups(), renderTable());
+}
+
+function deleteCustomer() {
+    if (confirm(`"${activeHistoryName}" మొత్తం రికార్డులు తీసివేయాలా?`)) {
+        db = db.filter(e => e.name !== activeHistoryName);
+        saveDB(true); closeAllPopups();
+    }
+}
+
+function quickAddVisit() { openForm('add', activeHistoryName); }
+
+function showAreaPopup() {
+    const areas = [...new Set(db.map(e => (e.area||'').trim()).filter(a => a && a !== 'N/A'))].sort();
+    document.getElementById('areaItems').innerHTML = areas.map(a =>
+        `<div class="area-chip" onclick="filterByArea('${escapeHtml(a)}')">${escapeHtml(a)}</div>`).join('');
+    showSheet('areaListPopup');
+}
+
+function filterByArea(area) { document.getElementById('search').value = area; closeAllPopups(); renderTable(); }
+function openSettings() { showSheet('settingsPopup'); }
+function showSheet(id) { document.getElementById('overlay').style.display = 'block'; document.getElementById(id).style.display = 'block'; }
+
+function exportJSON() {
+    const blob = new Blob([JSON.stringify(db, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+    a.download = `pharmanex_backup.json`; a.click();
+}
+
+function importJSON(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = e => {
+        try { db = JSON.parse(e.target.result); saveDB(true); alert('Import Success!'); }
+        catch { alert('Error!'); }
+    };
+    reader.readAsText(file);
+}
+
+function doPrint() { closeAllPopups(); setTimeout(() => window.print(), 300); }
+function closeAllPopups() {
+    document.querySelectorAll('.modal, .list-modal').forEach(el => el.style.display = 'none');
+    document.getElementById('overlay').style.display = 'none';
+}
+
+loadDB();
+</script>
+</body>
+</html>
