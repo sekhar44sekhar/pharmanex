@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Pharmanex Tracker Pro V18 | Colorful Graph</title>
+    <title>Pharmanex Tracker Pro V20</title>
     <link rel="icon" type="image/png" href="logo.PNG">
     <link rel="apple-touch-icon" href="logo.PNG">
     <style>
@@ -12,198 +12,249 @@
             --primary: #1a237e;
             --primary-dark: #0f195e;
             --bg: #f0f4f8;
-            --alert: #f57c00;
-            --success: #2e7d32;
-            --danger: #d32f2f;
-            --border-light: #e9ecef;
-            --text-muted: #5f6368;
             --gold: #ffd54f;
+            --text-muted: #5f6368;
+            --danger: #d32f2f;
         }
-        body {
-            font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
-            background: var(--bg);
-            padding-top: 245px !important;
-            padding-bottom: 80px;
-            min-height: 100vh;
-        }
+        body { font-family: 'Segoe UI','Roboto',system-ui,sans-serif; background: var(--bg); padding-top: 245px !important; padding-bottom: 80px; min-height: 100vh; }
 
-        .header-banner {
-            width: 100%;
-            height: 115px;
-            background: linear-gradient(135deg, #0b2060 0%, #0a3e82 55%, #0d4fa0 100%);
-            position: fixed; top: 0; left: 0; z-index: 1000;
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            box-shadow: 0 4px 18px rgba(0,0,0,0.28);
-            padding: 8px 14px;
-            gap: 1px;
-        }
-        .hdr-brand { font-size: 2rem; font-weight: 900; color: #ffffff; text-shadow: 0 2px 8px rgba(0,0,0,0.4); line-height: 1.15; }
-        .hdr-subtitle { font-size: 0.88rem; font-weight: 600; color: #e8eef8; letter-spacing: 0.5px; }
-        .hdr-contact { font-size: 0.92rem; font-weight: 800; color: var(--gold); letter-spacing: 0.8px; }
+        .header-banner { width:100%; height:115px; background:linear-gradient(135deg,#0b2060 0%,#0a3e82 55%,#0d4fa0 100%); position:fixed; top:0; left:0; z-index:1000; display:flex; flex-direction:column; align-items:center; justify-content:center; box-shadow:0 4px 18px rgba(0,0,0,0.28); padding:8px 14px; gap:1px; }
+        .hdr-brand { font-size:2rem; font-weight:900; color:#fff; text-shadow:0 2px 8px rgba(0,0,0,0.4); line-height:1.15; }
+        .hdr-subtitle { font-size:0.88rem; font-weight:600; color:#e8eef8; letter-spacing:0.5px; }
+        .hdr-contact { font-size:0.92rem; font-weight:800; color:var(--gold); letter-spacing:0.8px; }
 
-        .stats-container {
-            display: flex; gap: 9px; padding: 0 12px;
-            position: fixed; top: 120px !important; left: 0; right: 0; z-index: 1001;
-        }
-        .stat-box {
-            flex: 1; background: white; padding: 4px 2px;
-            border-radius: 18px; text-align: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-            cursor: pointer; border: 2px solid transparent;
-            transition: all 0.2s;
-        }
-        .stat-box.active { border-color: var(--primary); background: #eef2ff; transform: scale(0.97); }
-        .stat-box h4 { color: var(--text-muted); font-size: 9px; font-weight: 600; text-transform: uppercase; }
-        .stat-box p { font-size: 17px; font-weight: 800; color: var(--primary); margin-top: 2px; }
+        .stats-container { display:flex; gap:9px; padding:0 12px; position:fixed; top:120px !important; left:0; right:0; z-index:1001; }
+        .stat-box { flex:1; background:white; padding:4px 2px; border-radius:18px; text-align:center; box-shadow:0 4px 10px rgba(0,0,0,0.08); cursor:pointer; border:2px solid transparent; transition:all 0.2s; }
+        .stat-box.active { border-color:var(--primary); background:#eef2ff; transform:scale(0.97); }
+        .stat-box h4 { color:var(--text-muted); font-size:9px; font-weight:600; text-transform:uppercase; }
+        .stat-box p { font-size:17px; font-weight:800; color:var(--primary); margin-top:2px; }
 
-        .sort-bar {
-            display: flex; gap: 7px; padding: 6px 12px;
-            position: fixed; top: 190px !important; left: 0; right: 0; z-index: 999;
-            overflow-x: auto; background: var(--bg);
-        }
-        .sort-bar::-webkit-scrollbar { display: none; }
-        .sort-btn {
-            flex-shrink: 0; padding: 5px 14px;
-            border-radius: 40px; border: 1.5px solid #c8d6e8;
-            background: white; font-size: 12px; font-weight: 600;
-            color: #3a4a6b; cursor: pointer; white-space: nowrap;
-        }
-        .sort-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+        .sort-bar { display:flex; gap:7px; padding:6px 12px; position:fixed; top:190px !important; left:0; right:0; z-index:999; overflow-x:auto; background:var(--bg); }
+        .sort-bar::-webkit-scrollbar { display:none; }
+        .sort-btn { flex-shrink:0; padding:5px 14px; border-radius:40px; border:1.5px solid #c8d6e8; background:white; font-size:12px; font-weight:600; color:#3a4a6b; cursor:pointer; white-space:nowrap; }
+        .sort-btn.active { background:var(--primary); color:white; border-color:var(--primary); }
 
-        .action-area { padding: 14px 12px 8px; }
-        .search-input {
-            width: 100%; padding: 13px 18px;
-            border: 1.5px solid #dde3ef; border-radius: 40px;
-            margin-bottom: 10px; font-size: 15px; outline: none;
-            background: white;
-        }
-        .search-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(26,35,126,0.12); }
+        .action-area { padding:14px 12px 8px; }
+        .search-input { width:100%; padding:13px 18px; border:1.5px solid #dde3ef; border-radius:40px; margin-bottom:10px; font-size:15px; outline:none; background:white; }
+        .search-input:focus { border-color:var(--primary); box-shadow:0 0 0 3px rgba(26,35,126,0.12); }
+        .btn-main { width:100%; padding:13px; border:none; border-radius:40px; background:var(--primary); color:white; font-weight:700; font-size:16px; cursor:pointer; transition:0.2s; box-shadow:0 3px 8px rgba(26,35,126,0.25); }
+        .btn-main:active { transform:scale(0.97); background:var(--primary-dark); }
+        .btn-secondary { background:#eef2fa !important; color:#1f2b48 !important; box-shadow:none !important; border:1.5px solid #dde3ef !important; }
+        .btn-danger { background:#fdecea !important; color:var(--danger) !important; }
+        .settings-fab { width:48px; height:48px; border-radius:50%; background:var(--primary); color:white; font-size:20px; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 3px 8px rgba(26,35,126,0.25); }
+        .action-row { display:flex; gap:10px; align-items:center; margin-top:5px; }
 
-        .btn-main {
-            width: 100%; padding: 13px; border: none;
-            border-radius: 40px; background: var(--primary);
-            color: white; font-weight: 700; font-size: 16px;
-            cursor: pointer; transition: 0.2s;
-            box-shadow: 0 3px 8px rgba(26,35,126,0.25);
-        }
-        .btn-main:active { transform: scale(0.97); background: var(--primary-dark); }
-        .btn-secondary { background: #eef2fa !important; color: #1f2b48 !important; box-shadow: none !important; border: 1.5px solid #dde3ef !important; }
-        .btn-danger { background: #fdecea !important; color: var(--danger) !important; }
+        table { width:94%; margin:4px auto; background:transparent; border-collapse:separate; border-spacing:0 12px; }
+        th { text-transform:uppercase; letter-spacing:0.5px; font-size:12px; color:#3a4a6b; padding-bottom:5px; }
+        td { padding:16px 10px; background:white; border-top:2px solid #1a237e; border-bottom:2px solid #1a237e; font-size:14px; vertical-align:middle; cursor:pointer; box-shadow:0 4px 12px rgba(26,35,126,0.1); }
+        tr td:first-child { border-radius:20px 0 0 20px; }
+        tr td:last-child { border-radius:0 20px 20px 0; }
+        tr:active td { background:#f5f7ff; }
+        .date-cell { font-size:13px; line-height:1.3; color:#1e2a47; font-weight:600; min-width:52px; }
+        .date-year { color:#8898aa; display:block; font-size:10px; margin-top:2px; font-weight:400; }
+        .name-badge { display:inline-block; padding:3px 12px; background:#eef2ff; color:#1a237e; border-radius:20px; font-size:14px; font-weight:800; border:1px solid rgba(26,35,126,0.15); margin-bottom:5px; }
+        .score-pill { display:inline-block; padding:4px 12px; border-radius:50px; font-weight:800; font-size:14px; min-width:45px; text-align:center; }
+        .bg-red { background:#fdecea; color:#d32f2f; }
+        .bg-orange { background:#fff3e0; color:#f57c00; }
+        .bg-green { background:#e8f5e9; color:#2e7d32; }
+        .customer-details { display:flex; flex-direction:column; gap:3px; margin-top:4px; }
+        .info-line { font-size:11px; color:#444; display:flex; align-items:center; gap:4px; }
+        .area-line { font-size:11px; color:#1a237e; font-weight:600; display:flex; align-items:center; gap:4px; background:#f0f2fa; padding:3px 8px; border-radius:16px; margin-top:2px; width:fit-content; }
+        .phone-line { font-size:11px; color:var(--primary); font-weight:700; display:flex; align-items:center; gap:4px; }
 
-        .settings-fab {
-            width: 48px; height: 48px; border-radius: 50%;
-            background: var(--primary); color: white; font-size: 20px;
-            border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-            box-shadow: 0 3px 8px rgba(26,35,126,0.25);
-        }
-        .action-row { display: flex; gap: 10px; align-items: center; margin-top: 5px; }
+        .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.55); z-index:1500; }
+        .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.82); z-index:2000; align-items:center; justify-content:center; padding:16px; backdrop-filter:blur(5px); }
+        .modal-content { background:white; width:100%; max-width:500px; padding:22px 18px; border-radius:28px; max-height:92vh; overflow-y:auto; }
+        .modal-title { font-size:18px; font-weight:800; color:var(--primary); margin-bottom:16px; }
+        .list-modal { display:none; position:fixed; bottom:0; left:0; width:100%; background:white; border-radius:26px 26px 0 0; z-index:2100; padding:20px 16px 28px; box-sizing:border-box; box-shadow:0 -8px 32px rgba(0,0,0,0.22); }
+        .sheet-title { font-size:17px; font-weight:800; margin-bottom:14px; color:#1a237e; }
+        .form-group { margin-bottom:13px; }
+        label { font-size:11.5px; font-weight:700; color:#2c3e66; display:block; margin-bottom:5px; }
+        input,select,textarea { width:100%; padding:11px 14px; border:1.5px solid #cfdfe8; border-radius:16px; font-size:15px; background:#fff; font-family:inherit; }
+        input:focus,select:focus { outline:none; border-color:var(--primary); box-shadow:0 0 0 3px rgba(26,35,126,0.15); }
+        .flex-row { display:flex; gap:10px; }
+        .flex-row .form-group { flex:1; }
+        .h-info-bar { background:#f0f4fa; border-radius:20px; padding:9px 14px; font-size:13px; color:#3a527a; margin-bottom:10px; line-height:1.6; }
+        .contact-row { display:flex; gap:9px; margin-bottom:10px; }
+        .contact-btn { flex:1; padding:11px 6px; border-radius:16px; border:none; font-size:14px; font-weight:700; cursor:pointer; transition:0.15s; }
+        .contact-btn:active { transform:scale(0.96); }
+        .wa-btn { background:#e8f5e9; color:#2e7d32; }
+        .call-btn { background:#e3f2fd; color:#1565c0; }
 
-        table { width: 94%; margin: 4px auto; background: transparent; border-collapse: separate; border-spacing: 0 12px; }
-        th { text-transform: uppercase; letter-spacing: 0.5px; font-size: 12px; color: #3a4a6b; padding-bottom: 5px; }
-        td { 
-            padding: 16px 10px; background: white; 
-            border-top: 2px solid #1a237e; border-bottom: 2px solid #1a237e; 
-            font-size: 14px; vertical-align: middle; cursor: pointer; 
-            box-shadow: 0 4px 12px rgba(26, 35, 126, 0.1); 
+        /* ── CHART WRAP ── */
+        .chart-wrap {
+            background: linear-gradient(145deg,#f5f7ff 0%,#ffffff 100%);
+            border-radius: 22px;
+            padding: 12px 10px 12px;
+            margin-bottom: 10px;
+            display: none;
+            border: 1.5px solid rgba(26,35,126,0.12);
+            box-shadow: 0 6px 18px rgba(26,35,126,0.08);
         }
-        tr td:first-child { border-radius: 20px 0 0 20px; }
-        tr td:last-child { border-radius: 0 20px 20px 0; }
-        tr:active td { background: #f5f7ff; }
-        .date-cell { font-size: 13px; line-height: 1.3; color: #1e2a47; font-weight: 600; min-width: 52px; }
-        .date-year { color: #8898aa; display: block; font-size: 10px; margin-top: 2px; font-weight: 400; }
-        .name-badge {
-            display: inline-block;
-            padding: 3px 12px;
-            background: #eef2ff;
-            color: #1a237e;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 800;
-            border: 1px solid rgba(26, 35, 126, 0.15);
-            margin-bottom: 5px;
-        }
-        .score-pill { display: inline-block; padding: 4px 12px; border-radius: 50px; font-weight: 800; font-size: 14px; min-width: 45px; text-align: center; }
-        .bg-red { background: #fdecea; color: #d32f2f; }
-        .bg-orange { background: #fff3e0; color: #f57c00; }
-        .bg-green { background: #e8f5e9; color: #2e7d32; }
-        
-        .customer-details { display: flex; flex-direction: column; gap: 3px; margin-top: 4px; }
-        .info-line { font-size: 11px; color: #444; display: flex; align-items: center; gap: 4px; }
-        .area-line { font-size: 11px; color: #1a237e; font-weight: 600; display: flex; align-items: center; gap: 4px; background: #f0f2fa; padding: 3px 8px; border-radius: 16px; margin-top: 2px; width: fit-content; }
-        .phone-line { font-size: 11px; color: var(--primary); font-weight: 700; display: flex; align-items: center; gap: 4px; }
+        .chart-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
+        .chart-label { font-size:12px; font-weight:800; color:var(--primary); background:#eef2ff; padding:4px 10px; border-radius:30px; }
+        .chart-trend-badge { font-size:12px; font-weight:800; padding:4px 10px; border-radius:30px; }
+        .trend-up   { background:#e8f5e9; color:#2e7d32; }
+        .trend-down { background:#fdecea; color:#d32f2f; }
+        .trend-flat { background:#f3f4f6; color:#6b7280; }
 
-        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.55); z-index: 1500; }
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.82); z-index: 2000; align-items: center; justify-content: center; padding: 16px; backdrop-filter: blur(5px); }
-        .modal-content { background: white; width: 100%; max-width: 500px; padding: 22px 18px; border-radius: 28px; max-height: 92vh; overflow-y: auto; }
-        .modal-title { font-size: 18px; font-weight: 800; color: var(--primary); margin-bottom: 16px; }
-        .list-modal { display: none; position: fixed; bottom: 0; left: 0; width: 100%; background: white; border-radius: 26px 26px 0 0; z-index: 2100; padding: 20px 16px 28px; box-sizing: border-box; box-shadow: 0 -8px 32px rgba(0,0,0,0.22); }
-        .sheet-title { font-size: 17px; font-weight: 800; margin-bottom: 14px; color: #1a237e; }
-        .form-group { margin-bottom: 13px; }
-        label { font-size: 11.5px; font-weight: 700; color: #2c3e66; display: block; margin-bottom: 5px; }
-        input, select, textarea { width: 100%; padding: 11px 14px; border: 1.5px solid #cfdfe8; border-radius: 16px; font-size: 15px; background: #fff; font-family: inherit; }
-        input:focus, select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(26,35,126,0.15); }
-        .flex-row { display: flex; gap: 10px; }
-        .flex-row .form-group { flex: 1; }
-        .h-info-bar { background: #f0f4fa; border-radius: 20px; padding: 9px 14px; font-size: 13px; color: #3a527a; margin-bottom: 12px; line-height: 1.6; }
-        .contact-row { display: flex; gap: 9px; margin-bottom: 13px; }
-        .contact-btn { flex: 1; padding: 11px 6px; border-radius: 16px; border: none; font-size: 14px; font-weight: 700; cursor: pointer; transition: 0.15s; }
-        .contact-btn:active { transform: scale(0.96); }
-        .wa-btn { background: #e8f5e9; color: #2e7d32; }
-        .call-btn { background: #e3f2fd; color: #1565c0; }
-        
-        /* Colorful Graph Styles */
-        .chart-wrap { 
-            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%); 
-            border-radius: 24px; 
-            padding: 16px 12px 20px; 
-            margin-bottom: 16px; 
-            display: none; 
-            border: 1px solid rgba(26, 35, 126, 0.15);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-        }
-        .chart-label { 
-            font-size: 13px; 
-            font-weight: 800; 
-            color: var(--primary); 
-            margin-bottom: 12px; 
-            display: flex; 
-            align-items: center; 
-            gap: 8px;
-            background: #eef2ff;
-            padding: 6px 12px;
-            border-radius: 40px;
-            width: fit-content;
-        }
-        #scoreChart { 
-            width: 100%; 
-            height: 220px; 
-            display: block; 
-            background: transparent;
+        /* Canvas – width set by JS, height fixed */
+        #scoreChart { display:block; width:100%; height:170px; }
+
+        /* ── SCORE SIGNAL ZONE BAR ── */
+        .zone-bar-wrap {
+            margin-top: 10px;
+            padding: 8px 10px 4px;
+            background: #f8fafc;
             border-radius: 16px;
         }
-        .chart-stats {
+        .zone-bar-label {
+            font-size: 10px;
+            font-weight: 700;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .zone-track {
+            position: relative;
+            height: 14px;
+            border-radius: 8px;
+            background: linear-gradient(to right,
+                #ef4444 0%, #f97316 30%,
+                #f59e0b 55%, #84cc16 75%,
+                #10b981 90%, #059669 100%);
+            overflow: visible;
+        }
+        /* Zone dividers */
+        .zone-track::before {
+            content: '';
+            position: absolute;
+            left: 30%; top: 0; bottom: 0;
+            width: 1.5px; background: rgba(255,255,255,0.6);
+        }
+        .zone-track::after {
+            content: '';
+            position: absolute;
+            left: 75%; top: 0; bottom: 0;
+            width: 1.5px; background: rgba(255,255,255,0.6);
+        }
+        .zone-needle {
+            position: absolute;
+            top: -5px;
+            width: 3px;
+            height: 24px;
+            background: #1a237e;
+            border-radius: 3px;
+            transform: translateX(-50%);
+            box-shadow: 0 0 6px rgba(26,35,126,0.5);
+            transition: left 0.6s cubic-bezier(.34,1.56,.64,1);
+        }
+        .zone-needle::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 6px solid #1a237e;
+        }
+        .zone-score-label {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 10px;
+            font-weight: 800;
+            color: #1a237e;
+            background: white;
+            padding: 1px 5px;
+            border-radius: 8px;
+            border: 1px solid rgba(26,35,126,0.2);
+            white-space: nowrap;
+        }
+        .zone-labels {
             display: flex;
             justify-content: space-between;
-            margin-top: 12px;
-            padding: 8px 12px;
-            background: #f1f5f9;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 600;
+            margin-top: 6px;
+            font-size: 9px;
+            font-weight: 700;
         }
-        .history-item { background: #f9fafc; padding: 12px 14px; margin-bottom: 8px; border-radius: 18px; border-left: 4px solid var(--primary); font-size: 13px; }
-        .visit-options { position: relative; display: inline-block; }
-        .options-btn { background: none; border: none; cursor: pointer; color: #555; padding: 0 8px; font-size: 22px; font-weight: bold; }
-        .options-menu { display: none; position: absolute; right: 0; top: 30px; background: white; border: 1px solid #ddd; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); z-index: 100; min-width: 110px; }
-        .options-menu button { display: block; width: 100%; padding: 12px; border: none; background: none; text-align: left; font-size: 14px; font-weight: 600; cursor: pointer; }
-        .options-menu button:active { background: #f0f4ff; }
-        .show-menu { display: block !important; }
-        .area-chip { padding: 13px 14px; border-bottom: 1px solid #eef2f5; font-weight: 500; font-size: 15px; cursor: pointer; }
-        .area-chip:active { background: #eef2ff; }
-        .sett-item { display: flex; align-items: center; gap: 14px; padding: 14px 4px; border-bottom: 1px solid #eef2f5; cursor: pointer; font-size: 15px; font-weight: 500; }
-        .sett-icon { font-size: 22px; width: 34px; text-align: center; }
-        @media print { .header-banner, .stats-container, .sort-bar, .action-area, .settings-fab, .overlay, .modal, .list-modal { display: none !important; } body { padding: 0 !important; background: white !important; } }
+        .zone-lbl-low    { color:#ef4444; }
+        .zone-lbl-medium { color:#f59e0b; text-align:center; }
+        .zone-lbl-high   { color:#10b981; text-align:right; }
+
+        /* Input/Output signal bars */
+        .signal-row {
+            display: flex;
+            gap: 6px;
+            margin-top: 8px;
+        }
+        .signal-item {
+            flex: 1;
+            border-radius: 14px;
+            padding: 7px 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .sig-input  { background: linear-gradient(135deg,#e0f2fe,#bae6fd); border: 1px solid #38bdf8; }
+        .sig-output { background: linear-gradient(135deg,#dcfce7,#bbf7d0); border: 1px solid #4ade80; }
+        .sig-title  { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
+        .sig-input .sig-title  { color:#0369a1; }
+        .sig-output .sig-title { color:#166534; }
+        .sig-bar-track {
+            height: 8px;
+            border-radius: 6px;
+            background: rgba(255,255,255,0.6);
+            overflow: hidden;
+        }
+        .sig-bar-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 0.8s ease;
+        }
+        .sig-input  .sig-bar-fill { background: linear-gradient(to right,#38bdf8,#0284c7); }
+        .sig-output .sig-bar-fill { background: linear-gradient(to right,#4ade80,#16a34a); }
+        .sig-value  { font-size: 11px; font-weight: 800; }
+        .sig-input .sig-value  { color:#0369a1; }
+        .sig-output .sig-value { color:#166534; }
+
+        /* History scroll */
+        .history-scroll-wrap { max-height:444px; overflow-y:auto; -webkit-overflow-scrolling:touch; padding-right:2px; margin-bottom:10px; }
+        .history-scroll-wrap::-webkit-scrollbar { width:4px; }
+        .history-scroll-wrap::-webkit-scrollbar-thumb { background:#c8d6e8; border-radius:4px; }
+
+        .history-item { background:#f9fafc; padding:10px 12px; margin-bottom:8px; border-radius:18px; border-left:4px solid var(--primary); font-size:13px; }
+        .hist-top  { display:flex; justify-content:space-between; align-items:center; }
+        .hist-date { font-weight:700; font-size:12px; color:#1e2a47; }
+        .hist-badges { display:flex; gap:5px; align-items:center; flex-wrap:wrap; justify-content:flex-end; }
+        .score-badge { padding:3px 9px; border-radius:8px; font-weight:800; font-size:13px; }
+        .delta-badge { padding:2px 8px; border-radius:20px; font-size:11px; font-weight:800; white-space:nowrap; }
+        .delta-up   { background:#e8f5e9; color:#2e7d32; }
+        .delta-down { background:#fdecea; color:#d32f2f; }
+        .delta-same { background:#f3f4f6; color:#6b7280; }
+        .hist-sub  { margin-top:6px; font-size:11px; color:#555; line-height:1.5; }
+        .hist-foot { display:flex; justify-content:space-between; align-items:center; margin-top:6px; }
+        .lp-badge  { background:#eef2ff; padding:2px 9px; border-radius:12px; font-size:11px; font-weight:700; }
+        .latest-tag { color:#1a73e8; font-size:11px; }
+
+        .visit-options { position:relative; display:inline-block; }
+        .options-btn { background:none; border:none; cursor:pointer; color:#555; padding:0 8px; font-size:22px; font-weight:bold; }
+        .options-menu { display:none; position:absolute; right:0; top:30px; background:white; border:1px solid #ddd; border-radius:12px; box-shadow:0 4px 15px rgba(0,0,0,0.15); z-index:100; min-width:110px; }
+        .options-menu button { display:block; width:100%; padding:12px; border:none; background:none; text-align:left; font-size:14px; font-weight:600; cursor:pointer; }
+        .options-menu button:active { background:#f0f4ff; }
+        .show-menu { display:block !important; }
+        .area-chip { padding:13px 14px; border-bottom:1px solid #eef2f5; font-weight:500; font-size:15px; cursor:pointer; }
+        .area-chip:active { background:#eef2ff; }
+        .sett-item { display:flex; align-items:center; gap:14px; padding:14px 4px; border-bottom:1px solid #eef2f5; cursor:pointer; font-size:15px; font-weight:500; }
+        .sett-icon { font-size:22px; width:34px; text-align:center; }
+
+        @media print { .header-banner,.stats-container,.sort-bar,.action-area,.settings-fab,.overlay,.modal,.list-modal { display:none !important; } body { padding:0 !important; background:white !important; } }
     </style>
 </head>
 <body>
@@ -244,262 +295,373 @@
 <div id="areaListPopup" class="list-modal"><div class="sheet-title">📍 ప్రాంతం ఎంచుకోండి</div><div id="areaItems"></div><button class="btn-main btn-secondary" onclick="closeAllPopups()">మూసివేయండి</button></div>
 <div id="settingsPopup" class="list-modal"><div class="sheet-title">⚙️ సెట్టింగ్స్</div><div class="sett-item" onclick="saveToIndexedDBManual()"><span class="sett-icon">🛡️</span> IndexedDB లో భద్రపరచండి</div><div class="sett-item" onclick="exportJSON()"><span class="sett-icon">📤</span> డేటా Export</div><div class="sett-item" onclick="document.getElementById('importFile').click()"><span class="sett-icon">📥</span> డేటా Import</div><div class="sett-item" onclick="doPrint()"><span class="sett-icon">🖨️</span> Print / PDF</div><input type="file" id="importFile" accept=".json" style="display:none;" onchange="importJSON(event)"><button class="btn-main btn-secondary" onclick="closeAllPopups()">మూసివేయండి</button></div>
 
-<div id="entryModal" class="modal"><div class="modal-content"><div id="modalTitle" class="modal-title">📝 కొత్త విజిట్</div><input type="hidden" id="editId"><div class="form-group"><label>📅 తేదీ</label><input type="date" id="fDate"></div><div class="form-group"><label>🧑 పూర్తి పేరు *</label><input type="text" id="fName"></div><div class="flex-row"><div class="form-group"><label>🎂 వయస్సు</label><input type="number" id="fAge"></div><div class="form-group"><label>⚥ లింగం</label><select id="fGender"><option value="M">పురుషుడు</option><option value="F">స్త్రీ</option><option value="O">ఇతర</option></select></div></div><div class="form-group"><label>📞 ఫోన్ నంబర్</label><input type="tel" id="fPhone"></div><div class="form-group"><label>📍 ప్రాంతం</label><input type="text" id="fArea" placeholder="ఉదా: Kankipadu"></div><div class="flex-row"><div class="form-group"><label>⭐ స్కోర్ (0–1000)</label><input type="number" id="fScore"></div><div class="form-group"><label>📦 LP</label><input type="number" id="fLP"></div></div><div class="form-group"><label>🛒 Products</label><input type="text" id="fProducts"></div><div class="form-group"><label>📝 Notes</label><textarea id="fNotes" rows="2"></textarea></div><button class="btn-main" onclick="saveEntry()">💾 సేవ్ చేయండి</button><button class="btn-main btn-secondary" style="margin-top:8px;" onclick="closeAllPopups()">రద్దు</button></div></div>
+<div id="entryModal" class="modal"><div class="modal-content">
+    <div id="modalTitle" class="modal-title">📝 కొత్త విజిట్</div>
+    <input type="hidden" id="editId">
+    <div class="form-group"><label>📅 తేదీ</label><input type="date" id="fDate"></div>
+    <div class="form-group"><label>🧑 పూర్తి పేరు *</label><input type="text" id="fName"></div>
+    <div class="flex-row"><div class="form-group"><label>🎂 వయస్సు</label><input type="number" id="fAge"></div><div class="form-group"><label>⚥ లింగం</label><select id="fGender"><option value="M">పురుషుడు</option><option value="F">స్త్రీ</option><option value="O">ఇతర</option></select></div></div>
+    <div class="form-group"><label>📞 ఫోన్ నంబర్</label><input type="tel" id="fPhone"></div>
+    <div class="form-group"><label>📍 ప్రాంతం</label><input type="text" id="fArea" placeholder="ఉదా: Kankipadu"></div>
+    <div class="flex-row"><div class="form-group"><label>⭐ స్కోర్ (0–1000)</label><input type="number" id="fScore"></div><div class="form-group"><label>📦 LP</label><input type="number" id="fLP"></div></div>
+    <div class="form-group"><label>🛒 Products</label><input type="text" id="fProducts"></div>
+    <div class="form-group"><label>📝 Notes</label><textarea id="fNotes" rows="2"></textarea></div>
+    <button class="btn-main" onclick="saveEntry()">💾 సేవ్ చేయండి</button>
+    <button class="btn-main btn-secondary" style="margin-top:8px;" onclick="closeAllPopups()">రద్దు</button>
+</div></div>
 
-<div id="historyModal" class="modal"><div class="modal-content"><div id="hName" class="modal-title">📋 విజిట్ చరిత్ర</div><div id="hInfo" class="h-info-bar"></div><div id="contactRow" class="contact-row"></div><div id="chartWrap" class="chart-wrap"><div class="chart-label">🎨 స్కోర్ ట్రెండ్ (కలర్ఫుల్ గ్రాఫ్)</div><canvas id="scoreChart"></canvas><div id="chartStats" class="chart-stats"></div></div><div id="historyList" style="max-height:38vh; overflow-y:auto;"></div><button class="btn-main" onclick="quickAddVisit()">➕ కొత్త విజిట్ జోడించు</button><button class="btn-main btn-danger" onclick="deleteCustomer()">🗑️ కస్టమర్ డిలీట్</button><button class="btn-main btn-secondary" onclick="closeAllPopups()">మూసివేయి</button></div></div>
+<!-- ── HISTORY MODAL ── -->
+<div id="historyModal" class="modal"><div class="modal-content">
+    <div id="hName" class="modal-title">📋 విజిట్ చరిత్ర</div>
+    <div id="hInfo" class="h-info-bar"></div>
+    <div id="contactRow" class="contact-row"></div>
+
+    <!-- Chart + signal bars -->
+    <div id="chartWrap" class="chart-wrap">
+        <div class="chart-header">
+            <div class="chart-label">📊 స్కోర్ ట్రెండ్</div>
+            <div id="trendBadge" class="chart-trend-badge trend-flat">➡️ స్థిరం</div>
+        </div>
+
+        <!-- Bar + line canvas -->
+        <canvas id="scoreChart"></canvas>
+
+        <!-- Score zone signal bar -->
+        <div class="zone-bar-wrap">
+            <div class="zone-bar-label">🎯 స్కోర్ జోన్ సిగ్నల్</div>
+            <div class="zone-track" id="zoneTrack">
+                <div class="zone-needle" id="zoneNeedle">
+                    <span class="zone-score-label" id="zoneScoreLabel"></span>
+                </div>
+            </div>
+            <div class="zone-labels">
+                <span class="zone-lbl-low">🔴 తక్కువ (0–300)</span>
+                <span class="zone-lbl-medium">🟡 మధ్యస్థం (300–750)</span>
+                <span class="zone-lbl-high">🟢 ఉత్తమం (750+)</span>
+            </div>
+
+            <!-- Input / Output signal bars -->
+            <div class="signal-row">
+                <div class="signal-item sig-input">
+                    <div class="sig-title">📥 Input Score</div>
+                    <div class="sig-bar-track"><div class="sig-bar-fill" id="sigInputBar" style="width:0%"></div></div>
+                    <div class="sig-value" id="sigInputVal">—</div>
+                </div>
+                <div class="signal-item sig-output">
+                    <div class="sig-title">📤 Output Score</div>
+                    <div class="sig-bar-track"><div class="sig-bar-fill" id="sigOutputBar" style="width:0%"></div></div>
+                    <div class="sig-value" id="sigOutputVal">—</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scrollable history: 4 visible, rest scroll -->
+    <div id="historyList" class="history-scroll-wrap"></div>
+
+    <button class="btn-main" onclick="quickAddVisit()">➕ కొత్త విజిట్ జోడించు</button>
+    <button class="btn-main btn-danger" style="margin-top:8px;" onclick="deleteCustomer()">🗑️ కస్టమర్ డిలీట్</button>
+    <button class="btn-main btn-secondary" style="margin-top:8px;" onclick="closeAllPopups()">మూసివేయి</button>
+</div></div>
 
 <script>
-    const DB_NAME = 'PharmanexProDB', STORE_NAME = 'app_data', STORAGE_KEY = 'PhxData_V16';
-    let db = [], activeHistoryName = '', currentFilterMode = 'all', currentSort = 'date', sortAsc = false;
+const DB_NAME='PharmanexProDB', STORE_NAME='app_data', STORAGE_KEY='PhxData_V16';
+let db=[], activeHistoryName='', currentFilterMode='all', currentSort='date', sortAsc=false;
 
-    function openIDB() { return new Promise(res => { const req = indexedDB.open(DB_NAME, 1); req.onupgradeneeded = e => e.target.result.createObjectStore(STORE_NAME); req.onsuccess = e => res(e.target.result); }); }
-    function saveToIDB(data) { openIDB().then(idb => { const tx = idb.transaction(STORE_NAME, 'readwrite'); tx.objectStore(STORE_NAME).put(data, 'phx_main_data'); }); }
-    async function loadFromIDB() { const idb = await openIDB(); return new Promise(res => { const req = idb.transaction(STORE_NAME, 'readonly').objectStore(STORE_NAME).get('phx_main_data'); req.onsuccess = () => res(req.result); }); }
-    async function loadDB() { const idbData = await loadFromIDB(); if (idbData && idbData.length) db = idbData; else { const local = localStorage.getItem(STORAGE_KEY); if (local) db = JSON.parse(local); else db = []; } updateStats(); renderTable(); }
-    function saveDB(rerender = true) { localStorage.setItem(STORAGE_KEY, JSON.stringify(db)); saveToIDB(db); updateStats(); if (rerender) renderTable(); }
+function openIDB(){return new Promise(res=>{const req=indexedDB.open(DB_NAME,1);req.onupgradeneeded=e=>e.target.result.createObjectStore(STORE_NAME);req.onsuccess=e=>res(e.target.result);})}
+function saveToIDB(data){openIDB().then(idb=>{const tx=idb.transaction(STORE_NAME,'readwrite');tx.objectStore(STORE_NAME).put(data,'phx_main_data');})}
+async function loadFromIDB(){const idb=await openIDB();return new Promise(res=>{const req=idb.transaction(STORE_NAME,'readonly').objectStore(STORE_NAME).get('phx_main_data');req.onsuccess=()=>res(req.result);})}
+async function loadDB(){const idbData=await loadFromIDB();if(idbData&&idbData.length)db=idbData;else{const local=localStorage.getItem(STORAGE_KEY);if(local)db=JSON.parse(local);else db=[];}updateStats();renderTable();}
+function saveDB(rerender=true){localStorage.setItem(STORAGE_KEY,JSON.stringify(db));saveToIDB(db);updateStats();if(rerender)renderTable();}
 
-    const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    const MON_MAP = {Jan:'01',Feb:'02',Mar:'03',Apr:'04',May:'05',Jun:'06',Jul:'07',Aug:'08',Sep:'09',Oct:'10',Nov:'11',Dec:'12'};
-    function dateInputToDisplay(val) { if (!val) return ''; const [y, m, d] = val.split('-'); return `${d} ${MONTHS[parseInt(m,10)-1]} ${y.slice(-2)}`; }
-    function displayToDateInput(str) { if (!str) return ''; const p = str.trim().split(' '); const yr = parseInt(p[2],10) < 100 ? 2000 + parseInt(p[2],10) : parseInt(p[2],10); return `${yr}-${MON_MAP[p[1]]||'01'}-${p[0].padStart(2,'0')}`; }
-    function dateToTs(dateStr) { if (!dateStr) return 0; const inp = displayToDateInput(dateStr); return new Date(inp).getTime() || 0; }
-    function formatDisplayDate(dateStr) { const p = dateStr.split(' '); return p.length >= 3 ? `${p[0]} ${p[1]}<br><span class="date-year">20${p[2]}</span>` : dateStr; }
-    function todayInputVal() { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
-    function escapeHtml(s) { return String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]); }
-    function getGenderSymbol(gender) { if(gender === 'M') return '♂️'; if(gender === 'F') return '♀️'; return '⚧️'; }
+const MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const MON_MAP={Jan:'01',Feb:'02',Mar:'03',Apr:'04',May:'05',Jun:'06',Jul:'07',Aug:'08',Sep:'09',Oct:'10',Nov:'11',Dec:'12'};
+function dateInputToDisplay(val){if(!val)return'';const[y,m,d]=val.split('-');return`${d} ${MONTHS[parseInt(m,10)-1]} ${y.slice(-2)}`;}
+function displayToDateInput(str){if(!str)return'';const p=str.trim().split(' ');const yr=parseInt(p[2],10)<100?2000+parseInt(p[2],10):parseInt(p[2],10);return`${yr}-${MON_MAP[p[1]]||'01'}-${p[0].padStart(2,'0')}`;}
+function dateToTs(d){if(!d)return 0;const inp=displayToDateInput(d);return new Date(inp).getTime()||0;}
+function formatDisplayDate(dateStr){const p=dateStr.split(' ');return p.length>=3?`${p[0]} ${p[1]}<br><span class="date-year">20${p[2]}</span>`:dateStr;}
+function todayInputVal(){const d=new Date();return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
+function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);}
+function getGenderSymbol(g){return g==='M'?'♂️':g==='F'?'♀️':'⚧️';}
 
-    function updateStats() {
-        const unique = [...new Map(db.map(e => [e.name, e])).values()];
-        document.getElementById('totalCount').innerText = unique.length;
-        const areaSet = new Set(db.map(e => (e.area||'').trim()).filter(a => a && a !== 'N/A' && a !== ''));
-        document.getElementById('areaCount').innerText = areaSet.size;
-        const now = new Date(), currentMonth = now.getMonth(), currentYear = now.getFullYear();
-        const monthVisits = db.filter(v => { const d = displayToDateInput(v.date); if(!d) return false; const dv = new Date(d); return dv.getMonth() === currentMonth && dv.getFullYear() === currentYear; });
-        const uniqueMonth = [...new Map(monthVisits.map(e => [e.name, e])).values()];
-        document.getElementById('monthCount').innerText = uniqueMonth.length;
-    }
+function updateStats(){
+    const unique=[...new Map(db.map(e=>[e.name,e])).values()];
+    document.getElementById('totalCount').innerText=unique.length;
+    const areaSet=new Set(db.map(e=>(e.area||'').trim()).filter(a=>a&&a!=='N/A'&&a!==''));
+    document.getElementById('areaCount').innerText=areaSet.size;
+    const now=new Date(),cm=now.getMonth(),cy=now.getFullYear();
+    const mv=db.filter(v=>{const d=displayToDateInput(v.date);if(!d)return false;const dv=new Date(d);return dv.getMonth()===cm&&dv.getFullYear()===cy;});
+    document.getElementById('monthCount').innerText=[...new Map(mv.map(e=>[e.name,e])).values()].length;
+}
 
-    function setSort(s) { if (currentSort === s) sortAsc = !sortAsc; else { currentSort = s; sortAsc = (s === 'name'); } renderTable(); }
-    function filterData(mode) { currentFilterMode = mode; document.querySelectorAll('.stat-box').forEach(el => el.classList.remove('active')); document.getElementById(mode === 'all' ? 'statAll' : 'statMonth').classList.add('active'); renderTable(); }
+function setSort(s){if(currentSort===s)sortAsc=!sortAsc;else{currentSort=s;sortAsc=(s==='name');}renderTable();}
+function filterData(mode){currentFilterMode=mode;document.querySelectorAll('.stat-box').forEach(el=>el.classList.remove('active'));document.getElementById(mode==='all'?'statAll':'statMonth').classList.add('active');renderTable();}
 
-    function renderTable() {
-        const tbody = document.getElementById('tableBody'); tbody.innerHTML = '';
-        const q = (document.getElementById('search').value || '').toLowerCase().trim();
-        let filtered = db;
-        if (q) filtered = db.filter(e => e.name.toLowerCase().includes(q) || (e.phone && e.phone.includes(q)) || (e.area && e.area.toLowerCase().includes(q)));
-        if (currentFilterMode === 'month') {
-            const now = new Date(), currentMonth = now.getMonth(), currentYear = now.getFullYear();
-            filtered = filtered.filter(v => { const d = displayToDateInput(v.date); if(!d) return false; const dv = new Date(d); return dv.getMonth() === currentMonth && dv.getFullYear() === currentYear; });
-        }
-        const map = new Map();
-        filtered.forEach(e => { const n = e.name.trim(); if(!map.has(n)) map.set(n, {...e, count: 1}); else { const ex = map.get(n); ex.count++; if(dateToTs(e.date) > dateToTs(ex.date)) Object.assign(ex, e); } });
-        let latest = Array.from(map.values()).sort((a,b) => {
-            if(currentSort === 'date') return sortAsc ? dateToTs(a.date) - dateToTs(b.date) : dateToTs(b.date) - dateToTs(a.date);
-            if(currentSort === 'name') return sortAsc ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name);
-            if(currentSort === 'score') return sortAsc ? (parseInt(a.score)||0) - (parseInt(b.score)||0) : (parseInt(b.score)||0) - (parseInt(a.score)||0);
-            if(currentSort === 'lp') return sortAsc ? (parseInt(a.lp)||0) - (parseInt(b.lp)||0) : (parseInt(b.lp)||0) - (parseInt(a.lp)||0);
-            return 0;
-        });
-        if(latest.length === 0) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:40px;">📭 డేటా లేదు.</td></tr>'; return; }
-        
-        latest.forEach(c => {
-            const sv = parseInt(c.score, 10); const pCls = isNaN(sv) ? "" : (sv <= 700 ? "bg-red" : (sv <= 900 ? "bg-orange" : "bg-green"));
-            const genderSymbol = getGenderSymbol(c.gender);
-            const ageText = c.age ? `🎂 ${c.age} ${genderSymbol}` : `🎂 -- ${genderSymbol}`;
-            const areaVal = (c.area && c.area !== 'N/A') ? c.area : 'ప్రాంతం లేదు';
-            const phoneVal = c.phone || '----';
-            
-            tbody.innerHTML += `<tr onclick="showHistory('${escapeHtml(c.name)}')">
-                <td class="date-cell">${formatDisplayDate(c.date)}</td>
-                <td><div class="name-badge">${escapeHtml(c.name)}</div><div class="customer-details"><div class="info-line">${ageText}</div><div class="area-line"><span>📍</span> ${escapeHtml(areaVal)}</div><div class="phone-line"><span>📞</span> ${escapeHtml(phoneVal)}</div></div></td>
-                <td style="text-align:center; font-weight:800;">${c.count}</td>
-                <td style="text-align:center"><div class="score-pill ${pCls}">${c.score||'---'}</div></td>
-                <td style="text-align:center"><b>${c.lp||'---'}</b></td>
-            </tr>`;
-        });
-    }
+function renderTable(){
+    const tbody=document.getElementById('tableBody');tbody.innerHTML='';
+    const q=(document.getElementById('search').value||'').toLowerCase().trim();
+    let filtered=db;
+    if(q)filtered=db.filter(e=>e.name.toLowerCase().includes(q)||(e.phone&&e.phone.includes(q))||(e.area&&e.area.toLowerCase().includes(q)));
+    if(currentFilterMode==='month'){const now=new Date(),cm=now.getMonth(),cy=now.getFullYear();filtered=filtered.filter(v=>{const d=displayToDateInput(v.date);if(!d)return false;const dv=new Date(d);return dv.getMonth()===cm&&dv.getFullYear()===cy;});}
+    const map=new Map();
+    filtered.forEach(e=>{const n=e.name.trim();if(!map.has(n))map.set(n,{...e,count:1});else{const ex=map.get(n);ex.count++;if(dateToTs(e.date)>dateToTs(ex.date))Object.assign(ex,e);}});
+    let latest=Array.from(map.values()).sort((a,b)=>{
+        if(currentSort==='date')return sortAsc?dateToTs(a.date)-dateToTs(b.date):dateToTs(b.date)-dateToTs(a.date);
+        if(currentSort==='name')return sortAsc?a.name.localeCompare(b.name):b.name.localeCompare(a.name);
+        if(currentSort==='score')return sortAsc?(parseInt(a.score)||0)-(parseInt(b.score)||0):(parseInt(b.score)||0)-(parseInt(a.score)||0);
+        if(currentSort==='lp')return sortAsc?(parseInt(a.lp)||0)-(parseInt(b.lp)||0):(parseInt(b.lp)||0)-(parseInt(a.lp)||0);
+        return 0;
+    });
+    if(!latest.length){tbody.innerHTML='<tr><td colspan="5" style="text-align:center;padding:40px;">📭 డేటా లేదు.</td></tr>';return;}
+    latest.forEach(c=>{
+        const sv=parseInt(c.score,10);const pCls=isNaN(sv)?"":(sv<=700?"bg-red":(sv<=900?"bg-orange":"bg-green"));
+        const gSym=getGenderSymbol(c.gender);
+        const ageText=c.age?`🎂 ${c.age} ${gSym}`:`🎂 -- ${gSym}`;
+        const areaVal=(c.area&&c.area!=='N/A')?c.area:'ప్రాంతం లేదు';
+        const phoneVal=c.phone||'----';
+        tbody.innerHTML+=`<tr onclick="showHistory('${escapeHtml(c.name)}')">
+            <td class="date-cell">${formatDisplayDate(c.date)}</td>
+            <td><div class="name-badge">${escapeHtml(c.name)}</div><div class="customer-details"><div class="info-line">${ageText}</div><div class="area-line"><span>📍</span> ${escapeHtml(areaVal)}</div><div class="phone-line"><span>📞</span> ${escapeHtml(phoneVal)}</div></div></td>
+            <td style="text-align:center;font-weight:800;">${c.count}</td>
+            <td style="text-align:center"><div class="score-pill ${pCls}">${c.score||'---'}</div></td>
+            <td style="text-align:center"><b>${c.lp||'---'}</b></td>
+        </tr>`;
+    });
+}
 
-    // COLORFUL GRAPH with gradients and beautiful points
-    function drawColorfulScoreChart(visits) {
-        const canvas = document.getElementById('scoreChart');
-        const wrap = document.getElementById('chartWrap');
-        const statsDiv = document.getElementById('chartStats');
-        if (!canvas || !wrap) return;
-        
-        const sorted = [...visits].sort((a, b) => dateToTs(a.date) - dateToTs(b.date));
-        const scores = sorted.map(v => parseInt(v.score, 10) || 0);
-        if (scores.length < 2) { wrap.style.display = 'none'; return; }
-        wrap.style.display = 'block';
-        
-        // Calculate stats
-        const maxScore = Math.max(...scores, 0);
-        const minScore = Math.min(...scores, 1000);
-        const avgScore = Math.round(scores.reduce((a,b) => a+b, 0) / scores.length);
-        const trend = scores[scores.length-1] - scores[0];
-        const trendText = trend > 0 ? '📈 పెరుగుదల' : (trend < 0 ? '📉 తగ్గుదల' : '➡️ స్థిరం');
-        statsDiv.innerHTML = `<span>🔝 గరిష్ట: ${maxScore}</span><span>📉 కనిష్ట: ${minScore}</span><span>📊 సగటు: ${avgScore}</span><span>${trendText} (${trend>0?'+':''}${trend})</span>`;
-        
-        const ctx = canvas.getContext('2d');
-        const rect = canvas.getBoundingClientRect();
-        const dpr = window.devicePixelRatio || 1;
-        canvas.width = rect.width * dpr;
-        canvas.height = 220 * dpr;
-        ctx.scale(dpr, dpr);
-        const width = rect.width, height = 220;
-        const padding = { left: 45, right: 30, top: 30, bottom: 40 };
-        const chartW = width - padding.left - padding.right;
-        const chartH = height - padding.top - padding.bottom;
-        
-        ctx.clearRect(0, 0, width, height);
-        if (chartW <= 0 || chartH <= 0) return;
-        
-        const getX = (i) => padding.left + (i / (scores.length - 1)) * chartW;
-        const getY = (score) => padding.top + chartH - (score / 1000) * chartH;
-        
-        // Draw colorful background gradient
-        const bgGrad = ctx.createLinearGradient(0, padding.top, 0, height - padding.bottom);
-        bgGrad.addColorStop(0, 'rgba(26, 35, 126, 0.08)');
-        bgGrad.addColorStop(1, 'rgba(255, 213, 79, 0.03)');
-        ctx.fillStyle = bgGrad;
-        ctx.fillRect(padding.left, padding.top, chartW, chartH);
-        
-        // Draw grid lines with style
-        ctx.beginPath(); ctx.strokeStyle = "#cbd5e1"; ctx.lineWidth = 0.6;
-        for (let i = 0; i <= 5; i++) { 
-            let y = padding.top + (i * chartH / 5); 
-            ctx.moveTo(padding.left, y); 
-            ctx.lineTo(width - padding.right, y); 
-            ctx.stroke();
-            let val = Math.round(1000 - (i * 200));
-            ctx.fillStyle = "#64748b"; ctx.font = "9px sans-serif"; ctx.fillText(val, 5, y + 3);
-        }
-        
-        // Colorful area under line with gradient
-        const areaGrad = ctx.createLinearGradient(0, padding.top, 0, height - padding.bottom);
-        areaGrad.addColorStop(0, 'rgba(59, 130, 246, 0.35)');
-        areaGrad.addColorStop(0.5, 'rgba(139, 92, 246, 0.2)');
-        areaGrad.addColorStop(1, 'rgba(236, 72, 153, 0.05)');
+/* ══════════════════════════════════════════
+   DRAW CHART  — bar + line combo
+   FIX: use offsetWidth after rAF to avoid 0-width canvas
+══════════════════════════════════════════ */
+function drawChartNow(visits){
+    const canvas=document.getElementById('scoreChart');
+    if(!canvas) return;
+
+    const sorted=[...visits].sort((a,b)=>dateToTs(a.date)-dateToTs(b.date));
+    const scores=sorted.map(v=>parseInt(v.score,10)||0);
+    if(scores.length<1) return;
+
+    // ── get real pixel width AFTER layout ──
+    const W = canvas.offsetWidth || canvas.parentElement.offsetWidth || 300;
+    const H = 170;
+    const dpr = window.devicePixelRatio||1;
+    canvas.width  = W*dpr;
+    canvas.height = H*dpr;
+    const ctx=canvas.getContext('2d');
+    ctx.scale(dpr,dpr);
+
+    const pad={left:38,right:14,top:32,bottom:30};
+    const cW=W-pad.left-pad.right, cH=H-pad.top-pad.bottom;
+    ctx.clearRect(0,0,W,H);
+    if(cW<=0||cH<=0) return;
+
+    const n=scores.length;
+    const getX=i=> n===1 ? pad.left+cW/2 : pad.left+(i/(n-1))*cW;
+    const getY=s=> pad.top+cH - Math.max(0,Math.min(1,s/1000))*cH;
+
+    // ── Grid ──
+    ctx.strokeStyle='#e2e8f0'; ctx.lineWidth=0.6;
+    [0,250,500,750,1000].forEach(v=>{
+        const y=getY(v);
+        ctx.beginPath(); ctx.moveTo(pad.left,y); ctx.lineTo(W-pad.right,y); ctx.stroke();
+        ctx.fillStyle='#94a3b8'; ctx.font='8px sans-serif'; ctx.textAlign='right';
+        ctx.fillText(v,pad.left-4,y+3);
+    });
+    ctx.textAlign='left';
+
+    // ── Coloured bars ──
+    const barW=Math.max(8, Math.min(28, cW/n*0.55));
+    scores.forEach((s,i)=>{
+        const x=getX(i), barH=(s/1000)*cH;
+        const y=pad.top+cH-barH;
+        // bar colour by zone
+        const col = s<=300?'#ef4444': s<=600?'#f97316': s<=750?'#f59e0b': s<=900?'#84cc16':'#10b981';
+        // shadow
+        ctx.shadowBlur=6; ctx.shadowColor='rgba(0,0,0,0.12)';
+        // gradient bar
+        const barG=ctx.createLinearGradient(0,y,0,y+barH);
+        barG.addColorStop(0,col);
+        barG.addColorStop(1,col+'55');
+        ctx.fillStyle=barG;
         ctx.beginPath();
-        ctx.moveTo(getX(0), getY(scores[0]));
-        scores.forEach((s, i) => ctx.lineTo(getX(i), getY(s)));
-        ctx.lineTo(getX(scores.length-1), height - padding.bottom + 5);
-        ctx.lineTo(getX(0), height - padding.bottom + 5);
-        ctx.closePath();
-        ctx.fillStyle = areaGrad;
+        ctx.roundRect(x-barW/2, y, barW, barH, [4,4,0,0]);
         ctx.fill();
-        
-        // Draw main line with gradient stroke
-        const lineGrad = ctx.createLinearGradient(getX(0), 0, getX(scores.length-1), 0);
-        lineGrad.addColorStop(0, '#1a237e');
-        lineGrad.addColorStop(0.5, '#4f46e5');
-        lineGrad.addColorStop(1, '#ec4899');
-        ctx.beginPath();
-        scores.forEach((s, i) => { if(i===0) ctx.moveTo(getX(i), getY(s)); else ctx.lineTo(getX(i), getY(s)); });
-        ctx.strokeStyle = lineGrad;
-        ctx.lineWidth = 3.2;
-        ctx.lineCap = 'round';
-        ctx.stroke();
-        
-        // Draw colorful points with glow effect
-        scores.forEach((s, i) => {
-            const x = getX(i), y = getY(s);
-            // Outer glow
-            ctx.shadowBlur = 8;
-            ctx.shadowColor = 'rgba(79, 70, 229, 0.5)';
-            ctx.beginPath(); ctx.arc(x, y, 7, 0, 2 * Math.PI);
-            ctx.fillStyle = '#ffffff';
-            ctx.fill();
-            ctx.shadowBlur = 0;
-            // Inner colorful circle based on score
-            let pointColor = s <= 600 ? '#ef4444' : (s <= 800 ? '#f59e0b' : '#10b981');
-            ctx.beginPath(); ctx.arc(x, y, 5, 0, 2 * Math.PI);
-            ctx.fillStyle = pointColor;
-            ctx.fill();
-            ctx.strokeStyle = '#ffffff';
-            ctx.lineWidth = 2;
-            ctx.stroke();
-            
-            // Score label
-            ctx.fillStyle = '#1e293b';
-            ctx.font = "bold 11px 'Segoe UI'";
-            ctx.shadowBlur = 0;
-            ctx.fillText(s, x - 7, y - 10);
-            
-            // Date label below
-            const dateLabel = sorted[i].date.split(' ').slice(0,2).join(' ');
-            ctx.fillStyle = '#475569';
-            ctx.font = "9px sans-serif";
-            ctx.fillText(dateLabel, x - 14, height - padding.bottom + 18);
-        });
-        
-        // Draw trend arrow annotation if multiple points
-        if (scores.length >= 2) {
-            const firstX = getX(0), firstY = getY(scores[0]);
-            const lastX = getX(scores.length-1), lastY = getY(scores[scores.length-1]);
-            ctx.beginPath();
-            ctx.moveTo(lastX - 15, lastY - 10);
-            ctx.lineTo(lastX, lastY);
-            ctx.lineTo(lastX - 15, lastY + 10);
-            ctx.fillStyle = trend > 0 ? '#10b981' : (trend < 0 ? '#ef4444' : '#64748b');
-            ctx.fill();
+        ctx.shadowBlur=0;
+    });
+
+    // ── Area under line ──
+    const aG=ctx.createLinearGradient(0,pad.top,0,H-pad.bottom);
+    aG.addColorStop(0,'rgba(79,70,229,0.18)');
+    aG.addColorStop(1,'rgba(79,70,229,0.0)');
+    ctx.beginPath();
+    ctx.moveTo(getX(0),getY(scores[0]));
+    scores.forEach((s,i)=>ctx.lineTo(getX(i),getY(s)));
+    ctx.lineTo(getX(n-1),H-pad.bottom);
+    ctx.lineTo(getX(0),H-pad.bottom);
+    ctx.closePath(); ctx.fillStyle=aG; ctx.fill();
+
+    // ── Line ──
+    const lG=ctx.createLinearGradient(getX(0),0,getX(n-1),0);
+    lG.addColorStop(0,'#1a237e'); lG.addColorStop(0.5,'#4f46e5'); lG.addColorStop(1,'#ec4899');
+    ctx.beginPath();
+    scores.forEach((s,i)=>i===0?ctx.moveTo(getX(i),getY(s)):ctx.lineTo(getX(i),getY(s)));
+    ctx.strokeStyle=lG; ctx.lineWidth=2.5; ctx.lineCap='round'; ctx.lineJoin='round'; ctx.stroke();
+
+    // ── Points with score + delta ──
+    scores.forEach((s,i)=>{
+        const x=getX(i), y=getY(s);
+        const prev=i>0?scores[i-1]:null;
+        const delta=prev!==null?s-prev:null;
+        // white ring
+        ctx.beginPath(); ctx.arc(x,y,7,0,Math.PI*2);
+        ctx.fillStyle='#fff'; ctx.shadowBlur=5; ctx.shadowColor='rgba(79,70,229,0.35)'; ctx.fill(); ctx.shadowBlur=0;
+        // colour dot
+        const dotCol=s<=300?'#ef4444':s<=600?'#f97316':s<=750?'#f59e0b':s<=900?'#84cc16':'#10b981';
+        ctx.beginPath(); ctx.arc(x,y,4.5,0,Math.PI*2); ctx.fillStyle=dotCol; ctx.fill();
+        ctx.strokeStyle='#fff'; ctx.lineWidth=1.5; ctx.stroke();
+
+        // score value
+        ctx.fillStyle='#1e293b'; ctx.font='bold 10px sans-serif'; ctx.textAlign='center';
+        ctx.fillText(s,x,y-10);
+
+        // delta arrow
+        if(delta!==null){
+            const arrow=delta>0?'↑':delta<0?'↓':'→';
+            const c=delta>0?'#10b981':delta<0?'#ef4444':'#94a3b8';
+            ctx.fillStyle=c; ctx.font='bold 9px sans-serif';
+            ctx.fillText(`${arrow}${Math.abs(delta)}`,x,y-21);
         }
-    }
+        // date
+        const dl=sorted[i].date.split(' ').slice(0,2).join(' ');
+        ctx.fillStyle='#64748b'; ctx.font='8px sans-serif';
+        ctx.fillText(dl,x,H-pad.bottom+14);
+        ctx.textAlign='left';
+    });
+}
 
-    function showHistory(customerName) {
-        activeHistoryName = customerName;
-        const visits = db.filter(e => e.name === customerName).sort((a, b) => dateToTs(b.date) - dateToTs(a.date));
-        if (!visits.length) return;
-        const latest = visits[0];
-        const genderSymbol = getGenderSymbol(latest.gender);
-        document.getElementById('hName').innerHTML = `📜 ${escapeHtml(customerName)} <span style="font-size:13px; background:#eef2ff; padding:3px 10px; border-radius:10px;">Visits: ${visits.length}</span>`;
-        document.getElementById('hInfo').innerHTML = `<div>🎂 వయస్సు: ${latest.age||'--'} ${genderSymbol} &nbsp;| 📍 ${escapeHtml(latest.area||'N/A')}<br><span style="font-weight:800;">📞 ఫోన్: ${latest.phone || '---'}</span></div>`;
-        const phone = (latest.phone||'').replace(/\D/g,'');
-        document.getElementById('contactRow').innerHTML = phone ? `<button class="contact-btn wa-btn" onclick="window.open('https://wa.me/91${phone}')">💬 WhatsApp</button><button class="contact-btn call-btn" onclick="window.location.href='tel:+91${phone}'">📞 Call</button>` : '<div style="color:#aaa;">📵 ఫోన్ నంబర్ లేదు</div>';
-        
-        drawColorfulScoreChart(visits);
-        
-        const hl = document.getElementById('historyList'); hl.innerHTML = '';
-        visits.forEach((v, idx) => {
-            const sVal = parseInt(v.score, 10); 
-            const sColor = sVal <= 700 ? '#fdecea' : sVal <= 900 ? '#fff3e0' : '#e8f5e9'; 
-            const tColor = sVal <= 700 ? '#d32f2f' : sVal <= 900 ? '#f57c00' : '#2e7d32';
-            hl.innerHTML += `<div class="history-item"><div style="display:flex; justify-content:space-between;"><strong>📆 ${v.date}</strong><div style="display:flex; gap:6px;"><div style="background:${sColor}; color:${tColor}; padding:4px 10px; border-radius:8px; font-weight:800;">⭐ ${v.score||'---'}</div><div class="visit-options"><button class="options-btn" onclick="toggleVisitMenu(event, ${v.id})">⋮</button><div id="menu-${v.id}" class="options-menu"><button onclick="editVisit(${v.id})">✏️ Edit</button><button onclick="deleteVisit(${v.id})">🗑️ Delete</button></div></div></div></div><div class="history-sub" style="margin-top:8px;">${v.products ? `🛒 ${escapeHtml(v.products)}<br>` : ''}${v.notes ? `📝 ${escapeHtml(v.notes)}` : ''}</div><div style="display:flex; justify-content:space-between; margin-top:8px;"><span style="background:#eef2ff; padding:2px 10px; border-radius:12px;">📦 LP: ${v.lp||'---'}</span>${idx === 0 ? '<span style="color:#1a73e8;">✨ తాజా విజిట్</span>' : ''}</div></div>`;
-        });
-        document.getElementById('historyModal').style.display = 'flex';
-    }
+/* ── Signal zone bar update ── */
+function updateSignalBar(visits){
+    const sorted=[...visits].sort((a,b)=>dateToTs(a.date)-dateToTs(b.date));
+    const first=parseInt(sorted[0]?.score||0,10);
+    const last =parseInt(sorted[sorted.length-1]?.score||0,10);
 
-    function openForm(mode, existingName = null, visitId = null) {
-        closeAllPopups(); document.getElementById('entryModal').style.display = 'flex'; document.getElementById('modalTitle').innerText = visitId ? '✏️ విజిట్ ఎడిట్' : '📝 కొత్త విజిట్'; document.getElementById('editId').value = visitId || '';
-        ['fName','fAge','fPhone','fArea','fScore','fLP','fProducts','fNotes'].forEach(id => document.getElementById(id).value = ''); document.getElementById('fDate').value = todayInputVal(); document.getElementById('fGender').value = 'M';
-        if (visitId) { const v = db.find(e => e.id === visitId); if (v) { document.getElementById('fDate').value = displayToDateInput(v.date); document.getElementById('fName').value = v.name; document.getElementById('fAge').value = v.age; document.getElementById('fPhone').value = v.phone; document.getElementById('fArea').value = v.area; document.getElementById('fScore').value = v.score; document.getElementById('fLP').value = v.lp; document.getElementById('fProducts').value = v.products; document.getElementById('fNotes').value = v.notes; document.getElementById('fGender').value = v.gender || 'M'; } }
-        else if (existingName) { const last = [...db].reverse().find(e => e.name === existingName); if (last) { document.getElementById('fName').value = last.name; document.getElementById('fAge').value = last.age; document.getElementById('fPhone').value = last.phone; document.getElementById('fArea').value = last.area; document.getElementById('fGender').value = last.gender || 'M'; } }
-    }
+    // Needle position (0–100%)
+    const pct=Math.max(0,Math.min(100,(last/1000)*100));
+    document.getElementById('zoneNeedle').style.left=pct+'%';
+    document.getElementById('zoneScoreLabel').textContent=last;
 
-    function saveEntry() {
-        const name = document.getElementById('fName').value.trim(); if(!name) return alert('పేరు నమోదు చేయండి');
-        const eid = document.getElementById('editId').value;
-        const entry = { id: eid ? parseInt(eid) : Date.now(), date: dateInputToDisplay(document.getElementById('fDate').value), name: name, age: document.getElementById('fAge').value, gender: document.getElementById('fGender').value, phone: document.getElementById('fPhone').value, area: document.getElementById('fArea').value || 'N/A', score: document.getElementById('fScore').value, lp: document.getElementById('fLP').value, products: document.getElementById('fProducts').value, notes: document.getElementById('fNotes').value };
-        if(eid) { const idx = db.findIndex(e => e.id === entry.id); if(idx !== -1) db[idx] = entry; } else db.push(entry);
-        saveDB(); closeAllPopups();
-    }
+    // Input = first visit score, Output = latest visit score
+    const inputPct =Math.round((first/1000)*100);
+    const outputPct=Math.round((last/1000)*100);
+    document.getElementById('sigInputBar').style.width=inputPct+'%';
+    document.getElementById('sigOutputBar').style.width=outputPct+'%';
+    document.getElementById('sigInputVal').textContent=`${first} (${inputPct}%)`;
+    document.getElementById('sigOutputVal').textContent=`${last} (${outputPct}%)`;
+}
 
-    function editVisit(id) { openForm('edit', null, id); }
-    function deleteVisit(id) { if(confirm('డిలీట్ చేయాలా?')) { db = db.filter(e => e.id !== id); saveDB(false); const rem = db.filter(e => e.name === activeHistoryName); rem.length ? showHistory(activeHistoryName) : (closeAllPopups(), renderTable()); } }
-    function deleteCustomer() { if(confirm(`"${activeHistoryName}" రికార్డులు తీసివేయాలా?`)) { db = db.filter(e => e.name !== activeHistoryName); saveDB(); closeAllPopups(); } }
-    function quickAddVisit() { openForm('add', activeHistoryName); }
-    function showAreaPopup() { const areas = [...new Set(db.map(e => (e.area||'').trim()).filter(a => a && a !== 'N/A'))].sort(); document.getElementById('areaItems').innerHTML = areas.map(a => `<div class="area-chip" onclick="filterByArea('${escapeHtml(a)}')">📍 ${escapeHtml(a)}</div>`).join(''); showSheet('areaListPopup'); }
-    function filterByArea(area) { document.getElementById('search').value = area; closeAllPopups(); renderTable(); }
-    function toggleVisitMenu(event, id) { event.stopPropagation(); document.querySelectorAll('.options-menu').forEach(m => m.classList.remove('show-menu')); document.getElementById('menu-'+id).classList.toggle('show-menu'); }
-    function openSettings() { showSheet('settingsPopup'); }
-    function showSheet(id) { document.getElementById('overlay').style.display = 'block'; document.getElementById(id).style.display = 'block'; }
-    function closeAllPopups() { document.querySelectorAll('.modal, .list-modal, .overlay').forEach(el => el.style.display = 'none'); }
-    window.onclick = function(e) { if(e.target.classList.contains('modal')) closeAllPopups(); document.querySelectorAll('.options-menu').forEach(m => m.classList.remove('show-menu')); };
-    function exportJSON() { const blob = new Blob([JSON.stringify(db, null, 2)], {type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`pharmanex_backup.json`; a.click(); }
-    function importJSON(event) { const file = event.target.files[0]; if(!file) return; const reader = new FileReader(); reader.onload = e => { try { db = JSON.parse(e.target.result); saveDB(); alert('డేటా విజయవంతంగా లోడ్ అయింది!'); } catch { alert('ఫైల్ లోపం ఉంది!'); } }; reader.readAsText(file); }
-    function saveToIndexedDBManual() { saveToIDB(db); alert("✅ డేటా భద్రపరచబడింది!"); }
-    function doPrint() { closeAllPopups(); setTimeout(() => window.print(), 300); }
-    
-    loadDB();
+function drawColorfulScoreChart(visits){
+    const wrap=document.getElementById('chartWrap');
+    const trendBadge=document.getElementById('trendBadge');
+    if(!wrap) return;
+
+    const sorted=[...visits].sort((a,b)=>dateToTs(a.date)-dateToTs(b.date));
+    const scores=sorted.map(v=>parseInt(v.score,10)||0);
+    if(scores.length<1){wrap.style.display='none';return;}
+    wrap.style.display='block';
+
+    // Trend badge
+    const lastDelta=scores.length>=2?scores[scores.length-1]-scores[scores.length-2]:0;
+    if(lastDelta>0){trendBadge.textContent=`📈 +${lastDelta}`;trendBadge.className='chart-trend-badge trend-up';}
+    else if(lastDelta<0){trendBadge.textContent=`📉 ${lastDelta}`;trendBadge.className='chart-trend-badge trend-down';}
+    else{trendBadge.textContent='➡️ స్థిరం';trendBadge.className='chart-trend-badge trend-flat';}
+
+    // Signal bar (can run immediately — pure CSS)
+    updateSignalBar(visits);
+
+    // Canvas must wait for layout after display:block
+    requestAnimationFrame(()=>setTimeout(()=>drawChartNow(visits),0));
+}
+
+/* ══════════════════════════════════════════
+   SHOW HISTORY MODAL
+══════════════════════════════════════════ */
+function showHistory(customerName){
+    activeHistoryName=customerName;
+    const visits=db.filter(e=>e.name===customerName).sort((a,b)=>dateToTs(b.date)-dateToTs(a.date));
+    if(!visits.length) return;
+    const latest=visits[0], gSym=getGenderSymbol(latest.gender);
+    document.getElementById('hName').innerHTML=`📜 ${escapeHtml(customerName)} <span style="font-size:13px;background:#eef2ff;padding:3px 10px;border-radius:10px;">Visits: ${visits.length}</span>`;
+    document.getElementById('hInfo').innerHTML=`<div>🎂 వయస్సు: ${latest.age||'--'} ${gSym} &nbsp;| 📍 ${escapeHtml(latest.area||'N/A')}<br><span style="font-weight:800;">📞 ఫోన్: ${latest.phone||'---'}</span></div>`;
+    const phone=(latest.phone||'').replace(/\D/g,'');
+    document.getElementById('contactRow').innerHTML=phone
+        ?`<button class="contact-btn wa-btn" onclick="window.open('https://wa.me/91${phone}')">💬 WhatsApp</button><button class="contact-btn call-btn" onclick="window.location.href='tel:+91${phone}'">📞 Call</button>`
+        :'<div style="color:#aaa;">📵 ఫోన్ నంబర్ లేదు</div>';
+
+    drawColorfulScoreChart(visits);
+
+    const hl=document.getElementById('historyList');hl.innerHTML='';
+    visits.forEach((v,idx)=>{
+        const sVal=parseInt(v.score,10);
+        const sBg=sVal<=700?'#fdecea':sVal<=900?'#fff3e0':'#e8f5e9';
+        const sCol=sVal<=700?'#d32f2f':sVal<=900?'#f57c00':'#2e7d32';
+        const prev=visits[idx+1];
+        const prevScore=prev?parseInt(prev.score,10):null;
+        let deltaBadge='';
+        if(prevScore!==null&&!isNaN(sVal)&&!isNaN(prevScore)){
+            const d=sVal-prevScore;
+            const arrow=d>0?'↑':d<0?'↓':'→';
+            const cls=d>0?'delta-up':d<0?'delta-down':'delta-same';
+            deltaBadge=`<span class="delta-badge ${cls}">${arrow} ${d>0?'+':''}${d}</span>`;
+        }
+        hl.innerHTML+=`<div class="history-item">
+            <div class="hist-top">
+                <span class="hist-date">📆 ${v.date}</span>
+                <div class="hist-badges">
+                    <div class="score-badge" style="background:${sBg};color:${sCol}">⭐ ${v.score||'---'}</div>
+                    ${deltaBadge}
+                    <div class="visit-options"><button class="options-btn" onclick="toggleVisitMenu(event,${v.id})">⋮</button><div id="menu-${v.id}" class="options-menu"><button onclick="editVisit(${v.id})">✏️ Edit</button><button onclick="deleteVisit(${v.id})">🗑️ Delete</button></div></div>
+                </div>
+            </div>
+            <div class="hist-sub">${v.products?`🛒 ${escapeHtml(v.products)}<br>`:''}${v.notes?`📝 ${escapeHtml(v.notes)}`:''}</div>
+            <div class="hist-foot"><span class="lp-badge">📦 LP: ${v.lp||'---'}</span>${idx===0?'<span class="latest-tag">✨ తాజా విజిట్</span>':''}</div>
+        </div>`;
+    });
+    document.getElementById('historyModal').style.display='flex';
+}
+
+function openForm(mode,existingName=null,visitId=null){
+    closeAllPopups();document.getElementById('entryModal').style.display='flex';
+    document.getElementById('modalTitle').innerText=visitId?'✏️ విజిట్ ఎడిట్':'📝 కొత్త విజిట్';
+    document.getElementById('editId').value=visitId||'';
+    ['fName','fAge','fPhone','fArea','fScore','fLP','fProducts','fNotes'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('fDate').value=todayInputVal();document.getElementById('fGender').value='M';
+    if(visitId){const v=db.find(e=>e.id===visitId);if(v){document.getElementById('fDate').value=displayToDateInput(v.date);document.getElementById('fName').value=v.name;document.getElementById('fAge').value=v.age;document.getElementById('fPhone').value=v.phone;document.getElementById('fArea').value=v.area;document.getElementById('fScore').value=v.score;document.getElementById('fLP').value=v.lp;document.getElementById('fProducts').value=v.products;document.getElementById('fNotes').value=v.notes;document.getElementById('fGender').value=v.gender||'M';}}
+    else if(existingName){const last=[...db].reverse().find(e=>e.name===existingName);if(last){document.getElementById('fName').value=last.name;document.getElementById('fAge').value=last.age;document.getElementById('fPhone').value=last.phone;document.getElementById('fArea').value=last.area;document.getElementById('fGender').value=last.gender||'M';}}
+}
+function saveEntry(){
+    const name=document.getElementById('fName').value.trim();if(!name)return alert('పేరు నమోదు చేయండి');
+    const eid=document.getElementById('editId').value;
+    const entry={id:eid?parseInt(eid):Date.now(),date:dateInputToDisplay(document.getElementById('fDate').value),name,age:document.getElementById('fAge').value,gender:document.getElementById('fGender').value,phone:document.getElementById('fPhone').value,area:document.getElementById('fArea').value||'N/A',score:document.getElementById('fScore').value,lp:document.getElementById('fLP').value,products:document.getElementById('fProducts').value,notes:document.getElementById('fNotes').value};
+    if(eid){const idx=db.findIndex(e=>e.id===entry.id);if(idx!==-1)db[idx]=entry;}else db.push(entry);
+    saveDB();closeAllPopups();
+}
+function editVisit(id){openForm('edit',null,id);}
+function deleteVisit(id){if(confirm('డిలీట్ చేయాలా?')){db=db.filter(e=>e.id!==id);saveDB(false);const rem=db.filter(e=>e.name===activeHistoryName);rem.length?showHistory(activeHistoryName):(closeAllPopups(),renderTable());}}
+function deleteCustomer(){if(confirm(`"${activeHistoryName}" రికార్డులు తీసివేయాలా?`)){db=db.filter(e=>e.name!==activeHistoryName);saveDB();closeAllPopups();}}
+function quickAddVisit(){openForm('add',activeHistoryName);}
+function showAreaPopup(){const areas=[...new Set(db.map(e=>(e.area||'').trim()).filter(a=>a&&a!=='N/A'))].sort();document.getElementById('areaItems').innerHTML=areas.map(a=>`<div class="area-chip" onclick="filterByArea('${escapeHtml(a)}')">📍 ${escapeHtml(a)}</div>`).join('');showSheet('areaListPopup');}
+function filterByArea(area){document.getElementById('search').value=area;closeAllPopups();renderTable();}
+function toggleVisitMenu(event,id){event.stopPropagation();document.querySelectorAll('.options-menu').forEach(m=>m.classList.remove('show-menu'));document.getElementById('menu-'+id).classList.toggle('show-menu');}
+function openSettings(){showSheet('settingsPopup');}
+function showSheet(id){document.getElementById('overlay').style.display='block';document.getElementById(id).style.display='block';}
+function closeAllPopups(){document.querySelectorAll('.modal,.list-modal,.overlay').forEach(el=>el.style.display='none');}
+window.onclick=function(e){if(e.target.classList.contains('modal'))closeAllPopups();document.querySelectorAll('.options-menu').forEach(m=>m.classList.remove('show-menu'));};
+function exportJSON(){const blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='pharmanex_backup.json';a.click();}
+function importJSON(event){const file=event.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=e=>{try{db=JSON.parse(e.target.result);saveDB();alert('డేటా విజయవంతంగా లోడ్ అయింది!');}catch{alert('ఫైల్ లోపం ఉంది!');}};reader.readAsText(file);}
+function saveToIndexedDBManual(){saveToIDB(db);alert('✅ డేటా భద్రపరచబడింది!');}
+function doPrint(){closeAllPopups();setTimeout(()=>window.print(),300);}
+
+loadDB();
 </script>
 </body>
 </html>
