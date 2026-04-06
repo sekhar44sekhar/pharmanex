@@ -1,5 +1,3 @@
-This is a complete, ready-to-use HTML document that combines a secure login system with a customer relationship management (CRM) tracker for Pharmanex.
-```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -1159,7 +1157,7 @@ This is a complete, ready-to-use HTML document that combines a secure login syst
             const phone = document.getElementById('userPhone').value.trim();
             const btn = document.getElementById('loginBtn');
             if (!phone || !selectedEmail) {
-                alert("Please link Gmail and enter Phone Number.");
+                alert("Please link your Gmail and enter your Phone Number.");
                 return;
             }
             btn.disabled = true;
@@ -1170,16 +1168,20 @@ This is a complete, ready-to-use HTML document that combines a secure login syst
                     body: JSON.stringify({ phone: phone, email: selectedEmail })
                 });
                 const result = await response.json();
+                
                 if (result.status === "allowed") {
                     localStorage.setItem('phx_session_active', 'true');
                     showMainApp();
+                } else if (result.status === "pending" || result.status === "request_sent") {
+                    // Shows the message from the sheet to the user
+                    alert(result.message);
                 } else if (result.status === "blocked") {
-                    alert("Access Denied. Account is blocked.");
+                    alert("Your account has been blocked. Please contact admin.");
                 } else {
-                    alert("Record not found. Contact Admin.");
+                    alert("Something went wrong. Please try again.");
                 }
             } catch (error) {
-                alert("Connection Error. Please check your internet.");
+                alert("Connection error. Please check your internet connection.");
             } finally {
                 btn.disabled = false;
                 btn.innerHTML = 'Login Now';
