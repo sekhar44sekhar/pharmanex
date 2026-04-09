@@ -1,1282 +1,1583 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Pharmanex Tracker Pro V23 | Nu Skin CRM Secure</title>
-    <link rel="icon" type="image/png" href="logo.PNG">
-    <link rel="apple-touch-icon" href="logo.PNG">
-    <style>
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-            margin: 0;
-            padding: 0;
-        }
-
-        :root {
-            --primary: #1a237e;
-            --primary-dark: #0f195e;
-            --bg: #f0f4f8;
-            --gold: #ffd54f;
-            --text-muted: #5f6368;
-            --danger: #d32f2f;
-        }
-
-        body {
-            font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
-            background: var(--bg);
-            padding-top: 245px !important;
-            padding-bottom: 80px;
-            min-height: 100vh;
-        }
-
-        .header-banner {
-            width: 100%;
-            height: 115px;
-            background: linear-gradient(135deg, #0b2060 0%, #0a3e82 55%, #0d4fa0 100%);
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.28);
-            padding: 8px 14px;
-            gap: 1px;
-        }
-
-        .hdr-main-title {
-            font-size: 2.2rem;
-            font-weight: 900;
-            color: #fff;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-            line-height: 1;
-        }
-
-        .hdr-brand {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: rgba(255, 255, 255, 0.9);
-            letter-spacing: 1px;
-        }
-
-        .hdr-subtitle {
-            font-size: 0.88rem;
-            font-weight: 600;
-            color: #e8eef8;
-            letter-spacing: 0.5px;
-        }
-
-        .hdr-contact {
-            font-size: 0.92rem;
-            font-weight: 800;
-            color: var(--gold);
-            letter-spacing: 0.8px;
-            margin-top: 2px;
-        }
-
-        .stats-container {
-            display: flex;
-            gap: 9px;
-            padding: 0 12px;
-            position: fixed;
-            top: 120px !important;
-            left: 0;
-            right: 0;
-            z-index: 1001;
-        }
-
-        .stat-box {
-            flex: 1;
-            background: white;
-            padding: 4px 2px;
-            border-radius: 18px;
-            text-align: center;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: all 0.2s;
-        }
-
-        .stat-box.active {
-            border-color: var(--primary);
-            background: #eef2ff;
-            transform: scale(0.97);
-        }
-
-        .stat-box h4 {
-            color: var(--text-muted);
-            font-size: 9px;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .stat-box p {
-            font-size: 17px;
-            font-weight: 800;
-            color: var(--primary);
-            margin-top: 2px;
-        }
-
-        .sort-bar {
-            display: flex;
-            gap: 7px;
-            padding: 6px 12px;
-            position: fixed;
-            top: 190px !important;
-            left: 0;
-            right: 0;
-            z-index: 999;
-            overflow-x: auto;
-            background: var(--bg);
-        }
-
-        .sort-bar::-webkit-scrollbar {
-            display: none;
-        }
-
-        .sort-btn {
-            flex-shrink: 0;
-            padding: 5px 14px;
-            border-radius: 40px;
-            border: 1.5px solid #c8d6e8;
-            background: white;
-            font-size: 12px;
-            font-weight: 600;
-            color: #3a4a6b;
-            cursor: pointer;
-            white-space: nowrap;
-        }
-
-        .sort-btn.active {
-            background: var(--primary) !important;
-            color: white !important;
-            border-color: var(--primary) !important;
-        }
-
-        .action-area {
-            padding: 14px 12px 8px;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 13px 18px;
-            border: 1.5px solid #dde3ef;
-            border-radius: 40px;
-            margin-bottom: 10px;
-            font-size: 15px;
-            outline: none;
-            background: white;
-        }
-
-        .search-input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.12);
-        }
-
-        .btn-main {
-            width: 100%;
-            padding: 13px;
-            border: none;
-            border-radius: 40px;
-            background: var(--primary);
-            color: white;
-            font-weight: 700;
-            font-size: 16px;
-            cursor: pointer;
-            transition: 0.2s;
-            box-shadow: 0 3px 8px rgba(26, 35, 126, 0.25);
-        }
-
-        .btn-main:active {
-            transform: scale(0.97);
-            background: var(--primary-dark);
-        }
-
-        .btn-add-customer {
-            padding: 9px 13px !important;
-            background: linear-gradient(135deg, #6366f1 0%, #0ea5e9 50%, #10b981 100%) !important;
-            font-size: 15px !important;
-            letter-spacing: 0.3px;
-            box-shadow: 0 3px 12px rgba(99, 102, 241, 0.35) !important;
-        }
-
-        .btn-secondary {
-            background: #eef2fa !important;
-            color: #1f2b48 !important;
-            box-shadow: none !important;
-            border: 1.5px solid #dde3ef !important;
-        }
-
-        .btn-danger {
-            background: #fdecea !important;
-            color: var(--danger) !important;
-        }
-
-        .settings-fab {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: var(--primary);
-            color: white;
-            font-size: 20px;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            box-shadow: 0 3px 8px rgba(26, 35, 126, 0.25);
-        }
-
-        .action-row {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            margin-top: 5px;
-        }
-
-        table {
-            width: 94%;
-            margin: 4px auto;
-            background: transparent;
-            border-collapse: separate;
-            border-spacing: 0 12px;
-        }
-
-        th {
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-size: 12px;
-            color: #3a4a6b;
-            padding-bottom: 5px;
-        }
-
-        td {
-            padding: 16px 10px;
-            background: white;
-            border-top: 2px solid #1a237e;
-            border-bottom: 2px solid #1a237e;
-            font-size: 14px;
-            vertical-align: middle;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(26, 35, 126, 0.1);
-        }
-
-        tr td:first-child {
-            border-radius: 20px 0 0 20px;
-        }
-
-        tr td:last-child {
-            border-radius: 0 20px 20px 0;
-        }
-
-        tr:active td {
-            background: #f5f7ff;
-        }
-
-        .date-cell {
-            font-size: 13px;
-            line-height: 1.3;
-            color: #1e2a47;
-            font-weight: 600;
-            min-width: 52px;
-        }
-
-        .date-year {
-            color: #8898aa;
-            display: block;
-            font-size: 10px;
-            margin-top: 2px;
-            font-weight: 400;
-        }
-
-        .name-badge {
-            display: inline-block;
-            padding: 3px 12px;
-            background: #eef2ff;
-            color: #1a237e;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 800;
-            border: 1px solid rgba(26, 35, 126, 0.15);
-            margin-bottom: 5px;
-        }
-
-        .score-pill {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 50px;
-            font-weight: 800;
-            font-size: 14px;
-            min-width: 45px;
-            text-align: center;
-        }
-
-        .bg-red {
-            background: #fdecea;
-            color: #d32f2f;
-        }
-
-        .bg-orange {
-            background: #fff3e0;
-            color: #f57c00;
-        }
-
-        .bg-green {
-            background: #e8f5e9;
-            color: #2e7d32;
-        }
-
-        .customer-details {
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
-            margin-top: 4px;
-        }
-
-        .info-line {
-            font-size: 11px;
-            color: #444;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .area-line {
-            font-size: 11px;
-            color: #1a237e;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            background: #f0f2fa;
-            padding: 3px 8px;
-            border-radius: 16px;
-            margin-top: 2px;
-            width: fit-content;
-        }
-
-        .phone-line {
-            font-size: 11px;
-            color: var(--primary);
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.55);
-            z-index: 1500;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.82);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-            padding: 16px;
-            backdrop-filter: blur(5px);
-        }
-
-        .modal-content {
-            background: white;
-            width: 100%;
-            max-width: 500px;
-            padding: 22px 18px;
-            border-radius: 28px;
-            max-height: 92vh;
-            overflow-y: auto;
-        }
-
-        .modal-title {
-            font-size: 18px;
-            font-weight: 800;
-            color: var(--primary);
-            margin-bottom: 16px;
-        }
-
-        .list-modal {
-            display: none;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: white;
-            border-radius: 26px 26px 0 0;
-            z-index: 2100;
-            padding: 20px 16px 28px;
-            box-sizing: border-box;
-            box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.22);
-        }
-
-        .sheet-title {
-            font-size: 17px;
-            font-weight: 800;
-            margin-bottom: 14px;
-            color: #1a237e;
-        }
-
-        .form-group {
-            margin-bottom: 13px;
-        }
-
-        label {
-            font-size: 11.5px;
-            font-weight: 700;
-            color: #2c3e66;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        input,
-        select,
-        textarea {
-            width: 100%;
-            padding: 11px 14px;
-            border: 1.5px solid #cfdfe8;
-            border-radius: 16px;
-            font-size: 15px;
-            background: #fff;
-            font-family: inherit;
-        }
-
-        input:focus,
-        select:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.15);
-        }
-
-        .flex-row {
-            display: flex;
-            gap: 10px;
-        }
-
-        .flex-row .form-group {
-            flex: 1;
-        }
-
-        .h-info-bar {
-            background: #f0f4fa;
-            border-radius: 20px;
-            padding: 9px 14px;
-            font-size: 13px;
-            color: #3a527a;
-            margin-bottom: 10px;
-            line-height: 1.6;
-        }
-
-        .contact-row {
-            display: flex;
-            gap: 9px;
-            margin-bottom: 10px;
-        }
-
-        .contact-btn {
-            flex: 1;
-            padding: 11px 6px;
-            border-radius: 16px;
-            border: none;
-            font-size: 14px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.15s;
-        }
-
-        .contact-btn:active {
-            transform: scale(0.96);
-        }
-
-        .wa-btn {
-            background: #e8f5e9;
-            color: #2e7d32;
-        }
-
-        .call-btn {
-            background: #e3f2fd;
-            color: #1565c0;
-        }
-
-        .chart-wrap {
-            background: linear-gradient(145deg, #f5f7ff 0%, #ffffff 100%);
-            border-radius: 22px;
-            padding: 12px 10px 12px;
-            margin-bottom: 10px;
-            display: none;
-            border: 1.5px solid rgba(26, 35, 126, 0.12);
-            box-shadow: 0 6px 18px rgba(26, 35, 126, 0.08);
-        }
-
-        .chart-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 8px;
-        }
-
-        .chart-label {
-            font-size: 12px;
-            font-weight: 800;
-            color: var(--primary);
-            background: #eef2ff;
-            padding: 4px 10px;
-            border-radius: 30px;
-        }
-
-        .chart-trend-badge {
-            font-size: 12px;
-            font-weight: 800;
-            padding: 4px 10px;
-            border-radius: 30px;
-        }
-
-        .trend-up {
-            background: #e8f5e9;
-            color: #2e7d32;
-        }
-
-        .trend-down {
-            background: #fdecea;
-            color: #d32f2f;
-        }
-
-        .trend-flat {
-            background: #f3f4f6;
-            color: #6b7280;
-        }
-
-        .chart-scroll-container {
-            width: 100%;
-            overflow-x: auto;
-            overflow-y: hidden;
-            -webkit-overflow-scrolling: touch;
-            padding-bottom: 5px;
-        }
-
-        .chart-scroll-container::-webkit-scrollbar {
-            height: 4px;
-        }
-
-        .chart-scroll-container::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 10px;
-        }
-
-        #scoreChart {
-            display: block;
-            height: 140px;
-        }
-
-        .score-zone-circles {
-            display: flex;
-            gap: 6px;
-            justify-content: space-around;
-            padding: 10px 6px 8px;
-            background: #f8fafc;
-            border-radius: 16px;
-            margin-top: 10px;
-        }
-
-        .zone-circle-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 3px;
-            flex: 1;
-        }
-
-        .zone-circle {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto;
-            box-shadow: 0 2px 7px rgba(0, 0, 0, 0.1);
-        }
-
-        .zone-circle-count {
-            font-size: 15px;
-            font-weight: 900;
-            line-height: 1.1;
-        }
-
-        .zone-circle-unit {
-            font-size: 7px;
-            color: #94a3b8;
-            font-weight: 700;
-            letter-spacing: 0.3px;
-        }
-
-        .zone-circle-label {
-            font-size: 10px;
-            font-weight: 800;
-            color: #1e293b;
-        }
-
-        .zone-circle-range {
-            font-size: 8px;
-            font-weight: 700;
-            background: rgba(0, 0, 0, 0.06);
-            padding: 1px 5px;
-            border-radius: 10px;
-        }
-
-        .growth-indicator-row {
-            display: flex;
-            gap: 6px;
-            align-items: center;
-            justify-content: center;
-            margin-top: 8px;
-            padding: 6px 10px;
-            background: #f1f5ff;
-            border-radius: 12px;
-        }
-
-        .growth-badge {
-            font-size: 11px;
-            font-weight: 800;
-            padding: 4px 10px;
-            border-radius: 20px;
-        }
-
-        .growth-up {
-            background: #dcfce7;
-            color: #16a34a;
-        }
-
-        .growth-down {
-            background: #fee2e2;
-            color: #dc2626;
-        }
-
-        .growth-flat {
-            background: #f1f5f9;
-            color: #64748b;
-        }
-
-        .growth-label {
-            font-size: 10px;
-            color: #64748b;
-            font-weight: 600;
-        }
-
-        .history-scroll-wrap {
-            max-height: 444px;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-            padding-right: 2px;
-            margin-bottom: 10px;
-        }
-
-        .history-scroll-wrap::-webkit-scrollbar {
-            width: 4px;
-        }
-
-        .history-scroll-wrap::-webkit-scrollbar-thumb {
-            background: #c8d6e8;
-            border-radius: 4px;
-        }
-
-        .history-item {
-            background: #f9fafc;
-            padding: 10px 12px;
-            margin-bottom: 8px;
-            border-radius: 18px;
-            border-left: 4px solid var(--primary);
-            font-size: 13px;
-        }
-
-        .hist-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .hist-date {
-            font-weight: 700;
-            font-size: 12px;
-            color: #1e2a47;
-        }
-
-        .hist-badges {
-            display: flex;
-            gap: 5px;
-            align-items: center;
-            flex-wrap: wrap;
-            justify-content: flex-end;
-        }
-
-        .score-badge {
-            padding: 3px 9px;
-            border-radius: 8px;
-            font-weight: 800;
-            font-size: 13px;
-        }
-
-        .delta-badge {
-            padding: 2px 8px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 800;
-            white-space: nowrap;
-        }
-
-        .delta-up {
-            background: #e8f5e9;
-            color: #2e7d32;
-        }
-
-        .delta-down {
-            background: #fdecea;
-            color: #d32f2f;
-        }
-
-        .delta-same {
-            background: #f3f4f6;
-            color: #6b7280;
-        }
-
-        .hist-sub {
-            margin-top: 6px;
-            font-size: 11px;
-            color: #555;
-            line-height: 1.5;
-        }
-
-        .hist-foot {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 6px;
-        }
-
-        .lp-badge {
-            background: #eef2ff;
-            padding: 2px 9px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: 700;
-        }
-
-        .latest-tag {
-            color: #1a73e8;
-            font-size: 11px;
-        }
-
-        .visit-options {
-            position: relative;
-            display: inline-block;
-        }
-
-        .options-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: #555;
-            padding: 0 8px;
-            font-size: 22px;
-            font-weight: bold;
-        }
-
-        .options-menu {
-            display: none;
-            position: absolute;
-            right: 0;
-            top: 30px;
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-            z-index: 100;
-            min-width: 110px;
-        }
-
-        .options-menu button {
-            display: block;
-            width: 100%;
-            padding: 12px;
-            border: none;
-            background: none;
-            text-align: left;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .options-menu button:active {
-            background: #f0f4ff;
-        }
-
-        .show-menu {
-            display: block !important;
-        }
-
-        .area-chip {
-            padding: 13px 14px;
-            border-bottom: 1px solid #eef2f5;
-            font-weight: 500;
-            font-size: 15px;
-            cursor: pointer;
-        }
-
-        .area-chip:active {
-            background: #eef2ff;
-        }
-
-        .sett-item {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 14px 4px;
-            border-bottom: 1px solid #eef2f5;
-            cursor: pointer;
-            font-size: 15px;
-            font-weight: 500;
-        }
-
-        .sett-icon {
-            font-size: 22px;
-            width: 34px;
-            text-align: center;
-        }
-
-        @media print {
-
-            .header-banner,
-            .stats-container,
-            .sort-bar,
-            .action-area,
-            .settings-fab,
-            .overlay,
-            .modal,
-            .list-modal {
-                display: none !important;
-            }
-
-            body {
-                padding: 0 !important;
-                background: white !important;
-            }
-        }
-
-        .gender-toggle {
-            display: flex;
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1.5px solid #cfdfe8;
-        }
-
-        .gender-btn {
-            flex: 1;
-            padding: 11px 14px;
-            border: none;
-            font-size: 15px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.2s;
-            background: #f8fafc;
-            color: #64748b;
-        }
-
-        .gender-btn.active.gender-male {
-            background: linear-gradient(135deg, #60a5fa, #1d4ed8);
-            color: white;
-        }
-
-        .gender-btn.active.gender-female {
-            background: linear-gradient(135deg, #f472b6, #be185d);
-            color: white;
-        }
-
-        .info-btn {
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: #1a237e;
-            color: white;
-            border: none;
-            font-size: 10px;
-            font-weight: 900;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 5px;
-            vertical-align: middle;
-            font-style: italic;
-            flex-shrink: 0;
-        }
-
-        .info-btn:active {
-            opacity: 0.7;
-            transform: scale(0.92);
-        }
-
-        .info-popup-content {
-            background: white;
-            width: 100%;
-            max-width: 420px;
-            padding: 14px 14px 12px;
-            border-radius: 24px;
-            max-height: 55vh;
-            overflow-y: auto;
-        }
-
-        .entry-section {
-            border-radius: 14px;
-            padding: 10px 11px 2px;
-            margin-bottom: 9px;
-        }
-
-        .es-blue {
-            background: linear-gradient(135deg, #eff6ff, #dbeafe);
-            border-left: 3px solid #3b82f6;
-        }
-
-        .es-purple {
-            background: linear-gradient(135deg, #faf5ff, #ede9fe);
-            border-left: 3px solid #8b5cf6;
-        }
-
-        .es-green {
-            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
-            border-left: 3px solid #22c55e;
-        }
-
-        .es-orange {
-            background: linear-gradient(135deg, #fff7ed, #ffedd5);
-            border-left: 3px solid #f97316;
-        }
-
-        .auth-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: #f0f4f8;
-            z-index: 9999;
-        }
-
-        .auth-card {
-            background: white;
-            padding: 40px;
-            border-radius: 24px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-            width: 90%;
-            max-width: 380px;
-            text-align: center;
-            border: 1px solid #e2e8f0;
-        }
-
-        .auth-card h2 {
-            color: #1a237e;
-            margin-bottom: 8px;
-            font-size: 26px;
-            font-weight: 800;
-        }
-
-        .auth-input {
-            width: 100%;
-            padding: 14px;
-            margin: 10px 0;
-            border: 1.5px solid #e2e8f0;
-            border-radius: 12px;
-            font-size: 16px;
-            box-sizing: border-box;
-            background: #f1f5f9;
-        }
-
-        .auth-btn {
-            width: 100%;
-            padding: 15px;
-            border-radius: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            border: none;
-            margin-top: 10px;
-            font-size: 16px;
-            text-transform: uppercase;
-        }
-
-        .auth-btn-primary {
-            background: #1a237e;
-            color: white;
-        }
-
-        .auth-btn-link {
-            background: #e2e8f0;
-            color: #475569;
-        }
-
-        .auth-loader {
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #1a237e;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            animation: spin 1s linear infinite;
-            display: inline-block;
-            vertical-align: middle;
-            margin-right: 10px;
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        .hidden {
-            display: none !important;
-        }
-    </style>
+	<meta charset="UTF-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+	<title>Pharmanex Tracker Pro V25 | CRM Suite</title>
+	<style>
+	       * {
+	           box-sizing: border-box;
+	           -webkit-tap-highlight-color: transparent;
+	           margin: 0;
+	           padding: 0;
+	       }
+
+	       :root {
+	           --primary: #1a237e;
+	           --primary-dark: #0f195e;
+	           --bg: #f0f4f8;
+	           --gold: #ffd54f;
+	           --text-muted: #5f6368;
+	           --danger: #d32f2f;
+	       }
+
+	       body {
+	           font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
+	           background: var(--bg);
+	           padding-top: 245px !important;
+	           padding-bottom: 80px;
+	           min-height: 100vh;
+	       }
+
+	       .header-banner {
+	           width: 100%;
+	           height: 115px;
+	           background: linear-gradient(135deg, #0b2060 0%, #0a3e82 55%, #0d4fa0 100%);
+	           position: fixed;
+	           top: 0;
+	           left: 0;
+	           z-index: 1000;
+	           display: flex;
+	           flex-direction: column;
+	           align-items: center;
+	           justify-content: center;
+	           box-shadow: 0 4px 18px rgba(0, 0, 0, 0.28);
+	           padding: 8px 14px;
+	           gap: 1px;
+	       }
+
+	       .hdr-main-title {
+	           font-size: 1.5rem;
+	           font-weight: 900;
+	           color: #fff;
+	           text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+	           line-height: 1;
+	       }
+
+	       .hdr-brand {
+	           font-size: 1.1rem;
+	           font-weight: 700;
+	           color: rgba(255, 255, 255, 0.9);
+	           letter-spacing: 1px;
+	       }
+
+	       .hdr-subtitle {
+	           font-size: 0.88rem;
+	           font-weight: 600;
+	           color: #e8eef8;
+	           letter-spacing: 0.5px;
+	       }
+
+	       .hdr-contact {
+	           font-size: 0.92rem;
+	           font-weight: 800;
+	           color: var(--gold);
+	           letter-spacing: 0.8px;
+	           margin-top: 2px;
+	       }
+
+	       .stats-container {
+	           display: flex;
+	           gap: 9px;
+	           padding: 0 12px;
+	           position: fixed;
+	           top: 120px !important;
+	           left: 0;
+	           right: 0;
+	           z-index: 1001;
+	       }
+
+	       .stat-box {
+	           flex: 1;
+	           background: white;
+	           padding: 4px 2px;
+	           border-radius: 18px;
+	           text-align: center;
+	           box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+	           cursor: pointer;
+	           border: 2px solid transparent;
+	           transition: all 0.2s;
+	       }
+
+	       .stat-box.active {
+	           border-color: var(--primary);
+	           background: #eef2ff;
+	           transform: scale(0.97);
+	       }
+
+	       .stat-box h4 {
+	           color: var(--text-muted);
+	           font-size: 9px;
+	           font-weight: 600;
+	           text-transform: uppercase;
+	       }
+
+	       .stat-box p {
+	           font-size: 17px;
+	           font-weight: 800;
+	           color: var(--primary);
+	           margin-top: 2px;
+	       }
+
+	       .sort-bar {
+	           display: flex;
+	           gap: 7px;
+	           padding: 6px 12px;
+	           position: fixed;
+	           top: 190px !important;
+	           left: 0;
+	           right: 0;
+	           z-index: 999;
+	           overflow-x: auto;
+	           background: var(--bg);
+	       }
+
+	       .sort-bar::-webkit-scrollbar {
+	           display: none;
+	       }
+
+	       .sort-btn {
+	           flex-shrink: 0;
+	           padding: 5px 14px;
+	           border-radius: 40px;
+	           border: 1.5px solid #c8d6e8;
+	           background: white;
+	           font-size: 12px;
+	           font-weight: 600;
+	           color: #3a4a6b;
+	           cursor: pointer;
+	           white-space: nowrap;
+	       }
+
+	       .sort-btn.active {
+	           background: var(--primary) !important;
+	           color: white !important;
+	           border-color: var(--primary) !important;
+	       }
+
+	       .action-area {
+	           padding: 14px 12px 8px;
+	       }
+
+	       .search-input {
+	           width: 100%;
+	           padding: 13px 18px;
+	           border: 1.5px solid #dde3ef;
+	           border-radius: 40px;
+	           margin-bottom: 10px;
+	           font-size: 15px;
+	           outline: none;
+	           background: white;
+	       }
+
+	       .search-input:focus {
+	           border-color: var(--primary);
+	           box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.12);
+	       }
+
+	       .btn-main {
+	           width: 100%;
+	           padding: 13px;
+	           border: none;
+	           border-radius: 40px;
+	           background: var(--primary);
+	           color: white;
+	           font-weight: 700;
+	           font-size: 16px;
+	           cursor: pointer;
+	           transition: 0.2s;
+	           box-shadow: 0 3px 8px rgba(26, 35, 126, 0.25);
+	       }
+
+	       .btn-main:active {
+	           transform: scale(0.97);
+	           background: var(--primary-dark);
+	       }
+
+	       .btn-add-customer {
+	           padding: 9px 13px !important;
+	           background: linear-gradient(135deg, #6366f1 0%, #0ea5e9 50%, #10b981 100%) !important;
+	           font-size: 15px !important;
+	           letter-spacing: 0.3px;
+	           box-shadow: 0 3px 12px rgba(99, 102, 241, 0.35) !important;
+	       }
+
+	       .btn-secondary {
+	           background: #eef2fa !important;
+	           color: #1f2b48 !important;
+	           box-shadow: none !important;
+	           border: 1.5px solid #dde3ef !important;
+	       }
+
+	       .btn-danger {
+	           background: #fdecea !important;
+	           color: var(--danger) !important;
+	       }
+
+	       .settings-fab {
+	           position: relative;
+	           width: 48px;
+	           height: 48px;
+	           border-radius: 50%;
+	           background: var(--primary);
+	           color: white;
+	           font-size: 20px;
+	           border: none;
+	           cursor: pointer;
+	           display: flex;
+	           align-items: center;
+	           justify-content: center;
+	           flex-shrink: 0;
+	           box-shadow: 0 3px 8px rgba(26, 35, 126, 0.25);
+	       }
+
+	       .backup-alert {
+	           display: none;
+	           position: absolute;
+	           top: -3px;
+	           right: -3px;
+	           width: 0;
+	           height: 0;
+	           border-left: 7px solid transparent;
+	           border-right: 7px solid transparent;
+	           border-bottom: 13px solid #f59e0b;
+	           filter: drop-shadow(0 1px 3px rgba(245,158,11,0.7));
+	           pointer-events: none;
+	       }
+
+	       .action-row {
+	           display: flex;
+	           gap: 10px;
+	           align-items: center;
+	           margin-top: 5px;
+	       }
+
+	       table {
+	           width: 94%;
+	           margin: 4px auto;
+	           background: transparent;
+	           border-collapse: separate;
+	           border-spacing: 0 12px;
+	       }
+
+	       th {
+	           text-transform: uppercase;
+	           letter-spacing: 0.5px;
+	           font-size: 12px;
+	           color: #3a4a6b;
+	           padding-bottom: 5px;
+	       }
+
+	       td {
+	           padding: 16px 10px;
+	           background: white;
+	           border-top: 2px solid #1a237e;
+	           border-bottom: 2px solid #1a237e;
+	           font-size: 14px;
+	           vertical-align: middle;
+	           cursor: pointer;
+	           box-shadow: 0 4px 12px rgba(26, 35, 126, 0.1);
+	       }
+
+	       tr td:first-child {
+	           border-radius: 20px 0 0 20px;
+	       }
+
+	       tr td:last-child {
+	           border-radius: 0 20px 20px 0;
+	       }
+
+	       tr:active td {
+	           background: #f5f7ff;
+	       }
+
+	       .date-cell {
+	           font-size: 13px;
+	           line-height: 1.3;
+	           color: #1e2a47;
+	           font-weight: 600;
+	           min-width: 52px;
+	       }
+
+	       .date-year {
+	           color: #8898aa;
+	           display: block;
+	           font-size: 10px;
+	           margin-top: 2px;
+	           font-weight: 400;
+	       }
+
+	       .name-badge {
+	           display: inline-block;
+	           padding: 3px 12px;
+	           background: #eef2ff;
+	           color: #1a237e;
+	           border-radius: 20px;
+	           font-size: 14px;
+	           font-weight: 800;
+	           border: 1px solid rgba(26, 35, 126, 0.15);
+	           margin-bottom: 5px;
+	       }
+
+	       .score-pill {
+	           display: inline-block;
+	           padding: 4px 12px;
+	           border-radius: 50px;
+	           font-weight: 800;
+	           font-size: 14px;
+	           min-width: 45px;
+	           text-align: center;
+	       }
+
+	       .bg-red {
+	           background: #fdecea;
+	           color: #d32f2f;
+	       }
+
+	       .bg-orange {
+	           background: #fff3e0;
+	           color: #f57c00;
+	       }
+
+	       .bg-green {
+	           background: #e8f5e9;
+	           color: #2e7d32;
+	       }
+
+	       .customer-details {
+	           display: flex;
+	           flex-direction: column;
+	           gap: 3px;
+	           margin-top: 4px;
+	       }
+
+	       .info-line {
+	           font-size: 11px;
+	           color: #444;
+	           display: flex;
+	           align-items: center;
+	           gap: 4px;
+	       }
+
+	       .area-line {
+	           font-size: 11px;
+	           color: #1a237e;
+	           font-weight: 600;
+	           display: flex;
+	           align-items: center;
+	           gap: 4px;
+	           background: #f0f2fa;
+	           padding: 3px 8px;
+	           border-radius: 16px;
+	           margin-top: 2px;
+	           width: fit-content;
+	       }
+
+	       .phone-line {
+	           font-size: 11px;
+	           color: var(--primary);
+	           font-weight: 700;
+	           display: flex;
+	           align-items: center;
+	           gap: 4px;
+	       }
+
+	       .overlay {
+	           display: none;
+	           position: fixed;
+	           top: 0;
+	           left: 0;
+	           width: 100%;
+	           height: 100%;
+	           background: rgba(0, 0, 0, 0.55);
+	           z-index: 1500;
+	       }
+
+	       .modal {
+	           display: none;
+	           position: fixed;
+	           top: 0;
+	           left: 0;
+	           width: 100%;
+	           height: 100%;
+	           background: rgba(0, 0, 0, 0.82);
+	           z-index: 2000;
+	           align-items: center;
+	           justify-content: center;
+	           padding: 16px;
+	           backdrop-filter: blur(5px);
+	       }
+
+	       .modal-content {
+	           background: white;
+	           width: 100%;
+	           max-width: 500px;
+	           padding: 22px 18px;
+	           border-radius: 28px;
+	           max-height: 92vh;
+	           overflow-y: auto;
+	       }
+
+	       .modal-title {
+	           font-size: 18px;
+	           font-weight: 800;
+	           color: var(--primary);
+	           margin-bottom: 16px;
+	       }
+
+	       .list-modal {
+	           display: none;
+	           position: fixed;
+	           bottom: 0;
+	           left: 0;
+	           width: 100%;
+	           background: white;
+	           border-radius: 26px 26px 0 0;
+	           z-index: 2100;
+	           padding: 20px 16px 28px;
+	           box-sizing: border-box;
+	           box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.22);
+	       }
+
+	       .sheet-title {
+	           font-size: 17px;
+	           font-weight: 800;
+	           margin-bottom: 14px;
+	           color: #1a237e;
+	       }
+
+	       .form-group {
+	           margin-bottom: 13px;
+	       }
+
+	       label {
+	           font-size: 11.5px;
+	           font-weight: 700;
+	           color: #2c3e66;
+	           display: block;
+	           margin-bottom: 5px;
+	       }
+
+	       input,
+	       select,
+	       textarea {
+	           width: 100%;
+	           padding: 11px 14px;
+	           border: 1.5px solid #cfdfe8;
+	           border-radius: 16px;
+	           font-size: 15px;
+	           background: #fff;
+	           font-family: inherit;
+	       }
+
+	       input:focus,
+	       select:focus {
+	           outline: none;
+	           border-color: var(--primary);
+	           box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.15);
+	       }
+
+	       .flex-row {
+	           display: flex;
+	           gap: 10px;
+	       }
+
+	       .flex-row .form-group {
+	           flex: 1;
+	       }
+
+	       .h-info-bar {
+	           background: #f0f4fa;
+	           border-radius: 20px;
+	           padding: 9px 14px;
+	           font-size: 13px;
+	           color: #3a527a;
+	           margin-bottom: 10px;
+	           line-height: 1.6;
+	       }
+
+	       .contact-row {
+	           display: flex;
+	           gap: 9px;
+	           margin-bottom: 10px;
+	       }
+
+	       .contact-btn {
+	           flex: 1;
+	           padding: 11px 6px;
+	           border-radius: 16px;
+	           border: none;
+	           font-size: 14px;
+	           font-weight: 700;
+	           cursor: pointer;
+	           transition: 0.15s;
+	       }
+
+	       .contact-btn:active {
+	           transform: scale(0.96);
+	       }
+
+	       .wa-btn {
+	           background: #e8f5e9;
+	           color: #2e7d32;
+	       }
+
+	       .call-btn {
+	           background: #e3f2fd;
+	           color: #1565c0;
+	       }
+
+	       .chart-wrap {
+	           background: linear-gradient(145deg, #f5f7ff 0%, #ffffff 100%);
+	           border-radius: 22px;
+	           padding: 12px 10px 12px;
+	           margin-bottom: 10px;
+	           display: none;
+	           border: 1.5px solid rgba(26, 35, 126, 0.12);
+	           box-shadow: 0 6px 18px rgba(26, 35, 126, 0.08);
+	       }
+
+	       .chart-header {
+	           display: flex;
+	           align-items: center;
+	           justify-content: space-between;
+	           margin-bottom: 8px;
+	       }
+
+	       .chart-label {
+	           font-size: 12px;
+	           font-weight: 800;
+	           color: var(--primary);
+	           background: #eef2ff;
+	           padding: 4px 10px;
+	           border-radius: 30px;
+	       }
+
+	       .chart-trend-badge {
+	           font-size: 12px;
+	           font-weight: 800;
+	           padding: 4px 10px;
+	           border-radius: 30px;
+	       }
+
+	       .trend-up {
+	           background: #e8f5e9;
+	           color: #2e7d32;
+	       }
+
+	       .trend-down {
+	           background: #fdecea;
+	           color: #d32f2f;
+	       }
+
+	       .trend-flat {
+	           background: #f3f4f6;
+	           color: #6b7280;
+	       }
+
+	       .chart-scroll-container {
+	           width: 100%;
+	           overflow-x: auto;
+	           overflow-y: hidden;
+	           -webkit-overflow-scrolling: touch;
+	           padding-bottom: 5px;
+	       }
+
+	       .chart-scroll-container::-webkit-scrollbar {
+	           height: 4px;
+	       }
+
+	       .chart-scroll-container::-webkit-scrollbar-thumb {
+	           background: #cbd5e1;
+	           border-radius: 10px;
+	       }
+
+	       #scoreChart {
+	           display: block;
+	           height: 140px;
+	       }
+
+	       .score-zone-circles {
+	           display: flex;
+	           gap: 6px;
+	           justify-content: space-around;
+	           padding: 10px 6px 8px;
+	           background: #f8fafc;
+	           border-radius: 16px;
+	           margin-top: 10px;
+	       }
+
+	       .zone-circle-item {
+	           display: flex;
+	           flex-direction: column;
+	           align-items: center;
+	           gap: 3px;
+	           flex: 1;
+	       }
+
+	       .zone-circle {
+	           width: 40px;
+	           height: 40px;
+	           border-radius: 50%;
+	           display: flex;
+	           flex-direction: column;
+	           align-items: center;
+	           justify-content: center;
+	           margin: 0 auto;
+	           box-shadow: 0 2px 7px rgba(0, 0, 0, 0.1);
+	       }
+
+	       .zone-circle-count {
+	           font-size: 15px;
+	           font-weight: 900;
+	           line-height: 1.1;
+	       }
+
+	       .zone-circle-unit {
+	           font-size: 7px;
+	           color: #94a3b8;
+	           font-weight: 700;
+	           letter-spacing: 0.3px;
+	       }
+
+	       .zone-circle-label {
+	           font-size: 10px;
+	           font-weight: 800;
+	           color: #1e293b;
+	       }
+
+	       .zone-circle-range {
+	           font-size: 8px;
+	           font-weight: 700;
+	           background: rgba(0, 0, 0, 0.06);
+	           padding: 1px 5px;
+	           border-radius: 10px;
+	       }
+
+	       .growth-indicator-row {
+	           display: flex;
+	           gap: 6px;
+	           align-items: center;
+	           justify-content: center;
+	           margin-top: 8px;
+	           padding: 6px 10px;
+	           background: #f1f5ff;
+	           border-radius: 12px;
+	       }
+
+	       .growth-badge {
+	           font-size: 11px;
+	           font-weight: 800;
+	           padding: 4px 10px;
+	           border-radius: 20px;
+	       }
+
+	       .growth-up {
+	           background: #dcfce7;
+	           color: #16a34a;
+	       }
+
+	       .growth-down {
+	           background: #fee2e2;
+	           color: #dc2626;
+	       }
+
+	       .growth-flat {
+	           background: #f1f5f9;
+	           color: #64748b;
+	       }
+
+	       .growth-label {
+	           font-size: 10px;
+	           color: #64748b;
+	           font-weight: 600;
+	       }
+
+	       .history-scroll-wrap {
+	           max-height: 444px;
+	           overflow-y: auto;
+	           -webkit-overflow-scrolling: touch;
+	           padding-right: 2px;
+	           margin-bottom: 10px;
+	       }
+
+	       .history-scroll-wrap::-webkit-scrollbar {
+	           width: 4px;
+	       }
+
+	       .history-scroll-wrap::-webkit-scrollbar-thumb {
+	           background: #c8d6e8;
+	           border-radius: 4px;
+	       }
+
+	       .history-item {
+	           background: #f9fafc;
+	           padding: 10px 12px;
+	           margin-bottom: 8px;
+	           border-radius: 18px;
+	           border-left: 4px solid var(--primary);
+	           font-size: 13px;
+	       }
+
+	       .hist-top {
+	           display: flex;
+	           justify-content: space-between;
+	           align-items: center;
+	       }
+
+	       .hist-date {
+	           font-weight: 700;
+	           font-size: 12px;
+	           color: #1e2a47;
+	       }
+
+	       .hist-badges {
+	           display: flex;
+	           gap: 5px;
+	           align-items: center;
+	           flex-wrap: wrap;
+	           justify-content: flex-end;
+	       }
+
+	       .score-badge {
+	           padding: 3px 9px;
+	           border-radius: 8px;
+	           font-weight: 800;
+	           font-size: 13px;
+	       }
+
+	       .delta-badge {
+	           padding: 2px 8px;
+	           border-radius: 20px;
+	           font-size: 11px;
+	           font-weight: 800;
+	           white-space: nowrap;
+	       }
+
+	       .delta-up {
+	           background: #e8f5e9;
+	           color: #2e7d32;
+	       }
+
+	       .delta-down {
+	           background: #fdecea;
+	           color: #d32f2f;
+	       }
+
+	       .delta-same {
+	           background: #f3f4f6;
+	           color: #6b7280;
+	       }
+
+	       .hist-sub {
+	           margin-top: 6px;
+	           font-size: 11px;
+	           color: #555;
+	           line-height: 1.5;
+	       }
+
+	       .hist-foot {
+	           display: flex;
+	           justify-content: space-between;
+	           align-items: center;
+	           margin-top: 6px;
+	       }
+
+	       .lp-badge {
+	           background: #eef2ff;
+	           padding: 2px 9px;
+	           border-radius: 12px;
+	           font-size: 11px;
+	           font-weight: 700;
+	       }
+
+	       .latest-tag {
+	           color: #1a73e8;
+	           font-size: 11px;
+	       }
+
+	       .visit-options {
+	           position: relative;
+	           display: inline-block;
+	       }
+
+	       .options-btn {
+	           background: none;
+	           border: none;
+	           cursor: pointer;
+	           color: #555;
+	           padding: 0 8px;
+	           font-size: 22px;
+	           font-weight: bold;
+	       }
+
+	       .options-menu {
+	           display: none;
+	           position: absolute;
+	           right: 0;
+	           top: 30px;
+	           background: white;
+	           border: 1px solid #ddd;
+	           border-radius: 12px;
+	           box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+	           z-index: 100;
+	           min-width: 110px;
+	       }
+
+	       .options-menu button {
+	           display: block;
+	           width: 100%;
+	           padding: 12px;
+	           border: none;
+	           background: none;
+	           text-align: left;
+	           font-size: 14px;
+	           font-weight: 600;
+	           cursor: pointer;
+	       }
+
+	       .options-menu button:active {
+	           background: #f0f4ff;
+	       }
+
+	       .show-menu {
+	           display: block !important;
+	       }
+
+	       .area-chip {
+	           padding: 13px 14px;
+	           border-bottom: 1px solid #eef2f5;
+	           font-weight: 500;
+	           font-size: 15px;
+	           cursor: pointer;
+	       }
+
+	       .area-chip:active {
+	           background: #eef2ff;
+	       }
+
+	       .sett-item {
+	           display: flex;
+	           align-items: center;
+	           gap: 14px;
+	           padding: 14px 4px;
+	           border-bottom: 1px solid #eef2f5;
+	           cursor: pointer;
+	           font-size: 15px;
+	           font-weight: 500;
+	       }
+
+	       .sett-icon {
+	           font-size: 22px;
+	           width: 34px;
+	           text-align: center;
+	       }
+
+	       @media print {
+
+	           .header-banner,
+	           .stats-container,
+	           .sort-bar,
+	           .action-area,
+	           .settings-fab,
+	           .overlay,
+	           .modal,
+	           .list-modal {
+	               display: none !important;
+	           }
+
+	           body {
+	               padding: 0 !important;
+	               background: white !important;
+	           }
+	       }
+
+	       .gender-toggle {
+	           display: flex;
+	           border-radius: 16px;
+	           overflow: hidden;
+	           border: 1.5px solid #cfdfe8;
+	       }
+
+	       .gender-btn {
+	           flex: 1;
+	           padding: 11px 14px;
+	           border: none;
+	           font-size: 15px;
+	           font-weight: 700;
+	           cursor: pointer;
+	           transition: 0.2s;
+	           background: #f8fafc;
+	           color: #64748b;
+	       }
+
+	       .gender-btn.active.gender-male {
+	           background: linear-gradient(135deg, #60a5fa, #1d4ed8);
+	           color: white;
+	       }
+
+	       .gender-btn.active.gender-female {
+	           background: linear-gradient(135deg, #f472b6, #be185d);
+	           color: white;
+	       }
+
+	       .info-btn {
+	           width: 18px;
+	           height: 18px;
+	           border-radius: 50%;
+	           background: #1a237e;
+	           color: white;
+	           border: none;
+	           font-size: 10px;
+	           font-weight: 900;
+	           cursor: pointer;
+	           display: inline-flex;
+	           align-items: center;
+	           justify-content: center;
+	           margin-top: 5px;
+	           vertical-align: middle;
+	           font-style: italic;
+	           flex-shrink: 0;
+	       }
+
+	       .info-btn:active {
+	           opacity: 0.7;
+	           transform: scale(0.92);
+	       }
+
+	       .info-popup-content {
+	           background: white;
+	           width: 100%;
+	           max-width: 420px;
+	           padding: 14px 14px 12px;
+	           border-radius: 24px;
+	           max-height: 55vh;
+	           overflow-y: auto;
+	       }
+
+	       .entry-section {
+	           border-radius: 14px;
+	           padding: 10px 11px 2px;
+	           margin-bottom: 9px;
+	       }
+
+	       .es-blue {
+	           background: linear-gradient(135deg, #eff6ff, #dbeafe);
+	           border-left: 3px solid #3b82f6;
+	       }
+
+	       .es-purple {
+	           background: linear-gradient(135deg, #faf5ff, #ede9fe);
+	           border-left: 3px solid #8b5cf6;
+	       }
+
+	       .es-green {
+	           background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+	           border-left: 3px solid #22c55e;
+	       }
+
+	       .es-orange {
+	           background: linear-gradient(135deg, #fff7ed, #ffedd5);
+	           border-left: 3px solid #f97316;
+	       }
+	
+       /* ===== ACTIVATION SCREEN ===== */
+       #activationScreen {
+           display: none;
+           position: fixed; top:0; left:0; width:100%; height:100%;
+           z-index: 9999;
+           background: linear-gradient(160deg, #0b2060 0%, #0a3e82 50%, #0d4fa0 100%);
+           align-items: center; justify-content: center; padding: 20px;
+       }
+       .activ-card {
+           background: white; border-radius: 32px; padding: 30px 22px 26px;
+           width: 100%; max-width: 420px;
+           box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+       }
+       .activ-logo { text-align: center; margin-bottom: 20px; }
+       .activ-logo-title { font-size: 2rem; font-weight: 900; color: #0b2060; line-height:1; }
+       .activ-logo-sub { font-size: 0.9rem; font-weight: 600; color: #64748b; margin-top:4px; }
+       .activ-title { font-size: 17px; font-weight: 800; color: #1a237e; margin-bottom:18px; text-align:center; }
+       .activ-label { font-size: 11px; font-weight: 700; color: #475569; margin-bottom:5px; display:block; }
+       .activ-input { width:100%; padding:13px 16px; border:2px solid #dde3ef; border-radius:16px;
+           font-size:17px; letter-spacing:2px; font-family:monospace; text-align:center; outline:none;
+           margin-bottom:12px; }
+       .activ-input:focus { border-color:#1a237e; box-shadow:0 0 0 3px rgba(26,35,126,0.15); }
+       .activ-btn { width:100%; padding:15px; border:none; border-radius:40px;
+           background:linear-gradient(135deg,#1a237e,#0d4fa0);
+           color:white; font-size:16px; font-weight:800; cursor:pointer;
+           box-shadow:0 4px 14px rgba(26,35,126,0.4); margin-top:4px; }
+       .activ-btn:active { transform:scale(0.97); }
+       .activ-error { color:#d32f2f; font-size:12px; font-weight:700; text-align:center;
+           margin-top:8px; display:none; padding:8px; background:#fdecea; border-radius:10px; }
+       .activ-footer { text-align:center; font-size:10px; color:#94a3b8; margin-top:14px; }
+       /* ===== SIGN OUT BUTTON ===== */
+       .hdr-signout {
+           position: absolute; top: 10px; right: 12px;
+           background: rgba(255,255,255,0.15); border: 1.5px solid rgba(255,255,255,0.35);
+           color: white; font-size: 13px; font-weight: 700;
+           padding: 5px 11px; border-radius: 20px; cursor: pointer;
+           display: flex; align-items: center; gap: 5px;
+       }
+       .hdr-signout:active { background: rgba(255,255,255,0.25); }
+       /* ===== GOOGLE DRIVE MODAL ===== */
+       .gdrive-modal-inner { background:white; width:100%; max-width:440px;
+           padding:22px 18px; border-radius:28px; max-height:85vh; overflow-y:auto; }
+       .gdrive-status { display:flex; align-items:center; gap:8px; padding:10px 14px;
+           border-radius:14px; margin-bottom:12px; font-size:13px; font-weight:600; }
+       .gdrive-connected { background:#e8f5e9; color:#2e7d32; }
+       .gdrive-disconnected { background:#fff3e0; color:#f57c00; }
+       .gdrive-action-btn { width:100%; padding:12px; border:none; border-radius:16px;
+           font-size:14px; font-weight:700; cursor:pointer; margin-bottom:8px;
+           display:flex; align-items:center; gap:10px; }
+       .gdrive-backup-btn { background:#e8f5e9; color:#1b5e20; }
+       .gdrive-restore-btn { background:#e3f2fd; color:#0d47a1; }
+       .gdrive-disconnect-btn { background:#fdecea; color:#b71c1c; }
+       .gdrive-clientid-wrap { background:#f8fafc; border-radius:14px; padding:12px; margin-bottom:10px; }
+       .gdrive-file-list { max-height:180px; overflow-y:auto; margin-bottom:10px; }
+       .gdrive-file-item { padding:10px 12px; border-bottom:1px solid #eef2f5;
+           cursor:pointer; font-size:13px; border-radius:10px; }
+       .gdrive-file-item:active { background:#eef2ff; }
+
+	</style>
 </head>
-
 <body>
+	
+	<!-- ===== ACTIVATION SCREEN ===== -->
+	<div id="activationScreen" style="display:none;align-items:center;justify-content:center;">
+		<div class="activ-card">
+			<div class="activ-logo">
+				<div class="activ-logo-title">PRYSM IO - TOOL</div>
+				<div class="activ-logo-sub">PHARMANEX® | Prysm Score Tracker</div>
+			</div>
+			<div class="activ-title">🔐 App Activation</div>
+			<span class="activ-label">📱 Registered Mobile Number (10 digits)</span>
+			<input class="activ-input" id="activPhone" maxlength="10" pattern="[0-9]*" placeholder="9876543210" type="tel">
+			<span class="activ-label">🔑 Activation Code (4 digits)</span>
+			<input class="activ-input" id="activCode" maxlength="4" pattern="[0-9]*" placeholder="0000" type="tel">
+			<button class="activ-btn" onclick="doActivate()">✅ ACTIVATE APP</button>
+			<div class="activ-error" id="activError">❌ Invalid code. Please check and try again.</div>
+			<div class="activ-footer">Contact your distributor for activation code.</div>
+		</div>
+	</div>
+	<!-- ===== GOOGLE DRIVE MODAL ===== -->
+	<div class="modal" id="gdriveModal">
+		<div class="gdrive-modal-inner">
+			<div class="modal-title">☁️ Google Drive Backup</div>
+			<div id="gdriveStatusBar" class="gdrive-status gdrive-disconnected">🔴 Not connected to Google</div>
+			<div id="gdriveClientIdWrap" class="gdrive-clientid-wrap">
+				<label style="font-size:11px;font-weight:700;color:#475569;display:block;margin-bottom:5px;">Google OAuth Client ID</label>
+				<input id="gdriveClientId" placeholder="xxxx.apps.googleusercontent.com" style="width:100%;padding:9px 12px;border:1.5px solid #dde3ef;border-radius:12px;font-size:12px;" type="text">
+				<div style="font-size:10px;color:#94a3b8;margin-top:5px;">⚙️ Create at console.cloud.google.com → APIs → OAuth</div>
+			</div>
+			<button class="gdrive-action-btn" id="gdriveConnectBtn" onclick="gdriveConnect()">🔗 Connect Google Account</button>
+			<button class="gdrive-action-btn gdrive-backup-btn" id="gdriveBackupBtn" onclick="gdriveBackup()" style="display:none;">📤 Backup to Drive</button>
+			<button class="gdrive-action-btn gdrive-restore-btn" id="gdriveRestoreBtn" onclick="gdriveListFiles()" style="display:none;">📥 Restore from Drive</button>
+			<div id="gdriveFileList" class="gdrive-file-list" style="display:none;"></div>
+			<button class="gdrive-action-btn gdrive-disconnect-btn" id="gdriveDisconnectBtn" onclick="gdriveDisconnect()" style="display:none;">🔌 Disconnect</button>
+			<button class="btn-main btn-secondary" onclick="closeAllPopups()" style="margin-top:4px;">Close</button>
+		</div>
+	</div>
 
-    <!-- LOGIN SCREEN -->
-    <div id="loginSection" class="auth-container">
-        <div class="auth-card">
-            <h2>Pharmanex</h2>
-            <p style="color: #64748b; font-size: 14px; margin-bottom: 20px;">Advanced Tracker V23</p>
-            <input type="tel" id="userPhone" class="auth-input" placeholder="Mobile Number" maxlength="10">
-            <button class="auth-btn auth-btn-link" onclick="linkAccount()">Link Google Account</button>
-            <div id="gmailStatus" style="font-size:12px; margin-bottom:10px; color:#94a3b8;">Account Not Linked</div>
-            <button id="loginBtn" class="auth-btn auth-btn-primary" onclick="handleLogin()">Login Now</button>
-        </div>
-    </div>
+	<div id="mainApp" style="display:none;">
+		<div class="header-banner">
+			<button class="hdr-signout" id="signOutBtn" onclick="doSignOut()" style="display:none;">🔒 Lock</button>
+			<div class="hdr-main-title">
+				PRYSM IO - TOOL
+			</div>
+			<div class="hdr-brand">
+				PHARMANEX®
+			</div>
+			<div class="hdr-subtitle">
+				LifePak® Elements • Prysm Score Tracker
+			</div>
+			<div class="hdr-contact" id="displayContact">
+				ADD YOUR NAME & DASHBOARD
+			</div>
+		</div>
+		<div class="stats-container">
+			<div class="stat-box active" id="statAll" onclick="filterData('all')">
+				<h4>📊 TOTAL</h4>
+				<p id="totalCount">0</p>
+			</div>
+			<div class="stat-box" id="statArea" onclick="showAreaPopup()">
+				<h4>📍 AREAS</h4>
+				<p id="areaCount">0</p>
+			</div>
+			<div class="stat-box" id="statMonth" onclick="filterData('month')">
+				<h4>📅 THIS MONTH</h4>
+				<p id="monthCount">0</p>
+			</div>
+		</div>
+		<div class="sort-bar">
+			<button class="sort-btn active" id="sBtn_date" onclick="setSort('date')">📅 Date ↓</button> <button class="sort-btn" id="sBtn_name" onclick="setSort('name')">🔤 Name</button> <button class="sort-btn" id="sBtn_score" onclick="setSort('score')">📈 Score</button> <button class="sort-btn" id="sBtn_lp" onclick="setSort('lp')">💊 LP</button>
+		</div>
+		<div class="action-area">
+			<input class="search-input" id="search" oninput="renderTable()" placeholder="🔍 Search: Name / Phone / Area ..." type="text">
+			<div class="action-row">
+				<button class="btn-main btn-add-customer" onclick="openForm('add')">✚ Add New Customer</button> <button class="settings-fab" id="settingsFab" onclick="openSettings()">⚙️<span class="backup-alert" id="backupAlert"></span></button>
+			</div>
+		</div>
+		<table id="dataTable">
+			<thead>
+				<tr>
+					<th>📆 Date</th>
+					<th>👤 Customer</th>
+					<th style="text-align:center">ℹ️ Info</th>
+					<th style="text-align:center">🔄 Vis</th>
+					<th style="text-align:center">📈 Score</th>
+					<th style="text-align:center">💊 LP</th>
+				</tr>
+			</thead>
+			<tbody id="tableBody"></tbody>
+		</table>
+		<div class="overlay" id="overlay" onclick="closeAllPopups()"></div>
+		<div class="list-modal" id="areaListPopup">
+			<div class="sheet-title">
+				📍 Select Area
+			</div>
+			<div id="areaItems"></div><button class="btn-main btn-secondary" onclick="closeAllPopups()">Close</button>
+		</div>
+		<div class="list-modal" id="settingsPopup">
+			<div class="sheet-title">
+				⚙️ Settings & Data Vault
+			</div>
+			<div class="sett-item" onclick="openProfileEdit()">
+				<span class="sett-icon">👤</span> ADD OR EDIT YOUR  Profile (HEAR)
+			</div>
+			<div class="sett-item" onclick="exportJSON()">
+				<span class="sett-icon">📤</span> CUSTOMER DATA BACKUP TO SAFE  FILE
+			</div>
+			<div class="sett-item" onclick="triggerImport()">
+				<span class="sett-icon">📥</span> CUSTOMER DATA RELOAD & MERGE TO SAVED FILE
+			</div>
+			<div class="sett-item" onclick="localStorage.clear(); location.reload();" style="color:red">
+				<span class="sett-icon">🚪</span> CLEAR ALL DATA
+			</div><div class="sett-item" onclick="openGDriveModal()">
+				<span class="sett-icon">☁️</span> Google Drive Backup / Restore
+			</div>
+			<input accept=".json" id="importFile" onchange="enhancedImportJSON(event)" style="display:none;" type="file"><button class="btn-main btn-secondary" onclick="closeAllPopups()" style="margin-top:10px">Close</button>
+		</div>
+		<div class="modal" id="profileModal">
+			<div class="modal-content">
+				<div class="modal-title">
+					👤 Edit Profile Header
+				</div>
+				<div class="form-group">
+					<label>Display Name</label><input id="pName" placeholder="Your Name" type="text">
+				</div>
+				<div class="form-group">
+					<label>Phone Number</label><input id="pPhone" placeholder="Phone No" type="text">
+				</div><button class="btn-main" onclick="saveProfile()">💾 Save Changes</button><button class="btn-main btn-secondary" onclick="closeAllPopups()" style="margin-top:8px;">Cancel</button>
+			</div>
+		</div>
+		<div class="modal" id="entryModal">
+			<div class="modal-content">
+				<div class="modal-title" id="modalTitle">
+					📝 New Visit
+				</div><input id="editId" type="hidden">
+				<div class="entry-section es-blue">
+					<div class="form-group">
+						<label>📅 Date</label><input id="fDate" type="date">
+					</div>
+					<div class="form-group">
+						<label>🧑 Full Name *</label><input id="fName" type="text">
+					</div>
+				</div>
+				<div class="entry-section es-purple">
+					<div class="flex-row">
+						<div class="form-group">
+							<label>🎂 Age</label><input id="fAge" type="number">
+						</div>
+						<div class="form-group">
+							<label>⚥ Gender</label>
+							<div class="gender-toggle" id="genderToggle">
+								<button class="gender-btn gender-male active" onclick="setGender('M')" type="button">♂ Male</button><button class="gender-btn gender-female" onclick="setGender('F')" type="button">♀ Female</button>
+							</div><input id="fGender" type="hidden" value="M">
+						</div>
+					</div>
+					<div class="form-group">
+						<label>📞 Phone Number</label><input id="fPhone" type="tel">
+					</div>
+					<div class="form-group">
+						<label>📍 Area</label><input id="fArea" placeholder="e.g.: village town city" type="text">
+					</div>
+				</div>
+				<div class="entry-section es-green">
+					<div class="flex-row">
+						<div class="form-group">
+							<label>📈 Score (0–1000)</label><input id="fScore" type="number">
+						</div>
+						<div class="form-group">
+							<label>💊 LP</label><input id="fLP" type="number">
+						</div>
+					</div>
+				</div>
+				<div class="entry-section es-orange">
+					<div class="form-group">
+						<label>🛒 Products</label><input id="fProducts" type="text">
+					</div>
+					<div class="form-group">
+						<label>📝 Notes</label>
+						<textarea id="fNotes" rows="2"></textarea>
+					</div>
+				</div><button class="btn-main" onclick="saveEntry()">💾 Save Entry</button><button class="btn-main btn-secondary" onclick="closeAllPopups()" style="margin-top:8px;">Cancel</button>
+			</div>
+		</div>
+		<div class="modal" id="infoPopup">
+			<div class="info-popup-content">
+				<div class="modal-title" id="infoPopupTitle" style="font-size:15px;margin-bottom:10px;">
+					ℹ️ Latest Visit Info
+				</div>
+				<div id="infoPopupContent" style="margin-bottom:4px;"></div><button class="btn-main btn-secondary" onclick="closeAllPopups()" style="margin-top:8px;padding:9px;">Close</button>
+			</div>
+		</div>
+		<div class="modal" id="historyModal">
+			<div class="modal-content">
+				<div class="modal-title" id="hName">
+					📋 Visit History
+				</div>
+				<div class="h-info-bar" id="hInfo"></div>
+				<div class="contact-row" id="contactRow"></div>
+				<div class="chart-wrap" id="chartWrap">
+					<div class="chart-header">
+						<div class="chart-label">
+							📊 All Visits Score Trend
+						</div>
+						<div class="chart-trend-badge trend-flat" id="trendBadge">
+							➡️ Stable
+						</div>
+					</div>
+					<div class="chart-scroll-container">
+						<canvas id="scoreChart"></canvas>
+					</div>
+					<div class="score-zone-circles" id="scoreZoneCircles"></div>
+					<div class="growth-indicator-row" id="growthIndicatorRow" style="display:none;">
+						<span class="growth-label">📊 Overall:</span><span class="growth-badge growth-flat" id="overallGrowthBadge">→ No Change</span><span class="growth-label" id="overallGrowthDetail"></span>
+					</div>
+				</div>
+				<div class="history-scroll-wrap" id="historyList"></div><button class="btn-main" onclick="quickAddVisit()">➕ Add New Visit</button><button class="btn-main btn-danger" onclick="deleteCustomer()" style="margin-top:8px;">🗑️ Delete Customer</button><button class="btn-main btn-secondary" onclick="closeAllPopups()" style="margin-top:8px;">Close</button>
+			</div>
+		</div>
+	</div>
+	<script>
+	       // ======================== NO LOGIN - DIRECT ACCESS CRM ========================
+	       const STORAGE_KEY = 'PhxData_V25';
+	       const PROFILE_KEY = 'PhxProfile_V1';
+	       let db = [], activeHistoryName = '', currentFilterMode = 'all', currentSort = 'date', sortAsc = false;
 
-    <!-- MAIN APP (initially hidden) -->
-    <div id="mainApp" class="hidden">
+	       function loadProfile() {
+	           const data = JSON.parse(localStorage.getItem(PROFILE_KEY)) || { name: 'ADD YOUR NAME &', phone: 'NO ENTER TO SETTINGS' };
+	           const contactSpan = document.getElementById('displayContact');
+	           if (contactSpan) contactSpan.innerHTML = `${data.name.toUpperCase()} &nbsp; PH: ${data.phone}`;
+	           return data;
+	       }
+	       function openProfileEdit() { closeAllPopups(); const data = loadProfile(); document.getElementById('pName').value = data.name === 'ADD YOUR NAME &' ? '' : data.name; document.getElementById('pPhone').value = data.phone === 'NO ENTER TO SETTINGS' ? '' : data.phone; document.getElementById('profileModal').style.display = 'flex'; }
+	       function saveProfile() { const name = document.getElementById('pName').value.trim() || 'ADD YOUR NAME &'; const phone = document.getElementById('pPhone').value.trim() || 'NO ENTER TO SETTINGS'; localStorage.setItem(PROFILE_KEY, JSON.stringify({ name, phone })); loadProfile(); closeAllPopups(); }
 
-        <div class="header-banner">
-            <div class="hdr-main-title">NU SKIN</div>
-            <div class="hdr-brand">PHARMANEX®</div>
-            <div class="hdr-subtitle">LifePak® Elements &bull; Prysm Score Tracker</div>
-            <div id="displayContact" class="hdr-contact">SET YOUR NAME &nbsp; PH: SET PHONE NO</div>
-        </div>
+	       function loadDB() { const local = localStorage.getItem(STORAGE_KEY); db = local ? JSON.parse(local) : []; updateStats(); renderTable(); if (localStorage.getItem('PhxNeedsBackup')) showBackupAlert(); }
+	       function saveDB(rerender = true) { localStorage.setItem(STORAGE_KEY, JSON.stringify(db)); showBackupAlert(); updateStats(); if (rerender) renderTable(); }
 
-        <div class="stats-container">
-            <div class="stat-box active" id="statAll" onclick="filterData('all')">
-                <h4>📊 TOTAL</h4>
-                <p id="totalCount">0</p>
-            </div>
-            <div class="stat-box" id="statArea" onclick="showAreaPopup()">
-                <h4>📍 AREAS</h4>
-                <p id="areaCount">0</p>
-            </div>
-            <div class="stat-box" id="statMonth" onclick="filterData('month')">
-                <h4>📅 THIS MONTH</h4>
-                <p id="monthCount">0</p>
-            </div>
-        </div>
+	       const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+	       const MON_MAP = { Jan:'01',Feb:'02',Mar:'03',Apr:'04',May:'05',Jun:'06',Jul:'07',Aug:'08',Sep:'09',Oct:'10',Nov:'11',Dec:'12' };
+	       function dateInputToDisplay(val) { if (!val) return ''; const [y,m,d] = val.split('-'); return `${d} ${MONTHS[parseInt(m,10)-1]} ${y.slice(-2)}`; }
+	       function displayToDateInput(str) { if (!str) return ''; const p = str.trim().split(' '); const yr = parseInt(p[2],10) < 100 ? 2000+parseInt(p[2],10) : parseInt(p[2],10); return `${yr}-${MON_MAP[p[1]]||'01'}-${p[0].padStart(2,'0')}`; }
+	       function dateToTs(d) { if (!d) return 0; const inp = displayToDateInput(d); return new Date(inp).getTime() || 0; }
+	       function formatDisplayDate(dateStr) { const p = dateStr.split(' '); return p.length >=3 ? `${p[0]} ${p[1]}<br><span class="date-year">20${p[2]}<\/span>` : dateStr; }
+	       function todayInputVal() { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+	       function escapeHtml(s) { return String(s || '').replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' })[c]); }
+	       function getGenderSymbol(g) { return g === 'M' ? '♂️' : g === 'F' ? '♀️' : '⚧️'; }
 
-        <div class="sort-bar">
-            <button class="sort-btn active" id="sBtn_date" onclick="setSort('date')">📅 Date ↓</button>
-            <button class="sort-btn" id="sBtn_name" onclick="setSort('name')">🔤 Name</button>
-            <button class="sort-btn" id="sBtn_score" onclick="setSort('score')">📈 Score</button>
-            <button class="sort-btn" id="sBtn_lp" onclick="setSort('lp')">💊 LP</button>
-        </div>
+	       function updateStats() {
+	           const unique = [...new Map(db.map(e => [e.name, e])).values()];
+	           document.getElementById('totalCount').innerText = unique.length;
+	           const areaSet = new Set(db.map(e => (e.area || '').trim()).filter(a => a && a !== 'N/A' && a !== ''));
+	           document.getElementById('areaCount').innerText = areaSet.size;
+	           const now = new Date(), cm = now.getMonth(), cy = now.getFullYear();
+	           const mv = db.filter(v => { const d = displayToDateInput(v.date); if (!d) return false; const dv = new Date(d); return dv.getMonth() === cm && dv.getFullYear() === cy; });
+	           document.getElementById('monthCount').innerText = [...new Map(mv.map(e => [e.name, e])).values()].length;
+	       }
 
-        <div class="action-area">
-            <input type="text" id="search" class="search-input" placeholder="🔍 Search: Name / Phone / Area ..."
-                oninput="renderTable()">
-            <div class="action-row">
-                <button class="btn-main btn-add-customer" onclick="openForm('add')">✚ Add New Customer</button>
-                <button class="settings-fab" onclick="openSettings()">⚙️</button>
-            </div>
-        </div>
+	       function setSort(s) {
+	           if (currentSort === s) sortAsc = !sortAsc;
+	           else { currentSort = s; sortAsc = (s === 'name'); }
+	           document.querySelectorAll('.sort-btn').forEach(btn => btn.classList.remove('active'));
+	           const activeBtn = document.getElementById('sBtn_' + s);
+	           if (activeBtn) { activeBtn.classList.add('active'); const arrow = sortAsc ? ' ↑' : ' ↓'; const labels = { date:'📅 Date', name:'🔤 Name', score:'📈 Score', lp:'💊 LP' }; activeBtn.innerText = labels[s] + arrow; }
+	           renderTable();
+	       }
+	       function filterData(mode) { currentFilterMode = mode; document.querySelectorAll('.stat-box').forEach(el => el.classList.remove('active')); document.getElementById(mode === 'all' ? 'statAll' : 'statMonth').classList.add('active'); renderTable(); }
+	       
+	       function renderTable() {
+	           const tbody = document.getElementById('tableBody'); tbody.innerHTML = '';
+	           const q = (document.getElementById('search').value || '').toLowerCase().trim();
+	           let filtered = db; if (q) filtered = db.filter(e => e.name.toLowerCase().includes(q) || (e.phone && e.phone.includes(q)) || (e.area && e.area.toLowerCase().includes(q)));
+	           if (currentFilterMode === 'month') { const now = new Date(), cm = now.getMonth(), cy = now.getFullYear(); filtered = filtered.filter(v => { const d = displayToDateInput(v.date); if (!d) return false; const dv = new Date(d); return dv.getMonth() === cm && dv.getFullYear() === cy; }); }
+	           const map = new Map(); filtered.forEach(e => { const n = e.name.trim(); if (!map.has(n)) map.set(n, { ...e, count: 1 }); else { const ex = map.get(n); ex.count++; if (dateToTs(e.date) > dateToTs(ex.date)) Object.assign(ex, e); } });
+	           let latest = Array.from(map.values()).sort((a,b) => { if (currentSort === 'date') return sortAsc ? dateToTs(a.date)-dateToTs(b.date) : dateToTs(b.date)-dateToTs(a.date); if (currentSort === 'name') return sortAsc ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name); if (currentSort === 'score') return sortAsc ? (parseInt(a.score)||0)-(parseInt(b.score)||0) : (parseInt(b.score)||0)-(parseInt(a.score)||0); if (currentSort === 'lp') return sortAsc ? (parseInt(a.lp)||0)-(parseInt(b.lp)||0) : (parseInt(b.lp)||0)-(parseInt(a.lp)||0); return 0; });
+	           if (!latest.length) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:40px;">📭 No data. Click + to add. <\/td><\/tr>'; return; }
+	           latest.forEach(c => { const sv = parseInt(c.score,10); const pCls = isNaN(sv) ? "" : (sv <= 700 ? "bg-red" : (sv <= 900 ? "bg-orange" : "bg-green")); const gSym = getGenderSymbol(c.gender); const ageText = c.age ? `🎂 ${c.age} ${gSym}` : `🎂 -- ${gSym}`; const areaVal = (c.area && c.area !== 'N/A') ? c.area : 'No Area'; const phoneVal = c.phone || '----'; const safeName = escapeHtml(c.name).replace(/'/g, "&#39;"); const hasInfo = !!(c.products || c.notes); const infoBtnStyle = hasInfo ? 'background:#1a237e;' : 'background:#94a3b8;'; const infoBtn = `<button class="info-btn" style="${infoBtnStyle}" onclick="showInfoPopup(event,'${safeName}')">i<\/button>`; tbody.innerHTML += `<tr onclick="showHistory('${safeName}')"><td class="date-cell">${formatDisplayDate(c.date)}<\/td><td><div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;"><div class="name-badge">${escapeHtml(c.name)}<\/div><\/div><div class="customer-details"><div class="info-line">${ageText}<\/div><div class="area-line"><span>📍<\/span> ${escapeHtml(areaVal)}<\/div><div class="phone-line"><span>📞<\/span> ${escapeHtml(phoneVal)}<\/div><\/div><\/td><td style="text-align:center;font-weight:800;">${infoBtn}<\/td><td style="text-align:center;font-weight:800;">${c.count}<\/td><td style="text-align:center"><div class="score-pill ${pCls}">📈 ${c.score || '---'}<\/div><\/td><td style="text-align:center"><b>💊 ${c.lp || '---'}<\/b><\/td><\/tr>`; });
+	       }
 
-        <table id="dataTable">
-            <thead>
-                <tr><th>📆 Date</th><th>👤 Customer</th><th style="text-align:center">ℹ️ Info</th><th style="text-align:center">🔄 Vis</th><th style="text-align:center">📈 Score</th><th style="text-align:center">💊 LP</th></tr>
-            </thead>
-            <tbody id="tableBody"></tbody>
-        </table>
+	       function drawChartNow(visits) {
+	           const canvas = document.getElementById('scoreChart'); if (!canvas) return;
+	           const monthLabels = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+	           const allDates = visits.map(v => new Date(displayToDateInput(v.date))).filter(d => !isNaN(d.getTime()));
+	           if (!allDates.length) return;
+	           const earliest = new Date(Math.min(...allDates.map(d => d.getTime())));
+	           let iy = earliest.getFullYear(), im = earliest.getMonth();
+	           const chartData = [];
+	           const now = new Date();
+	           while (iy < now.getFullYear() || (iy === now.getFullYear() && im <= now.getMonth())) { 
+	               let monthVisits = visits.filter(v => { const vd = new Date(displayToDateInput(v.date)); return vd.getMonth() === im && vd.getFullYear() === iy; }); 
+	               let score = 0; 
+	               if (monthVisits.length > 0) { monthVisits.sort((a,b)=>dateToTs(b.date)-dateToTs(a.date)); score = parseInt(monthVisits[0].score) || 0; } 
+	               chartData.push({ label: monthLabels[im], year: iy, score }); 
+	               im++; if (im > 11) { im = 0; iy++; } 
+	           }
+	           const barW = 11, gap = 9, n = chartData.length, W = Math.max(n*(barW+gap)+50, 300), H = 140, dpr = window.devicePixelRatio||1;
+	           canvas.width = W*dpr; canvas.height = H*dpr; canvas.style.width = W+'px'; canvas.style.height = H+'px';
+	           const ctx = canvas.getContext('2d'); ctx.scale(dpr,dpr);
+	           const pad = { left:30, right:8, top:20, bottom:38 }, cW = W-pad.left-pad.right, cH = H-pad.top-pad.bottom;
+	           ctx.clearRect(0,0,W,H);
+	           const y700 = pad.top + cH - (700/1000)*cH, y900 = pad.top + cH - (900/1000)*cH;
+	           ctx.fillStyle = 'rgba(239,68,68,0.05)'; ctx.fillRect(pad.left, y700, cW, cH - (700/1000)*cH);
+	           ctx.fillStyle = 'rgba(245,158,11,0.05)'; ctx.fillRect(pad.left, y900, cW, y700-y900);
+	           ctx.fillStyle = 'rgba(16,185,129,0.05)'; ctx.fillRect(pad.left, pad.top, cW, y900-pad.top);
+	           ctx.strokeStyle = '#e2e8f0'; ctx.lineWidth = 0.5;[0,500,700,900,1000].forEach(v => { const gy = pad.top + cH - (v/1000)*cH; ctx.beginPath(); ctx.moveTo(pad.left,gy); ctx.lineTo(W-pad.right,gy); ctx.stroke(); if([0,700,1000].includes(v)){ ctx.fillStyle='#94a3b8'; ctx.font='7px sans-serif'; ctx.textAlign='right'; ctx.fillText(v, pad.left-2, gy+3); } });
+	           chartData.forEach((d,i)=>{ const x = pad.left + i*(barW+gap)+gap/2; const barH = (d.score/1000)*cH; const y = pad.top + cH - barH; let topCol,botCol; if(d.score<=0) topCol=null; else if(d.score<=700){ topCol='#ef4444'; botCol='#ef444466'; } else if(d.score<=900){ topCol='#f59e0b'; botCol='#f59e0b66'; } else { topCol='#10b981'; botCol='#10b98166'; }
+	           if(d.score>0 && topCol){ const grad = ctx.createLinearGradient(0,y,0,y+barH); grad.addColorStop(0,topCol); grad.addColorStop(1,botCol); ctx.fillStyle=grad; ctx.beginPath(); ctx.roundRect(x,y,barW,barH,[3,3,0,0]); ctx.fill(); ctx.strokeStyle=topCol; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(x+barW/2, y-4); ctx.lineTo(x+barW/2, y); ctx.stroke(); ctx.fillStyle='#1e293b'; ctx.font='bold 7px sans-serif'; ctx.textAlign='center'; ctx.fillText(d.score, x+barW/2, y-6); } else { ctx.fillStyle='#e2e8f0'; ctx.beginPath(); ctx.roundRect(x+2, pad.top+cH-2, barW-4, 2, 1); ctx.fill(); }
+	           ctx.fillStyle='#64748b'; ctx.font='bold 7px sans-serif'; ctx.textAlign='center'; ctx.fillText(d.label, x+barW/2, H-22);
+	           if(i===0 || chartData[i-1].year !== d.year){ let lastIdx=i; while(lastIdx+1<chartData.length && chartData[lastIdx+1].year===d.year) lastIdx++; const xYearStart = pad.left + i*(barW+gap)+gap/2; const xYearEnd = pad.left + lastIdx*(barW+gap)+gap/2+barW; const xYearMid = (xYearStart+xYearEnd)/2; ctx.fillStyle='#475569'; ctx.font='bold 8px sans-serif'; ctx.textAlign='center'; ctx.fillText(String(d.year), xYearMid, H-8); if(i>0){ ctx.strokeStyle='#94a3b8'; ctx.lineWidth=0.8; const xSep = pad.left + i*(barW+gap)-gap/2; ctx.setLineDash([2,2]); ctx.beginPath(); ctx.moveTo(xSep, pad.top); ctx.lineTo(xSep, H-4); ctx.stroke(); ctx.setLineDash([]); } } });
+	           setTimeout(()=>{ const c=canvas.parentElement; if(c) c.scrollLeft = c.scrollWidth; },100);
+	       }
+	       function updateZoneCircles(visits) { const scores = visits.map(v=>parseInt(v.score)||0).filter(s=>s>0); const redCount = scores.filter(s=>s<=700).length; const orangeCount = scores.filter(s=>s>700 && s<=900).length; const greenCount = scores.filter(s=>s>900).length; const container = document.getElementById('scoreZoneCircles'); if(!container) return; const zones = [{ emoji:'🔴', label:'Low', range:'0–700', count:redCount, color:'#ef4444', bg:'#fff0f0', border:'#fca5a5'},{ emoji:'🟡', label:'Mid', range:'701–900', count:orangeCount, color:'#d97706', bg:'#fffbeb', border:'#fcd34d'},{ emoji:'🟢', label:'Healthy', range:'901–1000', count:greenCount, color:'#16a34a', bg:'#f0fdf4', border:'#6ee7b7'}]; container.innerHTML = zones.map(z=>`<div class="zone-circle-item"><div class="zone-circle" style="background:${z.bg};border:2.5px solid ${z.border}"><span class="zone-circle-count" style="color:${z.color}">${z.count}<\/span><span class="zone-circle-unit">visits<\/span><\/div><div class="zone-circle-label">${z.emoji} ${z.label}<\/div><div class="zone-circle-range" style="color:${z.color}">${z.range}<\/div><\/div>`).join(''); const sorted = [...visits].sort((a,b)=>dateToTs(a.date)-dateToTs(b.date)); const firstScore = parseInt(sorted[0]?.score)||0; const latestScore = parseInt(sorted[sorted.length-1]?.score)||0; const growthRow = document.getElementById('growthIndicatorRow'); const growthBadge = document.getElementById('overallGrowthBadge'); const growthDetail = document.getElementById('overallGrowthDetail'); if(sorted.length>=2 && growthRow && growthBadge && growthDetail){ growthRow.style.display='flex'; const diff = latestScore-firstScore; const pct = firstScore>0 ? Math.round((diff/firstScore)*100):0; if(diff>0){ growthBadge.textContent=`📈 Growth +${diff}`; growthBadge.className='growth-badge growth-up'; } else if(diff<0){ growthBadge.textContent=`📉 Decline ${diff}`; growthBadge.className='growth-badge growth-down'; } else { growthBadge.textContent='→ No Change'; growthBadge.className='growth-badge growth-flat'; } growthDetail.textContent=`(${firstScore} → ${latestScore}, ${pct>0?'+':''}${pct}%)`; } else if(growthRow) growthRow.style.display='none'; }
+	       function drawColorfulScoreChart(visits) { const wrap = document.getElementById('chartWrap'); const trendBadge = document.getElementById('trendBadge'); if(!wrap) return; const sorted = [...visits].sort((a,b)=>dateToTs(a.date)-dateToTs(b.date)); const scores = sorted.map(v=>parseInt(v.score,10)||0); if(scores.length<1){ wrap.style.display='none'; return; } wrap.style.display='block'; const lastDelta = scores.length>=2 ? scores[scores.length-1]-scores[scores.length-2] : 0; if(lastDelta>0){ trendBadge.textContent=`📈 +${lastDelta}`; trendBadge.className='chart-trend-badge trend-up'; } else if(lastDelta<0){ trendBadge.textContent=`📉 ${lastDelta}`; trendBadge.className='chart-trend-badge trend-down'; } else { trendBadge.textContent='➡️ Stable'; trendBadge.className='chart-trend-badge trend-flat'; } updateZoneCircles(visits); requestAnimationFrame(()=>setTimeout(()=>drawChartNow(visits),0)); }
+	       
+	       function showHistory(customerName) { activeHistoryName = customerName; const visits = db.filter(e=>e.name===customerName).sort((a,b)=>dateToTs(b.date)-dateToTs(a.date)); if(!visits.length) return; const latest=visits[0]; document.getElementById('hName').innerHTML=`📜 ${escapeHtml(customerName)} <span style="font-size:13px;background:#eef2ff;padding:3px 10px;border-radius:10px;">Visits: ${visits.length}<\/span>`; document.getElementById('hInfo').innerHTML=`<div>🎂 Age: ${latest.age||'--'} ${getGenderSymbol(latest.gender)} &nbsp;| 📍 ${escapeHtml(latest.area||'N/A')}<br><span style="font-weight:800;">📞 Phone: ${latest.phone||'---'}<\/span><\/div>`; const phone=(latest.phone||'').replace(/\D/g,''); document.getElementById('contactRow').innerHTML=phone?`<button class="contact-btn wa-btn" onclick="window.open('https://wa.me/91${phone}')">💬 WhatsApp<\/button><button class="contact-btn call-btn" onclick="window.location.href='tel:+91${phone}'">📞 Call<\/button>`:'<div style="color:#aaa;">📵 No Phone Number<\/div>'; drawColorfulScoreChart(visits); const hl=document.getElementById('historyList'); hl.innerHTML=''; visits.forEach((v,idx)=>{ const sVal=parseInt(v.score,10); const sBg=sVal<=700?'#fdecea':(sVal<=900?'#fff3e0':'#e8f5e9'); const sCol=sVal<=700?'#d32f2f':(sVal<=900?'#f57c00':'#2e7d32'); const prev=visits[idx+1]; const prevScore=prev?parseInt(prev.score,10):null; let deltaBadge=''; if(prevScore!==null && !isNaN(sVal) && !isNaN(prevScore)){ const d=sVal-prevScore; const arrow=d>0?'↑':d<0?'↓':'→'; const cls=d>0?'delta-up':d<0?'delta-down':'delta-same'; deltaBadge=`<span class="delta-badge ${cls}">${arrow} ${d>0?'+'+d:d}<\/span>`; } hl.innerHTML+=`<div class="history-item"><div class="hist-top"><span class="hist-date">📆 ${v.date}<\/span><div class="hist-badges"><div class="score-badge" style="background:${sBg};color:${sCol}">📈 ${v.score||'---'}<\/div>${deltaBadge}<div class="visit-options"><button class="options-btn" onclick="toggleVisitMenu(event,${v.id})">⋮<\/button><div id="menu-${v.id}" class="options-menu"><button onclick="editVisit(${v.id})">✏️ Edit<\/button><button onclick="deleteVisit(${v.id})">🗑️ Delete<\/button><\/div><\/div><\/div><\/div><div class="hist-sub">${v.products?`🛒 ${escapeHtml(v.products)}<br>`:''}${v.notes?`📝 ${escapeHtml(v.notes)}`:''}<\/div><div class="hist-foot"><span class="lp-badge">💊 LP: ${v.lp||'---'}<\/span>${idx===0?'<span class="latest-tag">✨ Latest Visit<\/span>':''}<\/div><\/div>`; }); document.getElementById('historyModal').style.display='flex'; }
+	       
+	       function openForm(_mode, existingName = null, visitId = null) { closeAllPopups(); document.getElementById('entryModal').style.display = 'flex'; document.getElementById('modalTitle').innerText = visitId ? '✏️ Edit Visit' : '📝 New Visit'; document.getElementById('editId').value = visitId || ''; ['fName','fAge','fPhone','fArea','fScore','fLP','fProducts','fNotes'].forEach(id => document.getElementById(id).value = ''); document.getElementById('fDate').value = todayInputVal(); setGender('M'); if (visitId) { const v = db.find(e => e.id === visitId); if (v) { document.getElementById('fDate').value = displayToDateInput(v.date); document.getElementById('fName').value = v.name; document.getElementById('fAge').value = v.age; document.getElementById('fPhone').value = v.phone; document.getElementById('fArea').value = v.area; document.getElementById('fScore').value = v.score; document.getElementById('fLP').value = v.lp; document.getElementById('fProducts').value = v.products; document.getElementById('fNotes').value = v.notes; setGender(v.gender || 'M'); } } else if (existingName) { const last = [...db].reverse().find(e => e.name === existingName); if (last) { document.getElementById('fName').value = last.name; document.getElementById('fAge').value = last.age; document.getElementById('fPhone').value = last.phone; document.getElementById('fArea').value = last.area; setGender(last.gender || 'M'); } } }
+	       function saveEntry() { const name = document.getElementById('fName').value.trim(); if (!name) return alert('Please enter name'); const eid = document.getElementById('editId').value; const entry = { id: eid ? parseInt(eid) : Date.now(), date: dateInputToDisplay(document.getElementById('fDate').value), name, age: document.getElementById('fAge').value, gender: document.getElementById('fGender').value, phone: document.getElementById('fPhone').value, area: document.getElementById('fArea').value || 'N/A', score: document.getElementById('fScore').value, lp: document.getElementById('fLP').value, products: document.getElementById('fProducts').value, notes: document.getElementById('fNotes').value }; if (eid) { const idx = db.findIndex(e => e.id === entry.id); if (idx !== -1) db[idx] = entry; } else db.push(entry); saveDB(); closeAllPopups(); }
+	       function editVisit(id) { openForm('edit', null, id); }
+	       function deleteVisit(id) { if (confirm('Delete this visit?')) { db = db.filter(e => e.id !== id); saveDB(false); const rem = db.filter(e => e.name === activeHistoryName); rem.length ? showHistory(activeHistoryName) : (closeAllPopups(), renderTable()); } }
+	       function deleteCustomer() { if (confirm(`Delete ALL records for "${activeHistoryName}"?`)) { db = db.filter(e => e.name !== activeHistoryName); saveDB(); closeAllPopups(); } }
+	       function quickAddVisit() { openForm('add', activeHistoryName); }
+	       function showAreaPopup() { const areas = [...new Set(db.map(e => (e.area || '').trim()).filter(a => a && a !== 'N/A'))].sort(); document.getElementById('areaItems').innerHTML = areas.map(a => `<div class="area-chip" onclick="filterByArea('${escapeHtml(a)}')">📍 ${escapeHtml(a)}<\/div>`).join(''); document.getElementById('overlay').style.display = 'block'; document.getElementById('areaListPopup').style.display = 'block'; }
+	       function filterByArea(area) { document.getElementById('search').value = area; closeAllPopups(); renderTable(); }
+	       function toggleVisitMenu(event, id) { event.stopPropagation(); document.querySelectorAll('.options-menu').forEach(m => m.classList.remove('show-menu')); document.getElementById('menu-'+id).classList.toggle('show-menu'); }
+	       function openSettings() { document.getElementById('overlay').style.display = 'block'; document.getElementById('settingsPopup').style.display = 'block'; }
+	       function closeAllPopups() { document.querySelectorAll('.modal,.list-modal,.overlay').forEach(el => el.style.display = 'none'); }
+	       window.onclick = function (e) { if (e.target.classList.contains('modal')) closeAllPopups(); document.querySelectorAll('.options-menu').forEach(m => m.classList.remove('show-menu')); };
+	       async function exportJSON() {
+           const jsonStr = JSON.stringify(db, null, 2);
+           const blob = new Blob([jsonStr], { type: 'application/json' });
+           const d = new Date(); const ds = d.getFullYear()+('0'+(d.getMonth()+1)).slice(-2)+('0'+d.getDate()).slice(-2);
+           const fileName = 'PRYSM IO Life Pack_Backup_'+ds+'.json';
+           if (window.showSaveFilePicker) {
+               try {
+                   const handle = await window.showSaveFilePicker({
+                       suggestedName: fileName,
+                       startIn: 'downloads',
+                       types: [{ description: 'PRYSM IO Life Pack Backup JSON', accept: {'application/json': ['.json']} }]
+                   });
+                   const writable = await handle.createWritable();
+                   await writable.write(blob); await writable.close();
+                   hideBackupAlert(); alert('✅ Backup saved to: ' + fileName);
+                   return;
+               } catch(e) { if (e.name !== 'AbortError') console.warn(e); }
+           }
+           const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+           a.download = fileName; a.click();
+           hideBackupAlert();
+           setTimeout(()=>alert('✅ Saved to Downloads:\n📁 ' + fileName + '\n\nTip: Move to PRYSM IO Life Pack folder for organization.'), 400);
+       }
+	       function enhancedImportJSON(event) { const file = event.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = e => { try { const importedData = JSON.parse(e.target.result); if (!Array.isArray(importedData)) throw new Error(); const oldCount = db.length; const newCount = importedData.length; const userChoice = confirm(`📂 Import Data\n\nExisting: ${oldCount} records\nFile: ${newCount} records\n\nOK = MERGE (keep existing + add new)\nCancel = OVERWRITE`); if (userChoice) { const existingKeys = new Set(db.map(r => r.name + '_' + r.date + '_' + r.score)); let added = 0; importedData.forEach(rec => { const key = rec.name + '_' + rec.date + '_' + rec.score; if (!existingKeys.has(key)) { db.push(rec); added++; existingKeys.add(key); } }); alert(`✅ Merge: +${added} new records. Total: ${db.length}`); } else { if (confirm("⚠️ OVERWRITE all current data?")) { db = importedData; alert(`✅ Overwrite: ${db.length} records`); } } saveDB(); closeAllPopups(); } catch(err) { alert("❌ Invalid JSON file"); } }; reader.readAsText(file); }
+	       function setGender(val) { document.getElementById('fGender').value = val; document.querySelectorAll('.gender-btn').forEach(btn => btn.classList.remove('active')); document.querySelector('.gender-'+(val==='M'?'male':'female')).classList.add('active'); }
+	       function showInfoPopup(event, name) { event.stopPropagation(); const visits = db.filter(e=>e.name===name).sort((a,b)=>dateToTs(b.date)-dateToTs(a.date)); if(!visits.length) return; const latest=visits[0]; document.getElementById('infoPopupTitle').innerHTML=`ℹ️ ${escapeHtml(name)} <span style="font-size:12px;background:#eef2ff;padding:2px 8px;border-radius:8px;font-weight:600;">📆 ${latest.date}<\/span>`; let html=''; if(latest.products) html+=`<div style="margin-bottom:7px;padding:8px 10px;background:#f0f4ff;border-radius:12px;border-left:3px solid #6366f1;"><div style="font-size:10px;font-weight:800;color:#6366f1;margin-bottom:2px;">🛒 PRODUCTS<\/div><div style="font-size:13px;color:#1e293b;">${escapeHtml(latest.products)}<\/div><\/div>`; if(latest.notes) html+=`<div style="padding:8px 10px;background:#f0fdf4;border-radius:12px;border-left:3px solid #10b981;"><div style="font-size:10px;font-weight:800;color:#059669;margin-bottom:2px;">📝 NOTES<\/div><div style="font-size:13px;color:#1e293b;">${escapeHtml(latest.notes)}<\/div><\/div>`; if(!latest.products && !latest.notes) html=`<div style="color:#aaa;text-align:center;padding:20px 0;font-size:13px;">No products or notes recorded.<\/div>`; document.getElementById('infoPopupContent').innerHTML=html; document.getElementById('infoPopup').style.display='flex'; }
+	       
+	       function showBackupAlert() { localStorage.setItem('PhxNeedsBackup','1'); const el=document.getElementById('backupAlert'); if(el) el.style.display='block'; }
+	       function hideBackupAlert() { localStorage.removeItem('PhxNeedsBackup'); const el=document.getElementById('backupAlert'); if(el) el.style.display='none'; }
 
-        <!-- Popups -->
-        <div id="overlay" class="overlay" onclick="closeAllPopups()"></div>
-        <div id="areaListPopup" class="list-modal"><div class="sheet-title">📍 Select Area</div><div id="areaItems"></div><button class="btn-main btn-secondary" onclick="closeAllPopups()">Close</button></div>
-        <div id="settingsPopup" class="list-modal"><div class="sheet-title">⚙️ Settings & Data Vault</div><div class="sett-item" onclick="openProfileEdit()"><span class="sett-icon">👤</span> Edit Profile (Header Info)</div><div class="sett-item" onclick="exportJSON()"><span class="sett-icon">📤</span> Export JSON Backup</div><div class="sett-item" style="color:red" onclick="localStorage.clear(); location.reload();"><span class="sett-icon">🚪</span> Logout</div><button class="btn-main btn-secondary" style="margin-top:10px" onclick="closeAllPopups()">Close</button></div>
-        
-        <div id="profileModal" class="modal"><div class="modal-content"><div class="modal-title">👤 Edit Profile Header</div><div class="form-group"><label>Display Name</label><input type="text" id="pName" placeholder="Set Your Name"></div><div class="form-group"><label>Phone Number</label><input type="text" id="pPhone" placeholder="Set Phone No"></div><button class="btn-main" onclick="saveProfile()">💾 Save Changes</button><button class="btn-main btn-secondary" style="margin-top:8px;" onclick="closeAllPopups()">Cancel</button></div></div>
-        
-        <div id="entryModal" class="modal"><div class="modal-content"><div id="modalTitle" class="modal-title">📝 New Visit</div><input type="hidden" id="editId"><div class="entry-section es-blue"><div class="form-group"><label>📅 Date</label><input type="date" id="fDate"></div><div class="form-group"><label>🧑 Full Name *</label><input type="text" id="fName"></div></div><div class="entry-section es-purple"><div class="flex-row"><div class="form-group"><label>🎂 Age</label><input type="number" id="fAge"></div><div class="form-group"><label>⚥ Gender</label><div class="gender-toggle" id="genderToggle"><button type="button" class="gender-btn gender-male active" onclick="setGender('M')">♂ Male</button><button type="button" class="gender-btn gender-female" onclick="setGender('F')">♀ Female</button></div><input type="hidden" id="fGender" value="M"></div></div><div class="form-group"><label>📞 Phone Number</label><input type="tel" id="fPhone"></div><div class="form-group"><label>📍 Area</label><input type="text" id="fArea" placeholder="e.g.: Kankipadu"></div></div><div class="entry-section es-green"><div class="flex-row"><div class="form-group"><label>📈 Score (0–1000)</label><input type="number" id="fScore"></div><div class="form-group"><label>💊 LP</label><input type="number" id="fLP"></div></div></div><div class="entry-section es-orange"><div class="form-group"><label>🛒 Products</label><input type="text" id="fProducts"></div><div class="form-group"><label>📝 Notes</label><textarea id="fNotes" rows="2"></textarea></div></div><button class="btn-main" onclick="saveEntry()">💾 Save Entry</button><button class="btn-main btn-secondary" style="margin-top:8px;" onclick="closeAllPopups()">Cancel</button></div></div>
+       // ===== FILE SYSTEM ACCESS API IMPORT =====
+       async function triggerImport() {
+           if (window.showOpenFilePicker) {
+               try {
+                   const [handle] = await window.showOpenFilePicker({
+                       startIn: 'downloads',
+                       types: [{ description: 'PRYSM IO Life Pack Backup JSON', accept: {'application/json': ['.json']} }]
+                   });
+                   const file = await handle.getFile();
+                   processImportFile(file); return;
+               } catch(e) { if (e.name !== 'AbortError') console.warn(e); }
+           }
+           document.getElementById('importFile').click();
+       }
+       function processImportFile(file) {
+           const reader = new FileReader();
+           reader.onload = e => {
+               try {
+                   const importedData = JSON.parse(e.target.result);
+                   if (!Array.isArray(importedData)) throw new Error();
+                   const oldCount = db.length; const newCount = importedData.length;
+                   const userChoice = confirm('📂 Import Data\n\nExisting: '+oldCount+' records\nFile: '+newCount+' records\n\nOK = MERGE\nCancel = OVERWRITE');
+                   if (userChoice) {
+                       const existingKeys = new Set(db.map(r=>r.name+'_'+r.date+'_'+r.score));
+                       let added = 0;
+                       importedData.forEach(rec=>{ const key=rec.name+'_'+rec.date+'_'+rec.score; if(!existingKeys.has(key)){db.push(rec);added++;existingKeys.add(key);} });
+                       alert('✅ Merge: +'+added+' new records. Total: '+db.length);
+                   } else {
+                       if (confirm('⚠️ OVERWRITE all current data?')) { db=importedData; alert('✅ Overwrite: '+db.length+' records'); }
+                   }
+                   saveDB(); closeAllPopups();
+               } catch(err) { alert('❌ Invalid JSON file'); }
+           };
+           reader.readAsText(file);
+       }
 
-        <div id="infoPopup" class="modal"><div class="info-popup-content"><div id="infoPopupTitle" class="modal-title" style="font-size:15px;margin-bottom:10px;">ℹ️ Latest Visit Info</div><div id="infoPopupContent" style="margin-bottom:4px;"></div><button class="btn-main btn-secondary" style="margin-top:8px;padding:9px;" onclick="closeAllPopups()">Close</button></div></div>
-        
-        <div id="historyModal" class="modal"><div class="modal-content"><div id="hName" class="modal-title">📋 Visit History</div><div id="hInfo" class="h-info-bar"></div><div id="contactRow" class="contact-row"></div><div id="chartWrap" class="chart-wrap"><div class="chart-header"><div class="chart-label">📊 All Visits Score Trend</div><div id="trendBadge" class="chart-trend-badge trend-flat">➡️ Stable</div></div><div class="chart-scroll-container"><canvas id="scoreChart"></canvas></div><div id="scoreZoneCircles" class="score-zone-circles"></div><div id="growthIndicatorRow" class="growth-indicator-row" style="display:none;"><span class="growth-label">📊 Overall:</span><span id="overallGrowthBadge" class="growth-badge growth-flat">→ No Change</span><span id="overallGrowthDetail" class="growth-label"></span></div></div><div id="historyList" class="history-scroll-wrap"></div><button class="btn-main" onclick="quickAddVisit()">➕ Add New Visit</button><button class="btn-main btn-danger" style="margin-top:8px;" onclick="deleteCustomer()">🗑️ Delete Customer</button><button class="btn-main btn-secondary" style="margin-top:8px;" onclick="closeAllPopups()">Close</button></div></div>
+       // ===== ACTIVATION LOCK =====
+       const ACT_KEY = 'PhxActivated_V1';
+       function generateCode(phone) {
+           if (!/^\d{10}$/.test(phone)) return null;
+           const d = phone.split('').map(Number);
+           const c1 = (d[0]+d[1]+d[2]+d[3]+d[4]) % 10;
+           const c2 = (d[5]+d[6]+d[7]+d[8]+d[9]) % 10;
+           const c3 = (d[0]*d[9] + d[4]*d[5]) % 10;
+           const c4 = (c1+c2+c3) % 10;
+           return ''+c1+c2+c3+c4;
+       }
+       function checkActivation() {
+           if (localStorage.getItem(ACT_KEY)) {
+               document.getElementById('mainApp').style.display = 'block';
+               document.getElementById('activationScreen').style.display = 'none';
+               document.getElementById('signOutBtn').style.display = 'flex';
+           } else {
+               document.getElementById('mainApp').style.display = 'none';
+               document.getElementById('activationScreen').style.display = 'flex';
+               document.getElementById('signOutBtn').style.display = 'none';
+           }
+       }
+       function doActivate() {
+           const phone = (document.getElementById('activPhone').value || '').trim();
+           const code = (document.getElementById('activCode').value || '').trim();
+           const errEl = document.getElementById('activError');
+           errEl.style.display = 'none';
+           if (!/^\d{10}$/.test(phone)) { errEl.textContent='❌ Enter valid 10-digit phone number.'; errEl.style.display='block'; return; }
+           if (!/^\d{4}$/.test(code)) { errEl.textContent='❌ Enter valid 4-digit activation code.'; errEl.style.display='block'; return; }
+           const expected = generateCode(phone);
+           if (code === expected) {
+               localStorage.setItem(ACT_KEY, phone);
+               document.getElementById('activationScreen').style.display = 'none';
+               document.getElementById('mainApp').style.display = 'block';
+               document.getElementById('signOutBtn').style.display = 'flex';
+               loadDB(); loadProfile();
+           } else {
+               errEl.textContent = '❌ Invalid activation code. Contact your distributor.';
+               errEl.style.display = 'block';
+               document.getElementById('activCode').value = '';
+           }
+       }
+       function doSignOut() {
+           if (confirm('🔒 Lock this app?\n\nYou will need the activation code to unlock again.')) {
+               localStorage.removeItem(ACT_KEY);
+               location.reload();
+           }
+       }
 
-    </div>
+       // ===== GOOGLE DRIVE BACKUP =====
+       let gdriveToken = null;
+       function openGDriveModal() {
+           closeAllPopups();
+           const saved = localStorage.getItem('PhxGDriveClientId');
+           if (saved) document.getElementById('gdriveClientId').value = saved;
+           if (gdriveToken) gdriveUpdateUI(true); else gdriveUpdateUI(false);
+           document.getElementById('gdriveModal').style.display = 'flex';
+       }
+       function gdriveUpdateUI(connected) {
+           const statusBar = document.getElementById('gdriveStatusBar');
+           const connectBtn = document.getElementById('gdriveConnectBtn');
+           const backupBtn = document.getElementById('gdriveBackupBtn');
+           const restoreBtn = document.getElementById('gdriveRestoreBtn');
+           const disconnectBtn = document.getElementById('gdriveDisconnectBtn');
+           const clientIdWrap = document.getElementById('gdriveClientIdWrap');
+           if (connected) {
+               statusBar.className = 'gdrive-status gdrive-connected'; statusBar.textContent = '🟢 Connected to Google Drive';
+               connectBtn.style.display='none'; backupBtn.style.display='flex';
+               restoreBtn.style.display='flex'; disconnectBtn.style.display='flex';
+               clientIdWrap.style.display='none';
+           } else {
+               statusBar.className = 'gdrive-status gdrive-disconnected'; statusBar.textContent = '🔴 Not connected to Google';
+               connectBtn.style.display='flex'; backupBtn.style.display='none';
+               restoreBtn.style.display='none'; disconnectBtn.style.display='none';
+               clientIdWrap.style.display='block'; document.getElementById('gdriveFileList').style.display='none';
+           }
+       }
+       function gdriveConnect() {
+           const clientId = document.getElementById('gdriveClientId').value.trim();
+           if (!clientId) { alert('⚠️ Please enter your Google OAuth Client ID first.\n\nGet it from console.cloud.google.com'); return; }
+           localStorage.setItem('PhxGDriveClientId', clientId);
+           const params = new URLSearchParams({ client_id:clientId, redirect_uri:'https://accounts.google.com/o/oauth2/postmessage', response_type:'token', scope:'https://www.googleapis.com/auth/drive.file', prompt:'consent' });
+           const popup = window.open('https://accounts.google.com/o/oauth2/auth?'+params.toString(), 'gauth', 'width=500,height=600');
+           const timer = setInterval(()=>{
+               try { if (!popup || popup.closed) { clearInterval(timer); return; }
+                   const url = popup.location.href;
+                   if (url.includes('access_token')) {
+                       const hash = url.split('#')[1] || url.split('?')[1] || '';
+                       const p = new URLSearchParams(hash);
+                       gdriveToken = p.get('access_token');
+                       popup.close(); clearInterval(timer); gdriveUpdateUI(true);
+                   }
+               } catch(e) {}
+           }, 500);
+       }
+       function gdriveDisconnect() { gdriveToken=null; gdriveUpdateUI(false); }
+       async function gdriveBackup() {
+           if (!gdriveToken) return;
+           try {
+               const jsonStr = JSON.stringify(db, null, 2);
+               const d = new Date(); const ds = d.getFullYear()+('0'+(d.getMonth()+1)).slice(-2)+('0'+d.getDate()).slice(-2);
+               const fileName = 'PRYSM IO Life Pack_Backup_'+ds+'.json';
+               const meta = JSON.stringify({ name: fileName, parents:['root'] });
+               const form = new FormData();
+               form.append('metadata', new Blob([meta], {type:'application/json'}));
+               form.append('file', new Blob([jsonStr], {type:'application/json'}));
+               const r = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart', {
+                   method:'POST', headers:{'Authorization':'Bearer '+gdriveToken}, body:form });
+               if (r.ok) { hideBackupAlert(); alert('✅ Backup saved to Google Drive:\n📄 '+fileName); }
+               else { const err=await r.json(); if(err.error?.status==='UNAUTHENTICATED'){gdriveToken=null;gdriveUpdateUI(false);alert('❌ Session expired. Please reconnect.');}else alert('❌ Upload failed: '+err.error?.message); }
+           } catch(e) { alert('❌ Drive error: '+e.message); }
+       }
+       async function gdriveListFiles() {
+           if (!gdriveToken) return;
+           try {
+               const r = await fetch("https://www.googleapis.com/drive/v3/files?q=name+contains+'PRYSM IO Life Pack'&fields=files(id,name,modifiedTime)&orderBy=modifiedTime+desc", {
+                   headers:{'Authorization':'Bearer '+gdriveToken} });
+               const data = await r.json();
+               const listEl = document.getElementById('gdriveFileList');
+               if (!data.files || !data.files.length) { listEl.innerHTML='<div style="padding:14px;color:#888;text-align:center;font-size:13px;">📭 No backups found on Drive</div>'; listEl.style.display='block'; return; }
+               listEl.innerHTML = '<div style="font-size:11px;font-weight:800;color:#1a237e;padding:6px 4px 4px;">Select backup to restore:</div>' +
+                   data.files.map(f=>`<div class="gdrive-file-item" onclick="gdriveRestore('${f.id}','${escapeHtml(f.name)}')">📄 ${escapeHtml(f.name)}<br><span style="font-size:10px;color:#94a3b8;">${new Date(f.modifiedTime).toLocaleString()}</span></div>`).join('');
+               listEl.style.display = 'block';
+           } catch(e) { alert('❌ Could not list files: '+e.message); }
+       }
+       async function gdriveRestore(fileId, fileName) {
+           if (!confirm('📥 Restore from:\n'+fileName+'\n\nThis will MERGE with existing data. Continue?')) return;
+           try {
+               const r = await fetch('https://www.googleapis.com/drive/v3/files/'+fileId+'?alt=media', { headers:{'Authorization':'Bearer '+gdriveToken} });
+               const importedData = await r.json();
+               if (!Array.isArray(importedData)) throw new Error('Invalid format');
+               const existingKeys = new Set(db.map(rec=>rec.name+'_'+rec.date+'_'+rec.score));
+               let added=0;
+               importedData.forEach(rec=>{const k=rec.name+'_'+rec.date+'_'+rec.score;if(!existingKeys.has(k)){db.push(rec);added++;existingKeys.add(k);}});
+               saveDB(); closeAllPopups();
+               alert('✅ Restored from Drive!\n+'+added+' new records merged. Total: '+db.length);
+           } catch(e) { alert('❌ Restore failed: '+e.message); }
+       }
+		       // Initialize
+	       document.addEventListener('DOMContentLoaded', function() {
+	           checkActivation();
+	           if (localStorage.getItem('PhxActivated_V1')) { loadDB(); loadProfile(); }
+	       });
+	</script>
 
-    <script>
-        // ======================== GOOGLE SHEETS LOGIN SYSTEM ========================
-        // UPDATE WITH YOUR REAL GOOGLE APPS SCRIPT URL
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyg_jAq67sHKr5bx1o54ie1DSunVHTz7T0JqDsdemLyaJlq2V_16syY96oYig-4HwO-RA/exec";
-        let selectedEmail = "";
-
-        function linkAccount() {
-            let email = prompt("Confirm your registered Gmail:");
-            if (email && email.includes("@")) {
-                selectedEmail = email.toLowerCase().trim();
-                document.getElementById('gmailStatus').innerText = "Linked: " + selectedEmail;
-                document.getElementById('gmailStatus').style.color = "#10b981";
-            }
-        }
-
-        async function handleLogin() {
-            const phone = document.getElementById('userPhone').value.trim();
-            const btn = document.getElementById('loginBtn');
-            if (!phone || !selectedEmail) {
-                alert("Please link your Gmail and enter your Phone Number.");
-                return;
-            }
-            btn.disabled = true;
-            btn.innerHTML = '<span class="auth-loader"></span> Verifying...';
-            try {
-                const response = await fetch(WEB_APP_URL, {
-                    method: 'POST',
-                    body: JSON.stringify({ phone: phone, email: selectedEmail })
-                });
-                const result = await response.json();
-                
-                if (result.status === "allowed") {
-                    localStorage.setItem('phx_session_active', 'true');
-                    showMainApp();
-                } else if (result.status === "pending" || result.status === "request_sent") {
-                    // Shows the message from the sheet to the user
-                    alert(result.message);
-                } else if (result.status === "blocked") {
-                    alert("Your account has been blocked. Please contact admin.");
-                } else {
-                    alert("Something went wrong. Please try again.");
-                }
-            } catch (error) {
-                alert("Connection error. Please check your internet connection.");
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = 'Login Now';
-            }
-        }
-
-        function showMainApp() {
-            document.getElementById('loginSection').classList.add('hidden');
-            document.getElementById('mainApp').classList.remove('hidden');
-            loadDB();
-            loadProfile();
-        }
-
-        window.addEventListener('load', () => {
-            if (localStorage.getItem('phx_session_active') === 'true') {
-                showMainApp();
-            }
-        });
-
-        // ======================== MAIN CRM CODE (FULL FEATURE) ========================
-        const DB_NAME = 'PharmanexProDB', STORE_NAME = 'app_data', STORAGE_KEY = 'PhxData_V23', PROFILE_KEY = 'PhxProfile_V1';
-        let db = [], activeHistoryName = '', currentFilterMode = 'all', currentSort = 'date', sortAsc = false;
-
-        function loadProfile() {
-            const data = JSON.parse(localStorage.getItem(PROFILE_KEY)) || { name: 'SET YOUR NAME', phone: 'SET PHONE NO' };
-            const contactSpan = document.getElementById('displayContact');
-            if (contactSpan) contactSpan.innerHTML = `${data.name.toUpperCase()} &nbsp; PH: ${data.phone}`;
-            return data;
-        }
-        function openProfileEdit() { closeAllPopups(); const data = loadProfile(); document.getElementById('pName').value = data.name === 'SET YOUR NAME' ? '' : data.name; document.getElementById('pPhone').value = data.phone === 'SET PHONE NO' ? '' : data.phone; document.getElementById('profileModal').style.display = 'flex'; }
-        function saveProfile() { const name = document.getElementById('pName').value.trim() || 'SET YOUR NAME'; const phone = document.getElementById('pPhone').value.trim() || 'SET PHONE NO'; localStorage.setItem(PROFILE_KEY, JSON.stringify({ name, phone })); loadProfile(); closeAllPopups(); }
-
-        function loadDB() { const local = localStorage.getItem(STORAGE_KEY); db = local ? JSON.parse(local) : []; updateStats(); renderTable(); }
-        function saveDB(rerender = true) { localStorage.setItem(STORAGE_KEY, JSON.stringify(db)); updateStats(); if (rerender) renderTable(); }
-
-        const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        const MON_MAP = { Jan: '01', Feb: '02', Mar: '03', Apr: '04', May: '05', Jun: '06', Jul: '07', Aug: '08', Sep: '09', Oct: '10', Nov: '11', Dec: '12' };
-        function dateInputToDisplay(val) { if (!val) return ''; const [y, m, d] = val.split('-'); return `${d} ${MONTHS[parseInt(m, 10) - 1]} ${y.slice(-2)}`; }
-        function displayToDateInput(str) { if (!str) return ''; const p = str.trim().split(' '); const yr = parseInt(p[2], 10) < 100 ? 2000 + parseInt(p[2], 10) : parseInt(p[2], 10); return `${yr}-${MON_MAP[p[1]] || '01'}-${p[0].padStart(2, '0')}`; }
-        function dateToTs(d) { if (!d) return 0; const inp = displayToDateInput(d); return new Date(inp).getTime() || 0; }
-        function formatDisplayDate(dateStr) { const p = dateStr.split(' '); return p.length >= 3 ? `${p[0]} ${p[1]}<br><span class="date-year">20${p[2]}</span>` : dateStr; }
-        function todayInputVal() { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; }
-        function escapeHtml(s) { return String(s || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]); }
-        function getGenderSymbol(g) { return g === 'M' ? '♂️' : g === 'F' ? '♀️' : '⚧️'; }
-
-        function updateStats() {
-            const unique = [...new Map(db.map(e => [e.name, e])).values()];
-            document.getElementById('totalCount').innerText = unique.length;
-            const areaSet = new Set(db.map(e => (e.area || '').trim()).filter(a => a && a !== 'N/A' && a !== ''));
-            document.getElementById('areaCount').innerText = areaSet.size;
-            const now = new Date(), cm = now.getMonth(), cy = now.getFullYear();
-            const mv = db.filter(v => { const d = displayToDateInput(v.date); if (!d) return false; const dv = new Date(d); return dv.getMonth() === cm && dv.getFullYear() === cy; });
-            document.getElementById('monthCount').innerText = [...new Map(mv.map(e => [e.name, e])).values()].length;
-        }
-
-        function setSort(s) {
-            if (currentSort === s) sortAsc = !sortAsc;
-            else { currentSort = s; sortAsc = (s === 'name'); }
-            document.querySelectorAll('.sort-btn').forEach(btn => btn.classList.remove('active'));
-            const activeBtn = document.getElementById('sBtn_' + s);
-            if (activeBtn) { activeBtn.classList.add('active'); const arrow = sortAsc ? ' ↑' : ' ↓'; const labels = { date: '📅 Date', name: '🔤 Name', score: '📈 Score', lp: '💊 LP' }; activeBtn.innerText = labels[s] + arrow; }
-            renderTable();
-        }
-        function filterData(mode) { currentFilterMode = mode; document.querySelectorAll('.stat-box').forEach(el => el.classList.remove('active')); document.getElementById(mode === 'all' ? 'statAll' : 'statMonth').classList.add('active'); renderTable(); }
-        
-        function renderTable() {
-            const tbody = document.getElementById('tableBody'); tbody.innerHTML = '';
-            const q = (document.getElementById('search').value || '').toLowerCase().trim();
-            let filtered = db; if (q) filtered = db.filter(e => e.name.toLowerCase().includes(q) || (e.phone && e.phone.includes(q)) || (e.area && e.area.toLowerCase().includes(q)));
-            if (currentFilterMode === 'month') { const now = new Date(), cm = now.getMonth(), cy = now.getFullYear(); filtered = filtered.filter(v => { const d = displayToDateInput(v.date); if (!d) return false; const dv = new Date(d); return dv.getMonth() === cm && dv.getFullYear() === cy; }); }
-            const map = new Map(); filtered.forEach(e => { const n = e.name.trim(); if (!map.has(n)) map.set(n, { ...e, count: 1 }); else { const ex = map.get(n); ex.count++; if (dateToTs(e.date) > dateToTs(ex.date)) Object.assign(ex, e); } });
-            let latest = Array.from(map.values()).sort((a, b) => { if (currentSort === 'date') return sortAsc ? dateToTs(a.date) - dateToTs(b.date) : dateToTs(b.date) - dateToTs(a.date); if (currentSort === 'name') return sortAsc ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name); if (currentSort === 'score') return sortAsc ? (parseInt(a.score) || 0) - (parseInt(b.score) || 0) : (parseInt(b.score) || 0) - (parseInt(a.score) || 0); if (currentSort === 'lp') return sortAsc ? (parseInt(a.lp) || 0) - (parseInt(b.lp) || 0) : (parseInt(b.lp) || 0) - (parseInt(a.lp) || 0); return 0; });
-            if (!latest.length) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:40px;">📭 No data available. </td></tr>'; return; }
-            latest.forEach(c => { const sv = parseInt(c.score, 10); const pCls = isNaN(sv) ? "" : (sv <= 700 ? "bg-red" : (sv <= 900 ? "bg-orange" : "bg-green")); const gSym = getGenderSymbol(c.gender); const ageText = c.age ? `🎂 ${c.age} ${gSym}` : `🎂 -- ${gSym}`; const areaVal = (c.area && c.area !== 'N/A') ? c.area : 'No Area'; const phoneVal = c.phone || '----'; const safeName = escapeHtml(c.name).replace(/'/g, "&#39;"); const hasInfo = !!(c.products || c.notes); const infoBtnStyle = hasInfo ? 'background:#1a237e;' : 'background:#94a3b8;'; const infoBtn = `<button class="info-btn" style="${infoBtnStyle}" onclick="showInfoPopup(event,'${safeName}')">i</button>`; tbody.innerHTML += `<tr onclick="showHistory('${safeName}')"><td class="date-cell">${formatDisplayDate(c.date)}</td><td><div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;"><div class="name-badge">${escapeHtml(c.name)}</div></div><div class="customer-details"><div class="info-line">${ageText}</div><div class="area-line"><span>📍</span> ${escapeHtml(areaVal)}</div><div class="phone-line"><span>📞</span> ${escapeHtml(phoneVal)}</div></div></td><td style="text-align:center;font-weight:800;">${infoBtn}</td><td style="text-align:center;font-weight:800;">${c.count}</td><td style="text-align:center"><div class="score-pill ${pCls}">📈 ${c.score || '---'}</div></td><td style="text-align:center"><b>💊 ${c.lp || '---'}</b></td></tr>`; });
-        }
-
-        // Simplified chart and history (core functionality restored)
-        function showHistory(customerName) { activeHistoryName = customerName; const visits = db.filter(e => e.name === customerName).sort((a, b) => dateToTs(b.date) - dateToTs(a.date)); if (!visits.length) return; const latest = visits[0]; document.getElementById('hName').innerHTML = `📜 ${escapeHtml(customerName)} <span style="font-size:13px;background:#eef2ff;padding:3px 10px;border-radius:10px;">Visits: ${visits.length}</span>`; document.getElementById('hInfo').innerHTML = `<div>🎂 Age: ${latest.age || '--'} ${getGenderSymbol(latest.gender)} &nbsp;| 📍 ${escapeHtml(latest.area || 'N/A')}<br><span style="font-weight:800;">📞 Phone: ${latest.phone || '---'}</span></div>`; const phone = (latest.phone || '').replace(/\D/g, ''); document.getElementById('contactRow').innerHTML = phone ? `<button class="contact-btn wa-btn" onclick="window.open('https://wa.me/91${phone}')">💬 WhatsApp</button><button class="contact-btn call-btn" onclick="window.location.href='tel:+91${phone}'">📞 Call</button>` : '<div style="color:#aaa;">📵 No Phone Number</div>'; document.getElementById('chartWrap').style.display = 'none'; const hl = document.getElementById('historyList'); hl.innerHTML = ''; visits.forEach((v, idx) => { const sVal = parseInt(v.score, 10); const sBg = sVal <= 700 ? '#fdecea' : sVal <= 900 ? '#fff3e0' : '#e8f5e9'; const sCol = sVal <= 700 ? '#d32f2f' : sVal <= 900 ? '#f57c00' : '#2e7d32'; hl.innerHTML += `<div class="history-item"><div class="hist-top"><span class="hist-date">📆 ${v.date}</span><div class="hist-badges"><div class="score-badge" style="background:${sBg};color:${sCol}">📈 ${v.score || '---'}</div><div class="visit-options"><button class="options-btn" onclick="toggleVisitMenu(event,${v.id})">⋮</button><div id="menu-${v.id}" class="options-menu"><button onclick="editVisit(${v.id})">✏️ Edit</button><button onclick="deleteVisit(${v.id})">🗑️ Delete</button></div></div></div></div><div class="hist-sub">${v.products ? `🛒 ${escapeHtml(v.products)}<br>` : ''}${v.notes ? `📝 ${escapeHtml(v.notes)}` : ''}</div><div class="hist-foot"><span class="lp-badge">💊 LP: ${v.lp || '---'}</span>${idx === 0 ? '<span class="latest-tag">✨ Latest Visit</span>' : ''}</div></div>`; }); document.getElementById('historyModal').style.display = 'flex'; }
-        function openForm(mode, existingName = null, visitId = null) { closeAllPopups(); document.getElementById('entryModal').style.display = 'flex'; document.getElementById('modalTitle').innerText = visitId ? '✏️ Edit Visit' : '📝 New Visit'; document.getElementById('editId').value = visitId || ''; ['fName', 'fAge', 'fPhone', 'fArea', 'fScore', 'fLP', 'fProducts', 'fNotes'].forEach(id => document.getElementById(id).value = ''); document.getElementById('fDate').value = todayInputVal(); setGender('M'); if (visitId) { const v = db.find(e => e.id === visitId); if (v) { document.getElementById('fDate').value = displayToDateInput(v.date); document.getElementById('fName').value = v.name; document.getElementById('fAge').value = v.age; document.getElementById('fPhone').value = v.phone; document.getElementById('fArea').value = v.area; document.getElementById('fScore').value = v.score; document.getElementById('fLP').value = v.lp; document.getElementById('fProducts').value = v.products; document.getElementById('fNotes').value = v.notes; setGender(v.gender || 'M'); } } else if (existingName) { const last = [...db].reverse().find(e => e.name === existingName); if (last) { document.getElementById('fName').value = last.name; document.getElementById('fAge').value = last.age; document.getElementById('fPhone').value = last.phone; document.getElementById('fArea').value = last.area; setGender(last.gender || 'M'); } } }
-        function saveEntry() { const name = document.getElementById('fName').value.trim(); if (!name) return alert('Please enter name'); const eid = document.getElementById('editId').value; const entry = { id: eid ? parseInt(eid) : Date.now(), date: dateInputToDisplay(document.getElementById('fDate').value), name, age: document.getElementById('fAge').value, gender: document.getElementById('fGender').value, phone: document.getElementById('fPhone').value, area: document.getElementById('fArea').value || 'N/A', score: document.getElementById('fScore').value, lp: document.getElementById('fLP').value, products: document.getElementById('fProducts').value, notes: document.getElementById('fNotes').value }; if (eid) { const idx = db.findIndex(e => e.id === entry.id); if (idx !== -1) db[idx] = entry; } else db.push(entry); saveDB(); closeAllPopups(); }
-        function editVisit(id) { openForm('edit', null, id); }
-        function deleteVisit(id) { if (confirm('Delete visit?')) { db = db.filter(e => e.id !== id); saveDB(false); const rem = db.filter(e => e.name === activeHistoryName); rem.length ? showHistory(activeHistoryName) : (closeAllPopups(), renderTable()); } }
-        function deleteCustomer() { if (confirm(`Delete all records for "${activeHistoryName}"?`)) { db = db.filter(e => e.name !== activeHistoryName); saveDB(); closeAllPopups(); } }
-        function quickAddVisit() { openForm('add', activeHistoryName); }
-        function showAreaPopup() { const areas = [...new Set(db.map(e => (e.area || '').trim()).filter(a => a && a !== 'N/A'))].sort(); document.getElementById('areaItems').innerHTML = areas.map(a => `<div class="area-chip" onclick="filterByArea('${escapeHtml(a)}')">📍 ${escapeHtml(a)}</div>`).join(''); document.getElementById('overlay').style.display = 'block'; document.getElementById('areaListPopup').style.display = 'block'; }
-        function filterByArea(area) { document.getElementById('search').value = area; closeAllPopups(); renderTable(); }
-        function toggleVisitMenu(event, id) { event.stopPropagation(); document.querySelectorAll('.options-menu').forEach(m => m.classList.remove('show-menu')); document.getElementById('menu-' + id).classList.toggle('show-menu'); }
-        function openSettings() { document.getElementById('overlay').style.display = 'block'; document.getElementById('settingsPopup').style.display = 'block'; }
-        function closeAllPopups() { document.querySelectorAll('.modal,.list-modal,.overlay').forEach(el => el.style.display = 'none'); }
-        window.onclick = function (e) { if (e.target.classList.contains('modal')) closeAllPopups(); document.querySelectorAll('.options-menu').forEach(m => m.classList.remove('show-menu')); };
-        function exportJSON() { const jsonStr = JSON.stringify(db, null, 2); const blob = new Blob([jsonStr], { type: 'application/json' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'NuSkin_Pharmanex_Backup.json'; a.click(); }
-        function setGender(val) { document.getElementById('fGender').value = val; document.querySelectorAll('.gender-btn').forEach(btn => btn.classList.remove('active')); document.querySelector('.gender-' + (val === 'M' ? 'male' : 'female')).classList.add('active'); }
-        function showInfoPopup(event, name) { event.stopPropagation(); const visits = db.filter(e => e.name === name).sort((a, b) => dateToTs(b.date) - dateToTs(a.date)); if (!visits.length) return; const latest = visits[0]; document.getElementById('infoPopupTitle').innerHTML = `ℹ️ ${escapeHtml(name)} <span style="font-size:12px;background:#eef2ff;padding:2px 8px;border-radius:8px;font-weight:600;">📆 ${latest.date}</span>`; let html = ''; if (latest.products) html += `<div style="margin-bottom:7px;padding:8px 10px;background:#f0f4ff;border-radius:12px;border-left:3px solid #6366f1;"><div style="font-size:10px;font-weight:800;color:#6366f1;margin-bottom:2px;">🛒 PRODUCTS</div><div style="font-size:13px;color:#1e293b;">${escapeHtml(latest.products)}</div></div>`; if (latest.notes) html += `<div style="padding:8px 10px;background:#f0fdf4;border-radius:12px;border-left:3px solid #10b981;"><div style="font-size:10px;font-weight:800;color:#059669;margin-bottom:2px;">📝 NOTES</div><div style="font-size:13px;color:#1e293b;">${escapeHtml(latest.notes)}</div></div>`; if (!latest.products && !latest.notes) html = `<div style="color:#aaa;text-align:center;padding:20px 0;font-size:13px;">No products or notes recorded.</div>`; document.getElementById('infoPopupContent').innerHTML = html; document.getElementById('infoPopup').style.display = 'flex'; }
-    </script>
 </body>
-
 </html>
-```
